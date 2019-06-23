@@ -2,8 +2,9 @@
     "version": 2,
     "name": "Portal FIM",
     "builds": [
-        { "src": "server.js", "use": "@now/node-server" },
-        { "src": "static/*", "use": "@now/static" },
-        { "src": "next.config.js", "use": "@now/next" }
-    ]
+        { "src": "package.json", "use": "@now/static-build" }
+    ],
+    "env": {
+        "GOOGLE_CLIENT_ID": "@google-client-id"
+    }
 }
