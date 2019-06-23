@@ -27,7 +27,7 @@ function Layout(props) {
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
           <Menu.Item onClick={() => { handleRoute('/') }} key="1">
             <Icon type="desktop" />
-            <span>Home</span>
+            <span>Beranda</span>
           </Menu.Item>
           <Menu.Item onClick={() => { handleRoute('/about') }} key="2">
             <Icon type="compass" />

@@ -7,7 +7,9 @@
     "dev": "node server.js",
     "build": "next build",
     "start": "NODE_ENV=production node server.js",
-    "now-build": "next build && next export -o dist"
+    "now-build": "next build && next export -o dist",
+    "now:deploy:staging": "now",
+    "now:deploy:prod": "now && now --target production"
   },
   "keywords": [],
   "author": "",
