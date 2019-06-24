@@ -2,7 +2,7 @@ import React, { Component, useState } from 'react';
 import Head from 'next/head';
 import '../static/css/empty.css'
 import { Layout as LayoutAntd, Menu, Breadcrumb, Icon, Avatar } from 'antd';
-import Router from 'next/router'
+import Router from 'next/router';
 
 const { Header, Footer, Sider, Content } = LayoutAntd;
 const { SubMenu } = Menu;
@@ -22,6 +22,20 @@ function Layout(props) {
 
   return (
     <LayoutAntd style={{ minHeight: '100vh' }}>
+      <Head>
+        <title>Portal Forum Indonesia Muda</title>
+        <meta
+          name="viewport"
+          content="initial-scale=1.0, width=device-width"
+          key="viewport"
+        />
+        <link rel="apple-touch-icon" sizes="152x152" href="/static/img/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="/static/img/favicon/site.webmanifest" />
+        <meta name="msapplication-TileColor" content="#da532c" />
+        <meta name="theme-color" content="#ffffff" />
+      </Head>
       <Sider theme="light" collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
         <Menu theme="light" defaultSelectedKeys={['1']} mode="inline">
