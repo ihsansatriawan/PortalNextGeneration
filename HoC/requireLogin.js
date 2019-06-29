@@ -21,13 +21,10 @@ export default function requireLogin(WrappedComponent) {
 
       try {
         const response = await fetch({
-          url: '/auth/get-profile',
+          url: '/auth/checksession',
           method: 'post',
-          data: {},
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': `Bearer ${cookieLogin}s`
+          data: {
+            token: cookieLogin
           }
         })
 
@@ -36,7 +33,7 @@ export default function requireLogin(WrappedComponent) {
         if (!status) {
           this.redirectNonLogin();
         }
-        
+
       } catch (error) {
         console.log("error: ", error);
         

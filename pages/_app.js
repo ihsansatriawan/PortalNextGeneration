@@ -45,8 +45,6 @@ class MyApp extends App {
   render() {
     const { Component, pageProps, router, cookieLogin } = this.props;
 
-    console.log("cookieLogin: ", cookieLogin)
-
     return (
       <Container>
         <Layout pathName={router.pathname} cookieLogin={cookieLogin} >
