@@ -1,3 +1,4 @@
+import requireLogin from '@HoC/requireLogin';
 import {
   Form,
   Select,
@@ -11,7 +12,7 @@ import {
 const FormItem = Form.Item
 const Option = Select.Option
 
-export default () => (
+const About = () => (
   <div style={{ marginTop: 100 }}>
     <Form layout='horizontal'>
       <FormItem
@@ -72,3 +73,5 @@ export default () => (
     </Form>
   </div>
 )
+
+export default requireLogin(About);

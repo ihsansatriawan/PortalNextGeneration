@@ -34,12 +34,12 @@ class Login extends React.Component {
         url: '/auth/login',
         method: 'post',
         data: {
-            email: profileObj.email,
-            socialId: googleId,
-            loginSource: "Google",
-            profilPicture: imageUrl,
-            firstName: givenName,
-            lastName: familyName
+          email: profileObj.email,
+          socialId: googleId,
+          loginSource: "Google",
+          profilPicture: imageUrl,
+          firstName: givenName,
+          lastName: familyName
         },
       })
   
