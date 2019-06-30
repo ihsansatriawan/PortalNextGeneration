@@ -40,7 +40,7 @@ class ContainerFIM21 extends Component {
     const { step } = this.state;
 
     return (
-      <Steps current={step - 1} onChange={this.onChangeStep}>
+      <Steps current={step === 0 ? step : step - 1} onChange={this.onChangeStep}>
         <Step title="KTP" description="Wording KTP" />
         <Step title="Data Diri" description="Wording Data Diri" />
         <Step title="Pilih Jalur" description="Silahkan Pilih Jalur Anda" />
