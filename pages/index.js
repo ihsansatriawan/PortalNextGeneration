@@ -82,8 +82,6 @@ const Content = () => {
 function Index(props) {
 
   useEffect(() => {
-    props.router.prefetch('/about')
-    props.router.prefetch('/faq')
     props.router.prefetch('/login')
     props.router.prefetch('/fim21')
   }, [])
