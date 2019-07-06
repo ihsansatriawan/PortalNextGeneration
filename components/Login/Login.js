@@ -37,9 +37,9 @@ class Login extends React.Component {
           email: profileObj.email,
           socialId: googleId,
           loginSource: "Google",
-          profilPicture: imageUrl,
-          firstName: givenName,
-          lastName: familyName
+          profilPicture: profileObj.imageUrl,
+          firstName: profileObj.givenName,
+          lastName: profileObj.familyName
         },
       })
   
