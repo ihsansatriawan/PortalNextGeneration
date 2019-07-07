@@ -48,6 +48,7 @@ class RegistrationForm extends React.Component {
     if (Identity) {
       this.setState({ urlKtp: Identity.photoUrl })
       form.setFieldsValue({
+        profPic: Identity.photoUrl,
         name: Identity.name,
         address: Identity.address,
         phone: Identity.phone,
@@ -83,7 +84,7 @@ class RegistrationForm extends React.Component {
         photoUrl: urlKtp,
         name: name,
         address: address,
-        phone: `${prefix}${phone}`,
+        phone: phone,
         religion: religion,
         bornDate: moment(bornDate, 'YYYY-MM-DD').format('YYYY-MM-DD HH:mm:ss'),
       }
@@ -254,7 +255,7 @@ class RegistrationForm extends React.Component {
             rules: [
               { required: true, message: "Please input your phone number!" }
             ]
-          })(<Input addonBefore={prefixSelector} style={{ width: "100%" }} />)}
+          })(<Input style={{ width: "100%" }} />)}
         </Form.Item>
         <Form.Item label="Tanggal Lahir">
           {getFieldDecorator("bornDate", {
