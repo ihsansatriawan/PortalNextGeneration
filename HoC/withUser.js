@@ -23,11 +23,12 @@ export const withUser = async ctx => {
   if (ctx.req && !token_FIM) {
     ctx.res.writeHead(302, { Location: '/login' })
     ctx.res.end()
-    return
+    return {}
   }
 
   if (!token_FIM) {
-    return redirectForbidden()
+    redirectForbidden()
+    return {}
   }
 
   try {
@@ -43,6 +44,7 @@ export const withUser = async ctx => {
 
     if (!status) {
       redirectForbidden()
+      return {}
     }
 
     console.log("response profile: ", response.data.data)
@@ -54,7 +56,7 @@ export const withUser = async ctx => {
   } catch (error) {
     console.log("error: ", error)
     redirectForbidden()
-    return
+    return {}
   }
 
   return {

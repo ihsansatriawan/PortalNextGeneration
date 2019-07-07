@@ -26,11 +26,12 @@ export const auth = async ctx => {
   if (ctx.req && !token_FIM) {
     ctx.res.writeHead(302, { Location: '/login' })
     ctx.res.end()
-    return
+    return {}
   }
 
   if (!token_FIM) {
-    return redirectForbidden()
+    redirectForbidden()
+    return {}
   }
 
   try {
@@ -56,7 +57,7 @@ export const auth = async ctx => {
   } catch (error) {
     console.log("error: ", error)
     redirectForbidden()
-    return
+    return {}
   }
 
   return {
