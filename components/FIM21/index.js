@@ -87,10 +87,12 @@ class ContainerFIM21 extends Component {
     const { step } = this.state;
     const { dataUser, cookieLogin } = this.props;
 
-    console.log("dataUser: ", dataUser)
+    console.log("step: ", step)
 
     if (step === -1) {
       return <Skeleton active />
+    } else if (step === 0) {
+      return <KTP refetchStep={this.fetchSession} />
     } else if (step === 1) {
       return <KTP refetchStep={this.fetchSession} />
     } else if (step === 2) {
