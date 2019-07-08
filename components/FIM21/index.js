@@ -28,11 +28,12 @@ class ContainerFIM21 extends Component {
   onChangeStep = (index) => {
     const { stepReal } = this.state;
 
-    if (index < stepReal) {
-      // this.setState({ step: index + 1 })
-      this.openNotificationWithIcon('error', 'Anda Tidak bisa mengubah data kembali')
-    } else {
+    if (index === 0) {
+      this.openNotificationWithIcon('error', 'Anda Tidak bisa ubah KTP')
+    } else if (index >= stepReal) {
       this.openNotificationWithIcon('error', 'Anda Tidak boleh melompat tahapan')
+    } else {
+      this.setState({ step: index + 1 })
     }
 
   }
