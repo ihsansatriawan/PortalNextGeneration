@@ -10,6 +10,7 @@ import {
 import { fetch } from '@helper/fetch';
 import KTP from './KTP';
 import DataDiri from './DataDiri';
+import ChooseTunnel from './ChooseTunnel';
 const { Step } = Steps;
 
 class ContainerFIM21 extends Component {
@@ -98,6 +99,8 @@ class ContainerFIM21 extends Component {
       return <KTP refetchStep={this.fetchSession} />
     } else if (step === 2) {
       return <DataDiri refetchStep={this.fetchSession} cookieLogin={cookieLogin} dataUser={dataUser} />
+    } else if (step === 3) {
+      return <ChooseTunnel refetchStep={this.fetchSession} cookieLogin={cookieLogin} dataUser={dataUser} />
     }
 
     return <Empty />
