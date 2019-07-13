@@ -8,7 +8,7 @@ import {
   Steps,
 } from 'antd';
 import { fetch } from '@helper/fetch';
-import { KTP, DataDiri, ChooseTunnel } from './Dynamic';
+import { KTP, DataDiri, ChooseTunnel, Question } from './Dynamic';
 const { Step } = Steps;
 
 class ContainerFIM21 extends Component {
@@ -16,7 +16,12 @@ class ContainerFIM21 extends Component {
   state = {
     step: -1,
     stepReal: -1,
-    dataUser: {}
+    dataUser: {},
+    isLoading: false,
+  }
+
+  toggleLoading = (value) => {
+    this.setState({ isLoading: value })
   }
 
   openNotificationWithIcon = (type, message) => {
@@ -66,20 +71,23 @@ class ContainerFIM21 extends Component {
       const status = (response.data.status || false)
 
       if (!status) {
-        this.setState({ step: 0 })
+        this.setState({ step: -2 })
       }
 
-      this.setState({ step: response.data.data.step, stepReal: response.data.data.step })
+      // this.setState({ step: response.data.data.step, stepReal: response.data.data.step })
+      this.setState({ step: 4, stepReal: 4 })
 
     } catch (error) {
       console.log("error: ", error);
       
-      this.setState({ step: 0 })
+      this.setState({ step: -2 })
     }
   }
 
   fetchDataProfile = async () => {
     const { cookieLogin } = this.props;
+
+    this.toggleLoading(true)
 
     try {
       const response = await fetch({
@@ -94,19 +102,25 @@ class ContainerFIM21 extends Component {
   
       if (!status) {
         this.setState({
-          dataUser: {}
+          dataUser: {},
+          step: -2
         })
       }
 
       this.setState({
         dataUser: response.data.data
       })
+
+      this.toggleLoading(false)
   
     } catch (error) {
       console.log("error: ", error)
       this.setState({
-        dataUser: {}
+        dataUser: {},
+        step: -2
       })
+
+      this.toggleLoading(false)
     }
   }
 
@@ -117,15 +131,19 @@ class ContainerFIM21 extends Component {
   }
 
   refetchData = () => {
-    this.fetchSession();
     this.fetchDataProfile();
+    this.fetchSession();
   }
 
   renderContent = () => {
-    const { step, dataUser } = this.state;
+    const { step, dataUser, isLoading } = this.state;
     const { cookieLogin } = this.props;
 
     console.log("step: ", step)
+
+    if (isLoading) {
+      return <Skeleton active />
+    }
 
     if (step === -1) {
       return <Skeleton active />
@@ -137,6 +155,8 @@ class ContainerFIM21 extends Component {
       return <DataDiri refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
     } else if (step === 3) {
       return <ChooseTunnel refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
+    } else if (step === 4) {
+      return <Question refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
     }
 
     return <Empty />
