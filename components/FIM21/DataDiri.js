@@ -53,7 +53,7 @@ class RegistrationForm extends React.Component {
         name: Identity.name,
         address: Identity.address,
         phone: Identity.phone,
-        religion: Identity.religion,
+        religion: Identity.religion || '',
         bornPlace: Identity.bornPlace,
         institution: Identity.institution,
         gender: Identity.gender,
@@ -64,6 +64,7 @@ class RegistrationForm extends React.Component {
         emergencyPhone: Identity.emergencyPhone,
         expertise: Identity.expertise,
         headline: Identity.headline,
+        otherReligion: Identity.otherReligion,
         bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
       })
     }
@@ -82,7 +83,7 @@ class RegistrationForm extends React.Component {
   handleOnSubmit = async (values) => {
     const { cookieLogin, refetchStep } = this.props;
     const { urlKtp } = this.state;
-    const { bloodGroup, headline, expertise, emergencyPhone, hoby, gender, provinceAddress, cityAddress, address, name, phone, prefix, religion, bornDate, bornPlace, institution } = values
+    const { otherReligion, bloodGroup, headline, expertise, emergencyPhone, hoby, gender, provinceAddress, cityAddress, address, name, phone, prefix, religion, bornDate, bornPlace, institution } = values
     console.log("values: ", values)
 
     this.setState({ isLoadingButton: true })
@@ -110,6 +111,7 @@ class RegistrationForm extends React.Component {
         hoby: hoby,
         expertise: expertise,
         institution: institution,
+        otherReligion: otherReligion,
 
         // photoUrl: urlKtp,
         // name: name,
@@ -226,7 +228,7 @@ class RegistrationForm extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
+    const { getFieldDecorator, getFieldValue } = this.props.form;
     const { autoCompleteResult, isLoadingButton } = this.state;
 
     const formItemLayout = {
@@ -262,6 +264,8 @@ class RegistrationForm extends React.Component {
     const websiteOptions = autoCompleteResult.map(website => (
       <AutoCompleteOption key={website}>{website}</AutoCompleteOption>
     ));
+
+    const religionss = getFieldValue("religion") || ''
 
     return (
       <Form {...formItemLayout} onSubmit={this.handleSubmit}>
@@ -391,9 +395,19 @@ class RegistrationForm extends React.Component {
               <Option value="Hindu">Hindu</Option>
               <Option value="Buddha">Buddha</Option>
               <Option value="Kong Hu Cu">Kong Hu Cu</Option>
+              <Option value="Kepercayaan Lain nya">Kepercayaan Lain nya</Option>
             </Select>
           )}
         </Form.Item>
+        {
+          religionss.includes('Kepercayaan') && <Form.Item label="Kepercayaan Lain nya">
+            {getFieldDecorator("otherReligion", {
+              rules: [
+                { required: false, message: "Tolong isi Kepercayaan Lain Anda!" }
+              ]
+            })(<Input />)}
+          </Form.Item>
+        }
         <Form.Item label="Foto Pribadi">
           {getFieldDecorator("profPic", {
             rules: [
