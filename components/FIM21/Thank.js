@@ -9,6 +9,7 @@ import {
   Button,
 } from 'antd';
 import Router from 'next/router';
+import { fetch } from '@helper/fetch';
 
 class Thank extends Component {
 
@@ -17,7 +18,28 @@ class Thank extends Component {
   }
 
   componentDidMount = () => {
-    //TODO: Fetch data for update isCanMultiple
+    this.fetchSummaryCheck()
+  }
+
+  fetchSummaryCheck = async () => {
+    const { cookieLogin } = this.props;
+
+    try {
+      const response = await fetch({
+        url: '/summary/check',
+        method: 'post',
+        headers: {
+          'Authorization': `Bearer ${cookieLogin}`
+        }
+      })
+
+      const status = (response.data.status || false)
+
+      this.setState({ isCanMultiple: status })
+      
+    } catch (error) {
+      
+    }
   }
 
   render() {
