@@ -126,11 +126,12 @@ class RegistrationForm extends React.Component {
 
     const status = (response.data.status || false)
     const messageAPI = (response.data.message || '')
+    const nullData = (response.data.nullData || [])
 
     if (!status) {
       message.error(messageAPI);
     } else {
-      message.success(messageAPI);
+      message.success(`${messageAPI} ${nullData.length > 0 && nullData.toString()}`);
       refetchStep();
     }
 
