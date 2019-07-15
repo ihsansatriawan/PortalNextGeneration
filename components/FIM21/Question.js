@@ -294,8 +294,6 @@ class Question extends Component {
     const { answers } = this.state;
     const { cookieLogin, dataUser, refetchStep } = this.props;
 
-    console.log("answers: ", answers)
-
     try {
       const response = await fetch({
         url: '/summary/update-final-submit',

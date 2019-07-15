@@ -12,6 +12,6 @@ export default [
   {
     routeKey: '/login',
     routeIcon: 'login',
-    routeTitle: 'Login'
+    routeTitle: 'Account'
   }
 ]

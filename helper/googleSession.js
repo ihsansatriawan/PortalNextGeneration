@@ -11,6 +11,9 @@ const logout = ({ onLogoutSuccess = () => {} }) => {
         onLogoutSuccess()
       }))
     }
+  } else {
+    removeCookie(CONSTANT.TOKEN_NAME)
+    onLogoutSuccess()
   }
 }
 
