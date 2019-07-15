@@ -21,7 +21,7 @@ class Login extends React.Component {
   };
 
   redirectAfterSuccess = () => {
-    Router.push('/')
+    Router.push('/fim21')
   }
 
   onSuccessLogin = async (res) => {

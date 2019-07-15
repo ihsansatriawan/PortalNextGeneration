@@ -30,15 +30,6 @@ function renderMenus(menu) {
   )
 }
 
-function menusLogin() {
-  return (
-    <Menu.Item onClick={() => { console.log("Click Menu") }} key="LoginUser">
-      <Icon type="dingding" />
-      Hi Login User
-    </Menu.Item>
-  )
-}
-
 function Layout(props) {
   const [current, setCurrent] = useState('');
   const { children, pathName, cookieLogin } = props;
@@ -68,7 +59,6 @@ function Layout(props) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
       <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-        {cookieLogin && menusLogin()}
         {ListMenu.map(renderMenus)}
       </Menu>
       <LayoutAntd>
