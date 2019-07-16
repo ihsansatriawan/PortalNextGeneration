@@ -7,6 +7,9 @@ function isEmptyObject(obj) {
 }
 
 function Content({loading, tunnels, setTunnel}) {
+
+  const fallbackImage = "https://res.cloudinary.com/fim-indonesia/image/upload/v1563240716/fallback-jalur.jpg"
+
   if (loading) {
     return <Skeleton active />
   } else if (!tunnels || tunnels.length === 0) {
@@ -25,7 +28,7 @@ function Content({loading, tunnels, setTunnel}) {
       dataSource={tunnels}
       renderItem={(item) => {
         return <List.Item>
-          <Card hoverable onClick={() => {
+          <Card cover={<img alt="example" src={item.urlPicture || fallbackImage} />} hoverable onClick={() => {
             message.info(`Kamu memilih jalur ${item.name}`)
             setTunnel(item)
           }} title={item.name}>{item.description || 'Wait Input'}</Card>
