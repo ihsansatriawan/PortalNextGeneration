@@ -25,8 +25,6 @@ export const auth = async ctx => {
 
   const { [CONSTANT.TOKEN_NAME]: token_FIM } = nextCookie(ctx)
 
-  console.log("token_FIM: ", token_FIM)
-
   if (ctx.req && !token_FIM) {
     ctx.res.writeHead(302, { Location: '/login' })
     ctx.res.end()

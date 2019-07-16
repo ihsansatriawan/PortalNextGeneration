@@ -84,7 +84,6 @@ class RegistrationForm extends React.Component {
     const { cookieLogin, refetchStep } = this.props;
     const { urlKtp } = this.state;
     const { otherReligion, bloodGroup, headline, expertise, emergencyPhone, hoby, gender, provinceAddress, cityAddress, address, name, phone, prefix, religion, bornDate, bornPlace, institution } = values
-    console.log("values: ", values)
 
     this.setState({ isLoadingButton: true })
 
@@ -98,7 +97,7 @@ class RegistrationForm extends React.Component {
         name: name,
         address: address,
         phone: phone,
-        headline: headline,
+        headline: 'headline',
         photoUrl: urlKtp,
         religion: religion,
         bornPlace: bornPlace,
@@ -122,7 +121,6 @@ class RegistrationForm extends React.Component {
       }
     })
 
-    console.log("response: ", response)
 
     const status = (response.data.status || false)
     const messageAPI = (response.data.message || '')
@@ -315,13 +313,6 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Sebutan Anda">
-          {getFieldDecorator("headline", {
-            rules: [
-              { required: true, message: "Isi Personal Branding Anda!" }
-            ]
-          })(<Input />)}
-        </Form.Item>
         <Form.Item label="Nomor Telpon">
           {getFieldDecorator("phone", {
             rules: [
@@ -357,7 +348,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<DatePicker />)}
         </Form.Item>
-        <Form.Item label="Kelamin">
+        <Form.Item label="Jenis Kelamin">
           {getFieldDecorator("gender", {
             rules: [
               { required: true, message: "Pilih jenis kelamin anda" }

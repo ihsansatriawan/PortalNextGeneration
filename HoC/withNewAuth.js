@@ -23,8 +23,6 @@ const redirectForbidden = () => {
 
 export const newAuth = async token_FIM => {
 
-  console.log("token_FIM: ", token_FIM)
-
   // if (ctx.req && !token_FIM) {
   //   ctx.res.writeHead(302, { Location: '/login' })
   //   ctx.res.end()

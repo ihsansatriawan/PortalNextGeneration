@@ -49,7 +49,6 @@ class Login extends React.Component {
         },
       })
   
-      console.log("response: ", response)
       setCookie(CONSTANT.TOKEN_NAME, response.data.token)
       this.openNotificationWithIcon('success')
       this.redirectAfterSuccess()
@@ -61,7 +60,6 @@ class Login extends React.Component {
   }
 
   responseGoogle = async (response) => {
-    console.log(response);
 
     this.onToggleLoader();
     if (response.accessToken) {

@@ -19,7 +19,6 @@ function Index(props) {
   try {
     decode = jwtDecode(cookieLogin)
   } catch (error) {
-    console.log("err: ", error)
   }
 
   let extraButton = [
@@ -30,7 +29,7 @@ function Index(props) {
     <div>
       <Result
         icon={<Icon type="smile" theme="twoTone" />}
-        title="Halo Pemuda Indonesia!"
+        title="Halo Pemuda Pemudi Indonesia!"
         subTitle={`Hi ${decode.email || ''} Mari Bergabung ke Keluarga Besar Forum Indonesia Muda`}
         extra={extraButton}
       />
