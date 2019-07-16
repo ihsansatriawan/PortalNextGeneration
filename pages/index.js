@@ -1,4 +1,4 @@
-import { Result, Icon, Button, Divider, List, Avatar } from 'antd';
+import { Result, Icon, Button, Divider, List, Avatar, Carousel } from 'antd';
 import { Fragment } from 'react';
 import { withRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -40,6 +40,11 @@ function Index(props) {
 
   return (
     <div>
+      <Carousel autoplay effect="fade">
+        <div>
+          <img style={{ maxHeight: '100%', maxWidth: '100%' }} alt="all-fim" src="https://res.cloudinary.com/fim-indonesia/image/upload/q_auto:low/v1563261128/banner_primary.jpg" />
+        </div>
+      </Carousel>
       <Result
         icon={<Icon type="smile" theme="twoTone" />}
         title="Halo Pemuda Pemudi Indonesia!"
