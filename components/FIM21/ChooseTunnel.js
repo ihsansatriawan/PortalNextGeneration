@@ -6,7 +6,7 @@ function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object
 }
 
-function Content({loading, tunnels, setTunnel}) {
+function Content({loading, tunnels, setTunnel, tunnel}) {
 
   const fallbackImage = "https://res.cloudinary.com/fim-indonesia/image/upload/v1563240716/fallback-jalur.jpg"
 
@@ -27,8 +27,17 @@ function Content({loading, tunnels, setTunnel}) {
       }}
       dataSource={tunnels}
       renderItem={(item) => {
+        const styleObj = {
+          ...item.id === tunnel.id && {
+            borderColor: 'red'
+          }
+        }
+        if (item.id === tunnel.id) {
+          console.log("item: ", item)
+          console.log("tunnel: ", tunnel)
+        }
         return <List.Item>
-          <Card cover={<img alt="example" src={item.urlPicture || fallbackImage} />} hoverable onClick={() => {
+          <Card style={styleObj} cover={<img alt="example" src={item.urlPicture || fallbackImage} />} hoverable onClick={() => {
             message.info(`Kamu memilih jalur ${item.name}`)
             setTunnel(item)
           }} title={item.name}>{item.description || 'Wait Input'}</Card>
@@ -135,7 +144,7 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
   return (<Fragment>
     {!isEmptyObject(tunnel) && <Divider>Pilihan mu: {tunnel.name}</Divider>}
     <Divider>Tentukan Pilihan mu</Divider>
-    <Content setTunnel={setTunnel} loading={loading} tunnels={tunnels}  />
+    <Content tunnel={tunnel} setTunnel={setTunnel} loading={loading} tunnels={tunnels}  />
     <Button {...buttonSubmitProps()} >
       Submit
     </Button>
