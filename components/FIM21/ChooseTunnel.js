@@ -32,10 +32,7 @@ function Content({loading, tunnels, setTunnel, tunnel}) {
             borderColor: 'red'
           }
         }
-        if (item.id === tunnel.id) {
-          console.log("item: ", item)
-          console.log("tunnel: ", tunnel)
-        }
+
         return <List.Item>
           <Card style={styleObj} cover={<img alt="example" src={item.urlPicture || fallbackImage} />} hoverable onClick={() => {
             message.info(`Kamu memilih jalur ${item.name}`)

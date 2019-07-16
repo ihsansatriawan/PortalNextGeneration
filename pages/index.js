@@ -1,10 +1,23 @@
-import { Result, Icon, Button } from 'antd';
+import { Result, Icon, Button, Divider, List, Avatar } from 'antd';
 import { Fragment } from 'react';
 import { withRouter } from 'next/router';
 import { useEffect } from 'react';
 import jwtDecode from 'jwt-decode';
 import Router from 'next/router';
 import '../static/css/carousel.css';
+
+const data = [
+  {
+    title: 'File Rekomendasi',
+    description: 'File ini digunakan untuk diisi oleh perekomendasi kamu',
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1563242868/document/SURAT_PERNYATAAN_KOMITMEN_DIRI.docx'
+  },
+  {
+    title: 'File Surat Pernyataan Komitmen Diri',
+    description: 'File ini sebagai bukti komitmen kamu',
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1563242868/document/SURAT_PERNYATAAN_KOMITMEN_DIRI.docx'
+  }
+];
 
 function Index(props) {
   const { cookieLogin } = props
@@ -32,6 +45,23 @@ function Index(props) {
         title="Halo Pemuda Pemudi Indonesia!"
         subTitle={`Hi ${decode.email || ''} Mari Bergabung ke Keluarga Besar Forum Indonesia Muda`}
         extra={extraButton}
+      />
+      <Divider>File Format Berkas</Divider>
+      <p>
+        Berikut ini list file berformat yang dibutuhkan untuk diupload di tahap pendaftaran
+      </p>
+      <List
+        itemLayout="horizontal"
+        dataSource={data}
+        renderItem={item => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar icon="file-word" />}
+              title={<a href={item.urlFile}>{item.title}</a>}
+              description={item.description}
+            />
+          </List.Item>
+        )}
       />
     </div>
   )
