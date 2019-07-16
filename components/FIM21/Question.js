@@ -225,6 +225,7 @@ class Question extends Component {
     const findAnswer = answers.find(answer => answer.questionId === question.id)
 
     return <Fragment key={question.id}>
+      <h1 style={{ fontWeight: 'bold' }}>{question.headline}</h1>
       <div>{question.question}</div>
       <div>
         {entriesQ.map((q, idx) => {
