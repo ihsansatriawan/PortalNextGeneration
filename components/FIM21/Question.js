@@ -226,7 +226,8 @@ class Question extends Component {
 
     return <Fragment key={question.id}>
       <h1 style={{ fontWeight: 'bold' }}>{question.headline}</h1>
-      <div>{question.question}</div>
+      <div dangerouslySetInnerHTML={{ __html: question.question }} />
+      <div dangerouslySetInnerHTML={{ __html: question.note }} />
       <div>
         {entriesQ.map((q, idx) => {
           return (<Fragment key={idx}>
@@ -333,8 +334,8 @@ class Question extends Component {
 
   showConfirm = () => {
     confirm({
-      title: 'Kamu Yakin akan mengirimkan data ini ?',
-      content: 'Sekali anda mensubmit, tidak akan bisa diubah!',
+      title: 'Kamu yakin akan mengirimkan data ini?',
+      content: 'Sekali kamu kirimkan, tidak akan bisa diubah!',
       onOk: () => {
         this.submitEvent()
       },

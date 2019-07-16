@@ -50,8 +50,8 @@ class ContainerFIM21 extends Component {
 
     return (
       <Steps current={step === 0 ? step : step - 1} onChange={this.onChangeStep}>
-        <Step title="KTP" description="Wording KTP" />
-        <Step title="Data Diri" description="Wording Data Diri" />
+        <Step title="KTP" description="Data identitas formal" />
+        <Step title="Data Diri" description="Isian data diri calon peserta" />
         <Step title="Pilih Jalur" description="Silahkan Pilih Jalur Anda" />
         <Step title="Isi Formulir Jalur" description="Silahkan Isi Jalur Anda" />
       </Steps>
@@ -109,7 +109,7 @@ class ContainerFIM21 extends Component {
       }
 
       this.setState({
-        dataUser: response.data.data
+        dataUser: response.data.data || {}
       })
 
       this.toggleLoading(false)

@@ -276,35 +276,35 @@ class RegistrationForm extends React.Component {
                 message: "Please input your Name"
               }
             ]
-          })(<Input />)}
+          })(<Input placeholder="nama lengkap sesuai identitas" />)}
         </Form.Item>
         <Form.Item label="Alamat">
           {getFieldDecorator("address", {
             rules: [
               { required: true, message: "Please input your address!" }
             ]
-          })(<TextArea rows={4} />)}
+          })(<TextArea placeholder="alamat domisili saat ini" rows={4} />)}
         </Form.Item>
         <Form.Item label="Kota">
           {getFieldDecorator("cityAddress", {
             rules: [
               { required: true, message: "Isi Kota Alamat Anda!" }
             ]
-          })(<Input />)}
+          })(<Input placeholder="kota domisili saat ini" />)}
         </Form.Item>
         <Form.Item label="Provinsi">
           {getFieldDecorator("provinceAddress", {
             rules: [
               { required: true, message: "Isi Provinsi Alamat Anda!" }
             ]
-          })(<Input />)}
+          })(<Input placeholder="provinsi domisili saat ini" />)}
         </Form.Item>
         <Form.Item label="Nomor Darurat">
           {getFieldDecorator("emergencyPhone", {
             rules: [
               { required: true, message: "Isi Nomor Darurat Anda!" }
             ]
-          })(<Input />)}
+          })(<Input placeholder="nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789" />)}
         </Form.Item>
         <Form.Item label="Keahlian">
           {getFieldDecorator("expertise", {
@@ -318,7 +318,7 @@ class RegistrationForm extends React.Component {
             rules: [
               { required: true, message: "Please input your phone number!" }
             ]
-          })(<Input style={{ width: "100%" }} />)}
+          })(<Input placeholder="nomor telepon pribadi" style={{ width: "100%" }} />)}
         </Form.Item>
         <Form.Item label="Tempat Lahir">
           {getFieldDecorator("bornPlace", {

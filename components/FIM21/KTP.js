@@ -62,7 +62,7 @@ class KTP extends Component {
   renderInput = (currentValue, onChangeFn) => {
     return (<Fragment>
       <p>
-        Mohon masukkan dengan nomor KTP anda yang asli. Hal ini berguna untuk kami dalam verifikasi data.
+        Mohon masukkan nomor KTP asli kamu. Hal ini diperlukan dalam verifikasi data.
       </p>
       <Input
         value={currentValue}
@@ -91,7 +91,7 @@ class KTP extends Component {
 
     return (<Fragment>
       <p>
-        Mohon Upload Foto KTP Asli anda. Hal ini berguna untuk kami dalam verifikasi data.
+        Mohon Unggah Foto KTP Asli anda. Hal ini berguna untuk kami dalam verifikasi data.
       </p>
       <Upload
         listType="picture-card"
@@ -163,8 +163,8 @@ class KTP extends Component {
 
   showConfirm = () => {
     confirm({
-      title: 'Kamu Yakin akan mengirimkan data ini ?',
-      content: 'Sekali anda mensubmit, tidak akan bisa diubah!',
+      title: 'Kamu yakin akan mengirimkan data ini?',
+      content: 'Sekali kamu kirimkan, tidak akan bisa diubah!',
       onOk: () => {
         this.handleSubmit()
       },
@@ -200,7 +200,7 @@ class KTP extends Component {
     return (<Fragment>
       <Divider>Nomor KTP</Divider>
       {this.renderInput(noKtp, (e) => {this.changeState('noKtp', e.target.value)})}
-      <Divider>Upload Foto KTP</Divider>
+      <Divider>Unggah Foto KTP</Divider>
       {this.renderUpload()}
       <Button {...this.buttonSubmitProps}>
         Submit
