@@ -16,7 +16,7 @@ export default function requireLogin(WrappedComponent) {
 
     openNotificationWithIcon = type => {
       notification[type]({
-        message: 'Anda harus login terlenih dahulu'
+        message: 'Anda harus login terlebih dahulu'
       });
     }
 

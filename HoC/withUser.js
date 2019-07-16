@@ -7,7 +7,7 @@ import { notification } from 'antd';
 
 const openNotificationWithIcon = type => {
   notification[type]({
-    message: 'Anda harus login terlenih dahulu'
+    message: 'Anda harus login terlebih dahulu'
   });
 }
 
