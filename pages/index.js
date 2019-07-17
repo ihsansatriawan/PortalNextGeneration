@@ -10,7 +10,7 @@ const data = [
   {
     title: 'File Rekomendasi',
     description: 'File ini digunakan untuk diisi oleh perekomendasi kamu',
-    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1563242868/document/SURAT_PERNYATAAN_KOMITMEN_DIRI.docx'
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1563327650/document/Surat_Rekomendasi_FIM_21_non_next_gen.docx'
   },
   {
     title: 'File Surat Pernyataan Komitmen Diri',
