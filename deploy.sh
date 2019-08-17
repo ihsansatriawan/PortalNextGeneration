@@ -1,0 +1,1 @@
+npm run now:deploy:prod
