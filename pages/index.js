@@ -61,7 +61,7 @@ function Index(props) {
         subTitle={`Hi ${decode.email || ''} Mari Bergabung ke Keluarga Besar Forum Indonesia Muda`}
         extra={extraButton}
       />
-      <Divider>File Format Berkas</Divider>
+      <Divider>File Format Berkas Terbaru</Divider>
       <p>
         Berikut ini list file berformat yang dibutuhkan untuk diupload di tahap pendaftaran
       </p>
