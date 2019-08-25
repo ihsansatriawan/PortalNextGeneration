@@ -2,6 +2,7 @@
 require('dotenv').config()
 const webpack = require('webpack')
 const withCss = require('@zeit/next-css')
+const withSass= require('@zeit/next-sass');
 const withSourceMaps = require('@zeit/next-source-maps');
 
 const path = require('path')
@@ -10,6 +11,7 @@ const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 module.exports = withSourceMaps(withCss({
   target: 'serverless',
+  // cssModules: true,
   webpack: (config, { isServer }) => {
     if (isServer) {
       const antStyles = /antd\/.*?\/style\/css.*?/

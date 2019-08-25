@@ -1,7 +1,7 @@
 import LoginComponent from '@components/Login';
 ;
 
-class Login extends React.Component {
+class recruiterLogin extends React.Component {
 
   render() {
     return <React.Fragment>
@@ -11,4 +11,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default recruiterLogin;
