@@ -211,7 +211,7 @@ const ListCardRecruiter = (props) => {
                         {selectedParticipant.map((value, index) => {
                             if (value.Identity !== null) {
                                 const tunnel = value.Tunnel || {}
-                                return <div className="peserta-card" onClick={(e) => onUndoAssign(e, value.ktpNumber, props.dataRecruiter.email, value.tunnelId)}>
+                                return <div key={index} className="peserta-card" onClick={(e) => onUndoAssign(e, value.ktpNumber, props.dataRecruiter.email, value.tunnelId)}>
                                     <div className="nama">{value.Identity.name}</div>
                                     <div className="noKTP">{tunnel.name}  |<b>{value.ktpNumber}</b></div>
                                 </div>

@@ -121,10 +121,11 @@ const Assesment = (props) => {
                 // setIsLoading(false);
             } else {
                 response.data.data.map((value, index) => {
+                    const tunnel = value.Tunnel || {}
                     fetchedData.push({
                         ktp: value.ktpNumber,
                         name: value.Identity.name,
-                        jalur: value.Tunnel.name,
+                        jalur: tunnel.name,
 
                         aktivitas: value.scoreAktivitas,
                         datadiri: value.scoreDataDiri,                        
@@ -144,6 +145,7 @@ const Assesment = (props) => {
             }
 
         } catch (error) {
+            console.log("Error: ", error)
             message.error("Something Error")
             // setIsLoading(false);
         }
