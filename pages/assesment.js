@@ -78,15 +78,15 @@ const Assesment = (props) => {
             key: 'action',
             render: (text, record) => (
                 <span>
-                    <a onClick={(e) => onNilaiSekarang(e, record.ktp, record.tunnelId)}>Nilai Sekarang</a>
+                    <a onClick={(e) => onNilaiSekarang(e, record.ktp, record.TunnelId)}>Nilai Sekarang</a>
                 </span>
             ),
         },
     ];
 
-    const onNilaiSekarang = (e, ktpNumber, tunnelId) => {
+    const onNilaiSekarang = (e, ktpNumber, TunnelId) => {
         e.preventDefault();
-        Router.push('/detail-participant/' + ktpNumber + '/' + tunnelId)
+        Router.push('/detail-participant/' + ktpNumber + '/' + TunnelId)
     }
 
     useEffect(() => {
@@ -121,18 +121,15 @@ const Assesment = (props) => {
                 // setIsLoading(false);
             } else {
                 response.data.data.map((value, index) => {
-                    const tunnel = value.Tunnel || {}
                     fetchedData.push({
                         ktp: value.ktpNumber,
                         name: value.Identity.name,
-                        jalur: tunnel.name,
-
+                        jalur: value.Tunnel.name,
                         aktivitas: value.scoreAktivitas,
                         datadiri: value.scoreDataDiri,                        
                         lainnya: value.scoreOther,
                         project: value.scoreProject,
-
-                        tunnelId: value.tunnelId
+                        TunnelId: value.TunnelId
                     })
                 })
 

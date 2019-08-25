@@ -92,13 +92,15 @@ const ListCardRecruiter = (props) => {
         }
     }, [isToggle])
 
-    const onTriggerAssign = async (e, ktp, emailRecruiter, tunnelId) => {
+
+    const onTriggerAssign = async (e, ktp, emailRecruiter, TunnelId) => {
+
         e.preventDefault();
 
         const payload = {
             ktpNumberPeserta: ktp,
             emailRecruiter: emailRecruiter,
-            tunnelId: tunnelId
+            TunnelId: TunnelId
         }
 
         // setIsLoading(true);
@@ -132,13 +134,15 @@ const ListCardRecruiter = (props) => {
         }
     }
 
-    const onUndoAssign = async (e, ktp, emailRecruiter, tunnelId) => {
+
+    const onUndoAssign = async (e, ktp, emailRecruiter, TunnelId) => {
+
         e.preventDefault();
 
         const payload = {
             ktpNumberPeserta: ktp,
             emailRecruiter: emailRecruiter,
-            tunnelId: tunnelId
+            TunnelId: TunnelId
         }
 
         // setIsLoading(true);
@@ -172,8 +176,6 @@ const ListCardRecruiter = (props) => {
         }
     }
 
-    console.log("allParticipantAvailable: ", allParticipantAvailable)
-
     return (
         <>
             <div className="card-list-name" onClick={() => setToggle(!isToggle)}>
@@ -193,16 +195,13 @@ const ListCardRecruiter = (props) => {
                     <div className="all-peserta">
                         <h2>List Semua Peserta</h2>
                         {allParticipantAvailable.map((value, index) => {
-                                console.log("value: ", value)
-                                if (value.Identity !== null) {
-                                    const tunnel = value.Tunnel || {}
-                                    return <div key={index} className="peserta-card" onClick={(e) => onTriggerAssign(e, value.ktpNumber, props.dataRecruiter.email, value.tunnelId)}>
-                                        <div className="nama">{value.Identity.name}</div>
-                                        <div className="noKTP">{tunnel.name} | <b>{value.ktpNumber}</b></div>
-                                    </div>
-                                }
-                                return null;
+                            if (value.Identity !== null) {
+                                return <div className="peserta-card" onClick={(e) => onTriggerAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
+                                    <div className="nama">{value.Identity.name}</div>
+                                    <div className="noKTP">{value.Tunnel.name} | <b>{value.ktpNumber}</b></div>
+                                </div>
                             }
+                        }
                         )}
                     </div>
 
@@ -210,10 +209,9 @@ const ListCardRecruiter = (props) => {
                         <h4>Peserta yang ditugaskan untuk dinilai kepada {props.dataRecruiter.name}</h4>
                         {selectedParticipant.map((value, index) => {
                             if (value.Identity !== null) {
-                                const tunnel = value.Tunnel || {}
-                                return <div key={index} className="peserta-card" onClick={(e) => onUndoAssign(e, value.ktpNumber, props.dataRecruiter.email, value.tunnelId)}>
+                                return <div className="peserta-card" onClick={(e) => onUndoAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
                                     <div className="nama">{value.Identity.name}</div>
-                                    <div className="noKTP">{tunnel.name}  |<b>{value.ktpNumber}</b></div>
+                                    <div className="noKTP">{value.Tunnel.name}  |<b>{value.ktpNumber}</b></div>
                                 </div>
                             }
                         }
