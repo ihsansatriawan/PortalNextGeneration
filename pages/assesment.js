@@ -86,7 +86,7 @@ const Assesment = (props) => {
 
     const onNilaiSekarang = (e, ktpNumber, TunnelId) => {
         e.preventDefault();
-        Router.push('/detail-participant/' + ktpNumber + '/' + TunnelId)
+        Router.push(`/detail-participant?ktpNumber=${ktpNumber}&TunnelId=${TunnelId}`)
     }
 
     useEffect(() => {

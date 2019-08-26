@@ -1,7 +1,9 @@
 import React from 'react';
 import { withRouter } from 'next/router';
+import queryString from "query-string";
 import { Result, Icon, Button, Divider, Card, List, Avatar, Carousel, Table, message, Descriptions } from 'antd';
 import { fetch } from '@helper/fetch';
+import getQueryValue from '@helper/getQueryValue';
 import PenilaianCard from '../components/Recruiter/ListCardRecruiter/PenilaianCard';
 import ShowingAnswer from '../components/Recruiter/ListCardRecruiter/showingAnswer';
 
@@ -18,9 +20,10 @@ class DetailParticipant extends React.Component {
     }
 
     fetchDetailData = async () => {
+        const newQuery = queryString.parse(this.props.router.asPath.split(/\?/)[1]);
         const payload = {
-            ktpNumber: this.props.router.query.slug,
-            TunnelId: this.props.router.query.tunnel
+            ktpNumber: newQuery.ktpNumber,
+            TunnelId: newQuery.TunnelId
         }
 
         // setIsLoading(true);
@@ -59,7 +62,6 @@ class DetailParticipant extends React.Component {
     }
 
     render() {
-        console.log(this.state)
         const { router: { query } } = this.props
         return (
             <>
@@ -117,9 +119,9 @@ class DetailParticipant extends React.Component {
                     ) : null}
 
 
-                    {this.state.Summaries ? (
+                    {/* {this.state.Summaries ? (
                         <PenilaianCard scoreUpdated={this.state.Summaries ? this.state.Summaries[0] : undefined} TunnelId={query.tunnel} ktpNumber={query.slug} />
-                    ) : null}
+                    ) : null} */}
 
                 </div>
 
