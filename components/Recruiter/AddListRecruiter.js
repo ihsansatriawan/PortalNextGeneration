@@ -143,7 +143,7 @@ class AddListRecruiter extends Component {
         </div>
 
         {
-          isLoading ? <Skeleton /> : this._renderRecruiter()
+          isLoading ? <Skeleton active /> : this._renderRecruiter()
         }
 
         <style jsx>{`

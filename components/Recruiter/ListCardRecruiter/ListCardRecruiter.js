@@ -79,6 +79,7 @@ const ListCardRecruiter = (props) => {
         setLoadingAssign(false);
       } else {
         // message.success(response.data.message)
+        setLoadingAssign(false);
         setSelectedParticipant(response.data.data)
       }
 
@@ -198,7 +199,7 @@ const ListCardRecruiter = (props) => {
           <div className="all-peserta">
             <h2>List Semua Peserta</h2>
             {
-              isLoading ? <Skeleton /> : allParticipantAvailable.map((value, index) => {
+              isLoading ? <Skeleton active /> : allParticipantAvailable.map((value, index) => {
                 if (value.Identity !== null) {
                   return <div className="peserta-card" onClick={(e) => onTriggerAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
                     <div className="nama">{value.Identity.name}</div>
@@ -212,15 +213,17 @@ const ListCardRecruiter = (props) => {
 
           <div className="all-peserta">
             <h4>Peserta yang ditugaskan untuk dinilai kepada {props.dataRecruiter.name}</h4>
-            {selectedParticipant.map((value, index) => {
-              if (value.Identity !== null) {
-                return <div className="peserta-card" onClick={(e) => onUndoAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
-                  <div className="nama">{value.Identity.name}</div>
-                  <div className="noKTP">{value.Tunnel.name}  |<b>{value.ktpNumber}</b></div>
-                </div>
+            {
+              loadingAssign ? <Skeleton active /> : selectedParticipant.map((value, index) => {
+                if (value.Identity !== null) {
+                  return <div className="peserta-card" onClick={(e) => onUndoAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
+                    <div className="nama">{value.Identity.name}</div>
+                    <div className="noKTP">{value.Tunnel.name}  |<b>{value.ktpNumber}</b></div>
+                  </div>
+                }
               }
+              )
             }
-            )}
           </div>
         </div>
       ) : null}
