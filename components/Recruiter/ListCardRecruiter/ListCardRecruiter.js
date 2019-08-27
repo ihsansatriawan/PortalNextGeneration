@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { fetch } from '@helper/fetch';
 import {
   Form,
@@ -16,6 +16,7 @@ import {
   Radio,
   DatePicker,
   Upload,
+  Skeleton,
 } from "antd";
 
 
@@ -23,6 +24,7 @@ const ListCardRecruiter = (props) => {
   const [isToggle, setToggle] = useState(false);
   const [allParticipantAvailable, setAllParticipantAvailable] = useState([]);
   const [selectedParticipant, setSelectedParticipant] = useState([]);
+  const [loadingAssign, setLoadingAssign] = useState(false) 
   const [isLoading, setIsLoading] = useState(false);
 
   const fetchAllParticipantTersisa = async () => {
@@ -46,6 +48,7 @@ const ListCardRecruiter = (props) => {
         setIsLoading(false);
       } else {
         // message.success(response.data.message)
+        setIsLoading(false);
         setAllParticipantAvailable(response.data.data)
       }
 
@@ -56,7 +59,7 @@ const ListCardRecruiter = (props) => {
   }
 
   const fetchAllParticipantAssign = async () => {
-    setIsLoading(true);
+    setLoadingAssign(true);
     const { cookieLogin, refetchStep } = props;
     try {
       const response = await fetch({
@@ -73,7 +76,7 @@ const ListCardRecruiter = (props) => {
 
       if (!status) {
         message.error(response.data.message)
-        setIsLoading(false);
+        setLoadingAssign(false);
       } else {
         // message.success(response.data.message)
         setSelectedParticipant(response.data.data)
@@ -81,7 +84,7 @@ const ListCardRecruiter = (props) => {
 
     } catch (error) {
       message.error("Server Error")
-      setIsLoading(false);
+      setLoadingAssign(false);
     }
   }
 
@@ -177,7 +180,7 @@ const ListCardRecruiter = (props) => {
   }
 
   return (
-    <>
+    <Fragment>
       <div className="card-list-name" onClick={() => setToggle(!isToggle)}>
         <div className="name">
           {props.dataRecruiter.email}
@@ -194,15 +197,17 @@ const ListCardRecruiter = (props) => {
         <div className="list-peserta-wrapper">
           <div className="all-peserta">
             <h2>List Semua Peserta</h2>
-            {allParticipantAvailable.map((value, index) => {
-              if (value.Identity !== null) {
-                return <div className="peserta-card" onClick={(e) => onTriggerAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
-                  <div className="nama">{value.Identity.name}</div>
-                  <div className="noKTP">{value.Tunnel.name} | <b>{value.ktpNumber}</b></div>
-                </div>
+            {
+              isLoading ? <Skeleton /> : allParticipantAvailable.map((value, index) => {
+                if (value.Identity !== null) {
+                  return <div className="peserta-card" onClick={(e) => onTriggerAssign(e, value.ktpNumber, props.dataRecruiter.email, value.TunnelId)}>
+                    <div className="nama">{value.Identity.name}</div>
+                    <div className="noKTP">{value.Tunnel.name} | <b>{value.ktpNumber}</b></div>
+                  </div>
+                }
               }
+              )
             }
-            )}
           </div>
 
           <div className="all-peserta">
@@ -267,7 +272,7 @@ const ListCardRecruiter = (props) => {
           }
 
       `}</style>
-    </>
+    </Fragment>
   )
 }
 
