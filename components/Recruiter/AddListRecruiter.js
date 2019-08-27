@@ -15,6 +15,7 @@ import {
     Radio,
     DatePicker,
     Upload,
+    Skeleton,
 } from "antd";
 import '../../static/sass/AddListRecruiter.scss';
 import ListCardRecruiter from './ListCardRecruiter/ListCardRecruiter';
@@ -25,9 +26,9 @@ class AddListRecruiter extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
-            isLoading: false,
-            recruiters: []
+          email: '',
+          isLoading: false,
+          recruiters: []
         }
     }
 
@@ -37,6 +38,7 @@ class AddListRecruiter extends Component {
 
     fetchRecruiter = async () => {
         const { cookieLogin, refetchStep } = this.props;
+        this.setState({ isLoading: true })
         try {
             const response = await fetch({
                 url: '/recruiter/lists',
@@ -102,17 +104,31 @@ class AddListRecruiter extends Component {
         this.submitRecruiter(email);
     }
 
+    _renderRecruiter = () => {
+      const { recruiters } = this.state;
+
+      return <div className="list-recruiter-wrapper">
+        <div className="list-name-wrapper">
+          {recruiters.map((value, index) => (
+              <ListCardRecruiter dataRecruiter={value} key={index} />
+          ))}
+        </div>
+      </div>
+    }
+
+
     render() {
-        const formItemLayout = {
-            labelCol: {
-                xs: { span: 24 },
-                sm: { span: 3 }
-            },
-            wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 20 }
-            }
-        };
+      const { isLoading } = this.state
+      const formItemLayout = {
+          labelCol: {
+              xs: { span: 24 },
+              sm: { span: 3 }
+          },
+          wrapperCol: {
+              xs: { span: 24 },
+              sm: { span: 20 }
+          }
+      };
 
         return (
             <>
@@ -125,15 +141,10 @@ class AddListRecruiter extends Component {
                         </div>
                     </form>
                 </div>
-
-                <div className="list-recruiter-wrapper">
-                    <div className="list-name-wrapper">
-                        {this.state.recruiters.map((value, index) => (
-                            <ListCardRecruiter dataRecruiter={value} key={index} />
-                        ))}
-                    </div>
-                </div>
-
+                
+                {
+                  isLoading ? <Skeleton /> : this._renderRecruiter()
+                }
 
                 <style jsx>{`
                     .add-list-recruiter-wrapper{                       
