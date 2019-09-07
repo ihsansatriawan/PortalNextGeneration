@@ -186,7 +186,7 @@ export default [
   },
   {
     "Nama Capes": "Mustika Sari",
-    "E-mail": "mustika97.ms@gmail.com",
+    "E-mail": "mustikasari0110@gmail.com",
     "Jalur": "NEXT - GENERATION"
   },
   {
@@ -791,7 +791,7 @@ export default [
   },
   {
     "Nama Capes": "Rahmawati",
-    "E-mail": "rahmarahmawati20@gmail.com",
+    "E-mail": "nyrahma75@gmail.com",
     "Jalur": "NEXT - GENERATION"
   },
   {
