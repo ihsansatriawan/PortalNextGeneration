@@ -10,7 +10,7 @@ import {
   Button,
 } from 'antd';
 import { fetch } from '@helper/fetch';
-import { KTP, DataDiri, ChooseTunnel, Question, Thank } from './Dynamic';
+import { KTP, DataDiri, ChooseTunnel, Question, Thank, Pengumuman } from './Dynamic';
 const { Step } = Steps;
 
 class ContainerFIM21 extends Component {
@@ -146,23 +146,25 @@ class ContainerFIM21 extends Component {
       return <Skeleton active />
     }
 
-    if (step === -1) {
-      return <Skeleton active />
-    } else if (step === 0 || step === null) {
-      return <KTP refetchStep={this.refetchData} />
-    } else if (step === 1) {
-      return <KTP refetchStep={this.refetchData} />
-    } else if (step === 2) {
-      return <DataDiri refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
-    } else if (step === 3) {
-      return <ChooseTunnel refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
-    } else if (step === 4) {
-      return <Question refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
-    } else if (step === 5) {
-      return <Thank refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} onChangeStep={this.onChangeStep} />
-    }
+    // if (step === -1) {
+    //   return <Skeleton active />
+    // } else if (step === 0 || step === null) {
+    //   return <KTP refetchStep={this.refetchData} />
+    // } else if (step === 1) {
+    //   return <KTP refetchStep={this.refetchData} />
+    // } else if (step === 2) {
+    //   return <DataDiri refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
+    // } else if (step === 3) {
+    //   return <ChooseTunnel refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
+    // } else if (step === 4) {
+    //   return <Question refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
+    // } else if (step === 5) {
+    //   return <Thank refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} onChangeStep={this.onChangeStep} />
+    // }
 
-    return <Empty />
+    // return <Empty />
+
+    return <Pengumuman dataUser={dataUser} />
   }
 
   render() {
