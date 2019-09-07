@@ -146,6 +146,10 @@ class ContainerFIM21 extends Component {
       return <Skeleton active />
     }
 
+    if (step === -1) {
+      return <Skeleton active />
+    }
+
     // if (step === -1) {
     //   return <Skeleton active />
     // } else if (step === 0 || step === null) {
