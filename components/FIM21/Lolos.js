@@ -2298,5 +2298,55 @@ export default [
     "Nama Capes": "Deni Sulistiyanto",
     "E-mail": "denisulistiyanto77@gmail.com",
     "Jalur": "MILITARY"
+  },
+  {
+    "Nama Capes": "Dinda Realita Hawani",
+    "E-mail": "dindarealitahawani19@gmail.com",
+    "Jalur": "NEXT - GENERATION"
+  },
+  {
+    "Nama Capes": "Dany Ghufron",
+    "E-mail": "danyghufron@gmail.com",
+    "Jalur": "NEXT - GENERATION"
+  },
+  {
+    "Nama Capes": "Iqbal Adib Nu'man",
+    "E-mail": "iqbaladbn@gmail.com",
+    "Jalur": "NEXT - GENERATION"
+  },
+  {
+    "Nama Capes": "Dwi Fitrianingsih",
+    "E-mail": "dwi.ftry@gmail.com",
+    "Jalur": "NEXT - GENERATION"
+  },
+  {
+    "Nama Capes": "Ravena Lailatur Rohmah",
+    "E-mail": "lailatur.ravena@gmail.com",
+    "Jalur": "NEXT - GENERATION"
+  },
+  {
+    "Nama Capes": "Nisrina Qotrunnada",
+    "E-mail": "nisrina12003@mail.unpad.ac.id",
+    "Jalur": "NEXT - GENERATION"
+  },
+  {
+    "Nama Capes": "Yanto Wibowo",
+    "E-mail": "yantogembsho12345@gmail.com",
+    "Jalur": "INFLUENCER"
+  },
+  {
+    "Nama Capes": "81269006261",
+    "E-mail": "rudisulaiman40@gmail.com",
+    "Jalur": "INFLUENCER"
+  },
+  {
+    "Nama Capes": "Harum Bunga Melati",
+    "E-mail": "harumbungamelati28@gmail.com",
+    "Jalur": "INFLUENCER"
+  },
+  {
+    "Nama Capes": "Zhavira Intani Zakwan",
+    "E-mail": "zhavirazakk@gmail.com",
+    "Jalur": "INFLUENCER"
   }
 ]
