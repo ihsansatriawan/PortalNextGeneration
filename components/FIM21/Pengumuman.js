@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import DataLolos from './Lolos';
+import DataLolosFix from './FixLolos';
 
 class Pengumuman extends Component {
 
@@ -7,10 +8,7 @@ class Pengumuman extends Component {
     const { dataUser } = this.props;
 
     return (<div style={{ fontWeight: 'bold' }}>
-      <div>Name: {dataUser.Identity.name}</div>
-
-      <div>Mohon maaf, kamu belum bisa melanjutkan tahap seleksi Pelatnas FIM 21.</div>
-      <div>Tetap semangat dan kami tunggu kamu di pelatnas FIM selanjutnya!</div>
+      <p>Dear {dataUser.Identity.name}, aplikasi pendaftaranmu sudah kami terima, namun mohon maaf kali ini kamu belum dapat kami terima sebagai peserta Pelatihan Forum Indonesia angkatan 21. Semoga di pelatihan berikutnya kita akan bertemu yah, kalau kata Pak Elmir: "Jangan menyerah sebelum ditolak 21 kali!", tetap semangat teman!</p>
     </div>)
   }
 
@@ -18,14 +16,7 @@ class Pengumuman extends Component {
     const { dataUser } = this.props;
 
     return (<div style={{ fontWeight: 'bold' }}>
-      <p>Name: {dataUser.Identity.name}</p>
-      {
-        jalurs.map((jalur, index) => {
-          return <div>Jalur {index+1}: {jalur.Jalur}</div>
-        })
-      }
-      <p style={{ marginTop: '10px' }} >Selamat, kamu dinyatakan lolos seleksi tahap 1 Pelatnas FIM 21 dan berkesempatan untuk melanjutkan proses ke tahap selanjutnya (interview).</p>
-      <p>Seleksi tahap kedua akan dilangsungkan selama tanggal 7-13 September 2019. Panitia akan segera menghubungi kamu untuk penyesuaian jadwal interview. Jadi pastikan ponselmu selalu aktif dan tetap semangat. Semoga berhasil!</p>
+      <p>Dear {dataUser.Identity.name}, SELAMAT! Kamu terima sebagai peserta Pelatihan Forum Indonesia angkatan 21. Silahkan konfirmasi ke CP: 08xxxxx </p>
     </div>)
   }
 
@@ -33,10 +24,10 @@ class Pengumuman extends Component {
     const { dataUser } = this.props
 
     const dataFiltered = DataLolos.filter((data) => {
-      if (data['E-mail'] !== '0') {
-        return data['E-mail'] === dataUser.Identity.email
+      if (data['No. KTP'] !== '0') {
+        return data['No. KTP'] === dataUser.Identity.ktpNumber
       } else {
-        return data['Nama Capes'] === dataUser.Identity.name
+        return data['E-mail'] === dataUser.Identity.email
       }
     })
 
