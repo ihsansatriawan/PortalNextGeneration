@@ -1,8 +1,17 @@
 import React, { Component, Fragment } from "react";
+import dayjs from 'dayjs';
 import DataLolos from './Lolos';
 import DataLolosFix from './FixLolos';
 
 class Pengumuman extends Component {
+
+
+  get isLaunch() {
+    const today = dayjs(new Date());
+    const launchTime = dayjs.unix(1568811600)
+
+    return launchTime.unix() <= today.unix()
+  }
 
   renderTidakLolos = () => {
     const { dataUser } = this.props;
@@ -38,6 +47,22 @@ class Pengumuman extends Component {
     </div>)
   }
 
+  renderOpenAnnounce = () => {
+    const { dataUser } = this.props
+
+    const dataFiltered = DataLolosFix.filter((data) => {
+      if (data['No. KTP'] !== '0') {
+        return data['No. KTP'] === dataUser.Identity.ktpNumber
+      } else {
+        return data['E-mail'] === dataUser.Identity.email
+      }
+    })
+
+    const isLolos = dataFiltered.length > 0;
+
+    return isLolos ? this.renderLolos(dataFiltered) : this.renderTidakLolos()
+  }
+
   render() {
     const { dataUser } = this.props
 
@@ -53,9 +78,7 @@ class Pengumuman extends Component {
 
     return (<Fragment>
       <h1>Pengumuman</h1>
-      {
-        isLolos ? this.renderLolos(dataFiltered) : this.renderTidakLolos()
-      }
+      {this.isLaunch ? this.renderOpenAnnounce() : <h1>Sedang menyiapkan kejutan, silahkan kembali lagi pukul 20.00 WIB ya :)</h1>}
     </Fragment>)
   }
 }
