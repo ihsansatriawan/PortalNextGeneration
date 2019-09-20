@@ -586,12 +586,12 @@ export default [
   },
   {
     "Nama Lengkap": "Yuliani Rafidah",
-    "No. KTP": "9171036907980004",
+    "No. KTP": "9171036907980003",
     "E-mail": "rafidahyuliani@gmail.com"
   },
   {
     "Nama Lengkap": "Zona Wita Citra",
-    "No. KTP": "9171024107980016",
+    "No. KTP": "9171024107980017",
     "E-mail": "zonawita@gmail.com"
   },
   {
