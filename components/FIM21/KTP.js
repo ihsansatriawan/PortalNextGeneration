@@ -13,6 +13,7 @@ import { fetch } from '@helper/fetch';
 import { getCookie } from '@Cookie';
 import CONSTANT from '@constant';
 import { sendPageview } from '@tracker';
+import "./KTP.css";
 
 const { confirm } = Modal;
 
@@ -29,7 +30,7 @@ function beforeUpload(file) {
 }
 
 class KTP extends Component {
-  
+
   state = {
     noKtp: '',
     urlKtp: '',
@@ -88,7 +89,7 @@ class KTP extends Component {
     const { urlKtp } = this.state;
 
     const uploadButton = (
-      <div>
+      <div className="upload-render">
         <Icon type={this.state.loading ? 'loading' : 'plus'} />
         <div className="ant-upload-text">Upload</div>
       </div>
@@ -168,8 +169,8 @@ class KTP extends Component {
 
   showConfirm = () => {
     confirm({
-      title: 'Kamu yakin akan mengirimkan data ini?',
-      content: 'Sekali kamu kirimkan, tidak akan bisa diubah!',
+      title: 'Pastikan data Kamu Benar. Nomor KTP Kamu '+this.state.noKtp+' Kamu yakin akan mengirimkan data ini?',
+      content: 'Selanjutnya data nomor KTP tidak akan bisa diubah!',
       onOk: () => {
         this.handleSubmit()
       },
@@ -180,7 +181,7 @@ class KTP extends Component {
   }
 
   get isDisableButton() {
-    const { noKtp, urlKtp } = this.state; 
+    const { noKtp, urlKtp } = this.state;
 
     return Boolean(noKtp) && Boolean(urlKtp)
   }
@@ -200,16 +201,24 @@ class KTP extends Component {
   }
 
   render() {
-    const { noKtp } = this.state; 
+    const { noKtp } = this.state;
 
     return (<Fragment>
       <Divider>Nomor KTP</Divider>
-      {this.renderInput(noKtp, (e) => {this.changeState('noKtp', e.target.value)})}
-      <Divider>Unggah Foto KTP</Divider>
-      {this.renderUpload()}
-      <Button {...this.buttonSubmitProps}>
-        Submit
+      {this.renderInput(noKtp, (e) => {
+        const re = /^[0-9\b]+$/;
+        if (re.test(e.target.value) || e.target.value === '') {
+          this.changeState('noKtp', e.target.value)
+        }
+      })}
+
+      <div className="upload-ktp-file-wrapper">
+        <Divider>Unggah Foto KTP</Divider>
+        {this.renderUpload()}
+        <Button {...this.buttonSubmitProps}>
+          Submit
       </Button>
+      </div>
     </Fragment>)
   }
 }

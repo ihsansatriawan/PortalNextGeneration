@@ -1,0 +1,23 @@
+.tunnel-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.you-choose{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.you-choose h1{
+    font-size: 30px;
+}
+
+.ant-card-body{
+    min-height: 200px;
+}
+
+.ant-row{
+    display: flex;
+    justify-content: center;
+}

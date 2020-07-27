@@ -9,6 +9,8 @@ import Router from 'next/router';
 import { notification } from 'antd';
 import { logout } from '@helper/googleSession';
 import { sendTracker } from '@tracker';
+import "./login.css";
+
 class Login extends React.Component {
 
   state = {
@@ -22,7 +24,7 @@ class Login extends React.Component {
   };
 
   redirectAfterSuccess = () => {
-    Router.push('/fim21')
+    Router.push('/fim')
   }
 
   redirectAfterSuccessLogout = () => {
@@ -31,7 +33,7 @@ class Login extends React.Component {
   }
 
   onSuccessLogin = async (res) => {
-    
+
     const { profileObj, googleId, imageUrl, givenName, familyName } = res;
 
     try {
@@ -48,13 +50,13 @@ class Login extends React.Component {
           lastName: profileObj.familyName
         },
       })
-  
+
       setCookie(CONSTANT.TOKEN_NAME, response.data.token)
       this.openNotificationWithIcon('success')
       this.redirectAfterSuccess()
       this.onToggleLoader();
 
-      sendTracker({ 
+      sendTracker({
         eventCategory: 'Login',
         eventAction: 'ResponseAPI',
         eventLabel: 'success',
@@ -64,7 +66,7 @@ class Login extends React.Component {
     } catch (error) {
       this.onToggleLoader();
       console.log("error: ", error)
-      sendTracker({ 
+      sendTracker({
         eventCategory: 'Login',
         eventAction: 'ResponseAPI',
         eventLabel: 'failed',
@@ -78,14 +80,14 @@ class Login extends React.Component {
     this.onToggleLoader();
     if (response.accessToken) {
       this.onSuccessLogin(response)
-      sendTracker({ 
+      sendTracker({
         eventCategory: 'Login',
         eventAction: 'ResponseGoogle',
         eventLabel: 'success',
         dimension1: JSON.stringify(response)
       })
     } else {
-      sendTracker({ 
+      sendTracker({
         eventCategory: 'Login',
         eventAction: 'ResponseGoogle',
         eventLabel: 'failed',
@@ -94,7 +96,7 @@ class Login extends React.Component {
       this.onToggleLoader();
       console.log("GAGAL GOOGLE")
     }
-    
+
   }
 
   onToggleLoader = () => {
@@ -106,27 +108,33 @@ class Login extends React.Component {
     const { cookieLogin } = this.props;
 
     return <React.Fragment>
-      <Spin spinning={isLoading} tip="Loading..." >
-        {
-          cookieLogin ? 
-          <Button onClick={() => {
-            logout({
-              onLogoutSuccess: () => { this.redirectAfterSuccessLogout() }
-            })
-          }} type="primary" key="console">
-            Logout
+      <div className="login-wrapper">
+
+        <h2>Log In / Sign Up</h2>
+        <div className="button-wrapper">
+          <Spin spinning={isLoading} tip="Loading..." >
+            {
+              cookieLogin ?
+                <Button onClick={() => {
+                  logout({
+                    onLogoutSuccess: () => { this.redirectAfterSuccessLogout() }
+                  })
+                }} type="primary" key="console">
+                  Logout
           </Button>
-          :
-          <GoogleLogin
-            clientId={process.env.GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-            cookiePolicy={'single_host_origin'}
-            uxMode="popup"
-          />
-        }
-      </Spin>
+                :
+                <GoogleLogin
+                  clientId={process.env.GOOGLE_CLIENT_ID}
+                  buttonText="Login"
+                  onSuccess={this.responseGoogle}
+                  onFailure={this.responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                  uxMode="popup"
+                />
+            }
+          </Spin>
+        </div>
+      </div>
     </React.Fragment>;
   }
 }

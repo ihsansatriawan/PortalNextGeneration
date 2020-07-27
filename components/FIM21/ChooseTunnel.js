@@ -2,12 +2,13 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { BackTop, Divider, Skeleton, Empty, message, List, Card, Button } from 'antd';
 import { fetch } from '@helper/fetch';
 import { sendPageview } from '@tracker';
+import "./ChooseTunnel.css";
 
 function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object
 }
 
-function Content({loading, tunnels, setTunnel, tunnel}) {
+function Content({ loading, tunnels, setTunnel, tunnel }) {
 
   const fallbackImage = "https://res.cloudinary.com/fim-indonesia/image/upload/v1563240716/fallback-jalur.jpg"
 
@@ -16,7 +17,7 @@ function Content({loading, tunnels, setTunnel, tunnel}) {
   } else if (!tunnels || tunnels.length === 0) {
     return <Empty />
   } else {
-    return <List
+    return <List      
       grid={{
         gutter: 16,
         xs: 1,
@@ -30,7 +31,7 @@ function Content({loading, tunnels, setTunnel, tunnel}) {
       renderItem={(item) => {
         const styleObj = {
           ...item.id === tunnel.id && {
-            borderColor: 'red'
+            borderColor: 'red',
           }
         }
 
@@ -38,7 +39,9 @@ function Content({loading, tunnels, setTunnel, tunnel}) {
           <Card style={styleObj} cover={<img alt="example" src={item.urlPicture || fallbackImage} />} hoverable onClick={() => {
             message.info(`Kamu memilih jalur ${item.name}`)
             setTunnel(item)
-          }} title={item.name}>{item.description || 'Wait Input'}</Card>
+            window.scrollTo(0, 0)
+          }} title={item.name}>{item.description || 'Wait Input'}
+          </Card>
         </List.Item>
       }}
     />
@@ -66,7 +69,7 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
             'Authorization': `Bearer ${cookieLogin}`
           },
         })
-  
+
         const status = (response.data.status || false)
 
         if (!status) {
@@ -112,7 +115,7 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
             TunnelId: tunnel.id
           }
         })
-  
+
         const status = (response.data.status || false)
 
         if (!status) {
@@ -126,7 +129,7 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
       } catch (error) {
         setLoadingButton(false)
       }
-      
+
       // setTimeout(() => {
       //   setLoadingButton(false)
       // }, 3000)
@@ -143,13 +146,22 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
   }
 
   return (<Fragment>
-    <Button {...buttonSubmitProps()} >
-      Submit
+
+    {!isEmptyObject(tunnel) && (
+      <div className="you-choose">
+        <Divider />
+    Pilihan mu:
+        <h1>{tunnel.name}</h1>
+        <Button {...buttonSubmitProps()} >
+          Submit
     </Button>
-    {!isEmptyObject(tunnel) && <Divider>Pilihan mu: {tunnel.name}</Divider>}
+      </div>)}
     <Divider>Tentukan Pilihan mu</Divider>
-    <Content tunnel={tunnel} setTunnel={setTunnel} loading={loading} tunnels={tunnels}  />
+    <div className="tunnel-wrapper">
+      <Content tunnel={tunnel} setTunnel={setTunnel} loading={loading} tunnels={tunnels} />
+    </div>
     <BackTop />
+
   </Fragment>)
 }
 
