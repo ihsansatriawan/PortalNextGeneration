@@ -31,6 +31,8 @@ export const withUser = async ctx => {
     return {}
   }
 
+  console.log("HALAAAAA")
+
   try {
     const response = await fetch({
       url: '/auth/get-profile',
@@ -46,7 +48,7 @@ export const withUser = async ctx => {
       redirectForbidden()
       return {}
     }
-
+    
     console.log("response profile: ", response.data.data)
 
     return {

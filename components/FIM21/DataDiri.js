@@ -69,6 +69,14 @@ class RegistrationForm extends React.Component {
         headline: Identity.headline,
         otherReligion: Identity.otherReligion,
         bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
+        occupation: Identity.occupation,
+        instagram: Identity.instagram,
+        twitter: Identity.twitter,
+        facebook: Identity.facebook,
+        website: Identity.website,
+        reference_by: Identity.reference_by,
+        video_editing: Identity.video_editing
+        
       })
     }
 
@@ -86,7 +94,33 @@ class RegistrationForm extends React.Component {
   handleOnSubmit = async (values) => {
     const { cookieLogin, refetchStep } = this.props;
     const { urlKtp } = this.state;
-    const { otherReligion, bloodGroup, headline, expertise, emergencyPhone, hoby, gender, provinceAddress, cityAddress, address, name, phone, prefix, religion, bornDate, bornPlace, institution } = values
+    const {
+      otherReligion,
+      bloodGroup,
+      headline,
+      expertise,
+      emergencyPhone,
+      hoby,
+      gender,
+      provinceAddress,
+      cityAddress,
+      address,
+      name,
+      phone,
+      prefix,
+      religion,
+      bornDate,
+      bornPlace,
+      institution,
+
+      occupation,
+      instagram,
+      twitter,
+      facebook,
+      website,
+      reference_by,
+      video_editing
+    } = values
 
     this.setState({ isLoadingButton: true })
 
@@ -114,6 +148,13 @@ class RegistrationForm extends React.Component {
         expertise: expertise,
         institution: institution,
         otherReligion: otherReligion,
+        occupation: occupation,
+        instagram: instagram,
+        twitter: twitter,
+        facebook: facebook,
+        website: website,
+        reference_by: reference_by,
+        video_editing: video_editing,
 
         // photoUrl: urlKtp,
         // name: name,
@@ -231,6 +272,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
+    
     const { autoCompleteResult, isLoadingButton } = this.state;
 
     const formItemLayout = {
@@ -309,7 +351,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input placeholder="nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789" />)}
         </Form.Item>
-        <Form.Item label="Keahlian">
+        <Form.Item label="Sertifikasi Keahlian (lisensi)">
           {getFieldDecorator("expertise", {
             rules: [
               { required: true, message: "Isi Keahlian Anda!" }
@@ -423,6 +465,73 @@ class RegistrationForm extends React.Component {
             </AutoComplete>
           )}
           </Form.Item> */}
+
+
+        <Form.Item label="Profesi / Jabatan">
+          {getFieldDecorator("occupation", {
+            rules: [
+              { required: true, message: "Tolong isi Profesi jabatan / aktivitas Anda saat ini " }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Akun Instagram">
+          {getFieldDecorator("instagram", {
+            rules: [
+              { required: true, message: "Jika anda tidak memiliki sosial media apapun silahkan ketik alasan Anda di sini" }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Akun Twitter">
+          {getFieldDecorator("twitter", {
+            rules: [
+              { required: false, message: null }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Link Facebook">
+          {getFieldDecorator("facebook", {
+            rules: [
+              { required: false, message: null }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Website">
+          {getFieldDecorator("website", {
+            rules: [
+              { required: false, message: null }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Referensi alumni FIM ">
+          {getFieldDecorator("reference_by", {
+            rules: [
+              { required: true, message: "Silahkan tuliskan Nama, Nomor HP, Angkatan anggota FIM yang merekomendasikan" }
+            ]
+          })(<Input placeholder="Tuliskan (Nama, Nomor HP, dan Angkatan)" />)}
+        </Form.Item>
+
+        <Form.Item label="Bisa Video Editing ?">
+          {getFieldDecorator("video_editing", {
+            rules: [
+              { required: true, message: "Pilih Golongan Darah" }
+            ]
+          })(
+            <Select>
+              <Option value="SANGAT MAHIR">SANGAT MAHIR</Option>
+              <Option value="MAHIR">MAHIR</Option>
+              <Option value="BISA">BISA </Option>
+              <Option value="TIDAK BISA">TIDAK BISA</Option>
+            </Select>
+          )}
+        </Form.Item>
+
+
+
         <Form.Item {...tailFormItemLayout}>
           <Button loading={isLoadingButton} type="primary" htmlType="submit">
             Submit

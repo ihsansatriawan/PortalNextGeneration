@@ -8,10 +8,13 @@ import {
   Steps,
   Result,
   Button,
+  message
 } from 'antd';
 import { fetch } from '@helper/fetch';
 import { KTP, DataDiri, ChooseTunnel, Question, Thank, Pengumuman } from './Dynamic';
 const { Step } = Steps;
+import { logout } from '@helper/googleSession';
+
 
 class ContainerFIM21 extends Component {
 
@@ -31,6 +34,11 @@ class ContainerFIM21 extends Component {
       message
     });
   };
+
+  redirectAfterSuccessLogout = () => {
+    message.success('Berhasil Logout')
+    Router.push('/')
+  }
 
   onChangeStep = (index) => {
     const { stepReal } = this.state;
@@ -82,7 +90,7 @@ class ContainerFIM21 extends Component {
 
     } catch (error) {
       console.log("error: ", error);
-      
+
       this.setState({ step: -2 })
     }
   }
@@ -100,9 +108,11 @@ class ContainerFIM21 extends Component {
           'Authorization': `Bearer ${cookieLogin}`
         },
       })
-  
+
+
+
       const status = (response.data.status || false)
-  
+
       if (!status) {
         this.setState({
           dataUser: {},
@@ -115,8 +125,13 @@ class ContainerFIM21 extends Component {
       })
 
       this.toggleLoading(false)
-  
+
     } catch (error) {
+      // Jika error auto logout
+      logout({
+        onLogoutSuccess: () => { this.redirectAfterSuccessLogout() }
+      })
+
       console.log("error: ", error)
       this.setState({
         dataUser: {},

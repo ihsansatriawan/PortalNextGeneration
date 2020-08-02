@@ -17,7 +17,7 @@ function Content({ loading, tunnels, setTunnel, tunnel }) {
   } else if (!tunnels || tunnels.length === 0) {
     return <Empty />
   } else {
-    return <List      
+    return <List
       grid={{
         gutter: 16,
         xs: 1,
@@ -150,12 +150,11 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
     {!isEmptyObject(tunnel) && (
       <div className="you-choose">
         <Divider />
-    Pilihan mu:
+        Pilihan mu:
         <h1>{tunnel.name}</h1>
-        <Button {...buttonSubmitProps()} >
-          Submit
-    </Button>
-      </div>)}
+        <Button {...buttonSubmitProps()} >Submit</Button>
+      </div>
+    )}
     <Divider>Tentukan Pilihan mu</Divider>
     <div className="tunnel-wrapper">
       <Content tunnel={tunnel} setTunnel={setTunnel} loading={loading} tunnels={tunnels} />
