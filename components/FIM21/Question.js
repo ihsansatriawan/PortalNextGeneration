@@ -208,10 +208,10 @@ class Question extends Component {
 
   }
 
-  handleChange = (event, id, header) => {
+  handleChange = (event, id, header, conditionalitem) => {
 
-    let yangdiketik = event;
-    if (event.target !== undefined) {
+    let yangdiketik;
+    if (event.target !== undefined && conditionalitem === undefined) {
       event.preventDefault()
       yangdiketik = event.target.value;
     } else {
@@ -241,14 +241,37 @@ class Question extends Component {
     if (isExistQuestion) {
       newArray.map((value, index) => {
         if (value.QuestionId === id) {
+
+
+          let conditionalvalue;
+          let yangdiketik2;
+          if (conditionalitem) {
+            yangdiketik2 = event.target.value
+            conditionalvalue = {
+              ...value.answer,
+              // ...[header[0]],
+              [conditionalitem]: yangdiketik2
+            }
+          } else {
+            conditionalvalue = {
+              // ...value.answer,
+              [header[0]]: yangdiketik,
+            }
+          }
+
+
+
           // update answer in specific index
           const newJawaban = {
             QuestionId: id,
             answer: {
-              ...value.answer,
-              [header[0]]: yangdiketik
-            }
+              ...conditionalvalue
+            },
+
+
           }
+
+          console.log(newJawaban)
 
           newArray.splice(index, 1, newJawaban)
 
@@ -268,31 +291,6 @@ class Question extends Component {
       })
     }
 
-
-
-
-
-    // console.log(newArray)
-
-
-
-
-
-    // const newAnswer = answers.map(object => {
-    //   if (object.QuestionId === id) {
-    //     return {
-    //       ...object,
-    //       answer: {
-    //         ...object.answer,
-    //         [header[0]]: value
-    //       }
-    //     }
-    //   }
-
-    //   return object
-    // })
-
-    // console.log(header)
 
     this.setState({
       answers: newArray
@@ -381,7 +379,7 @@ class Question extends Component {
                         // saat ini hanya mendukung tipe text saja, kedepan bisa pengembangan per type field
                         if (findAnswer !== undefined && optionitem.value === findAnswer.answer[q[0]]) {
                           const arrayNestedConditionalSelect = Object.entries(optionitem.conditionalnest);
-                          conditionalnest = <Input size="large" onChange={(e) => { this.handleChange(e, question.id, q) }} placeholder={arrayNestedConditionalSelect[0][1].placeholder}></Input>
+                          conditionalnest = <Input size="large" onChange={(e) => { this.handleChange(e, question.id, q, optionitem.value) }} placeholder={arrayNestedConditionalSelect[0][1].placeholder}></Input>
                         }
                       }
                       return <Option value={optionitem.value} key={index}>{optionitem.label}</Option>
