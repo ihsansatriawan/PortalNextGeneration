@@ -358,7 +358,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input />)}
         </Form.Item>
-        <Form.Item label="Nomor Telpon">
+        <Form.Item label="Nomor HP">
           {getFieldDecorator("phone", {
             rules: [
               { required: true, message: "Please input your phone number!" }
@@ -521,9 +521,7 @@ class RegistrationForm extends React.Component {
               { required: true, message: "Pilih Golongan Darah" }
             ]
           })(
-            <Select>
-              <Option value="SANGAT MAHIR">SANGAT MAHIR</Option>
-              <Option value="MAHIR">MAHIR</Option>
+            <Select>            
               <Option value="BISA">BISA </Option>
               <Option value="TIDAK BISA">TIDAK BISA</Option>
             </Select>

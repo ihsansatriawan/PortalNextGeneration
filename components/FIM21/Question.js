@@ -7,7 +7,8 @@ import {
   Modal,
   Divider,
   DatePicker,
-  InputNumber
+  InputNumber,
+  Select
 } from 'antd';
 import { fetch } from '@helper/fetch';
 import { object } from 'prop-types';
@@ -16,6 +17,7 @@ import { sendPageview } from '@tracker';
 import "./Question.css";
 import moment from 'moment';
 
+const { Option } = Select;
 const { confirm } = Modal;
 
 class Question extends Component {
@@ -317,7 +319,7 @@ class Question extends Component {
         <div>
           {entriesQ.map((q, idx) => {
             const pertanyaanHeader = q[0];
-            const type = q[1];
+            const type = typeof (q[1]) == "object" ? q[1].type : q[1];
 
             let inputvar = <Input
               // value={findAnswer.answer[q[0]]} 
@@ -326,6 +328,7 @@ class Question extends Component {
 
             const { RangePicker } = DatePicker;
             const { TextArea } = Input;
+            let conditionalnest = null;
 
             switch (type) {
               case "text":
@@ -336,7 +339,7 @@ class Question extends Component {
                 break;
               case "date":
                 inputvar = <DatePicker size="large"
-                  value={findAnswer ? moment(findAnswer.answer[q[0]]) : null} 
+                  value={findAnswer ? moment(findAnswer.answer[q[0]]) : null}
                   format={dateFormatList}
                   onChange={(e) => { this.handleChange(e, question.id, q) }}
                 />
@@ -344,7 +347,7 @@ class Question extends Component {
                 break;
               case "daterange":
                 inputvar = <RangePicker size="large"
-                  value={findAnswer && [moment(findAnswer.answer[q[0]][0]),moment(findAnswer.answer[q[0]][1])]} 
+                  value={findAnswer && [moment(findAnswer.answer[q[0]][0]), moment(findAnswer.answer[q[0]][1])]}
                   format={dateFormatList}
                   onChange={(e) => { this.handleChange(e, question.id, q) }}
                 />
@@ -362,6 +365,32 @@ class Question extends Component {
                   value={findAnswer && findAnswer.answer[q[0]]}
                   onChange={(e) => { this.handleChange(e, question.id, q) }}
                 />
+                break;
+              case "select":
+
+                inputvar = <>
+                  <Select size="large" style={{ width: '100%' }}
+                    placeholder={q[1].placeholder}
+                    value={findAnswer && findAnswer.answer[q[0]]}
+                    onChange={(e) => { this.handleChange(e, question.id, q) }}
+                  >
+                    {q[1].options.map((optionitem, index) => {
+                      const nilainya = findAnswer && findAnswer.answer[q[0]] && findAnswer.answer[q[0]];
+                      if (optionitem.conditionalnest !== null) {
+
+                        // saat ini hanya mendukung tipe text saja, kedepan bisa pengembangan per type field
+                        if (findAnswer !== undefined && optionitem.value === findAnswer.answer[q[0]]) {
+                          const arrayNestedConditionalSelect = Object.entries(optionitem.conditionalnest);
+                          conditionalnest = <Input size="large" onChange={(e) => { this.handleChange(e, question.id, q) }} placeholder={arrayNestedConditionalSelect[0][1].placeholder}></Input>
+                        }
+                      }
+                      return <Option value={optionitem.value} key={index}>{optionitem.label}</Option>
+                    }
+                    )}
+                  </Select>
+                  {conditionalnest}
+                </>
+
                 break;
               default:
                 break;
