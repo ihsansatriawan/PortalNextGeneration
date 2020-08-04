@@ -245,16 +245,16 @@ class Question extends Component {
 
           let conditionalvalue;
           let yangdiketik2;
-          if (conditionalitem) {
+          if (conditionalitem) {            
             yangdiketik2 = event.target.value
             conditionalvalue = {
               ...value.answer,
               // ...[header[0]],
               [conditionalitem]: yangdiketik2
             }
-          } else {
+          } else {            
             conditionalvalue = {
-              // ...value.answer,
+              ...value.answer,
               [header[0]]: yangdiketik,
             }
           }
