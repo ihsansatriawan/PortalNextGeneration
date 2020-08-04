@@ -44,7 +44,9 @@ function Content({ loading, tunnels, setTunnel, tunnel }) {
       renderItem={(item) => {
         const styleObj = {
           ...item.id === tunnel.id && {
-            borderColor: 'red',
+            border: '2px solid red',
+            borderRadius: '11px',
+            padding: '11px'
           }
         }
 
@@ -68,7 +70,7 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
   const [tunnel, setTunnel] = useState({})
   const [regionals, setRegionals] = useState([])
   const [subRegionals, setSubRegionals] = useState([])
-  const [regional, setRegional] = useState({})
+  const [regional, setRegional] = useState(null)
 
   useEffect(() => {
     sendPageview({ pathName: '/chooseTunnel' })
@@ -137,10 +139,26 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
         setRegionals(responseData)
         setLoading(false)
 
-        // if (dataUser.RegionalId) {
-        //   const findData = responseData.find(item => item.id === dataUser.TunnelId)
-        //   findData && setTunnel(findData)
-        // }
+        if (dataUser.RegionalId) {
+
+          const listAllRegional = []
+          responseData.map((value) => {
+            value.data.map((subdata) => {
+              listAllRegional.push(subdata)
+            })
+          })
+
+          const findRegional = listAllRegional.find((item)=> item.id === dataUser.RegionalId)
+          findRegional && setRegional({
+            province:findRegional.province,
+            RegionalId:findRegional.id
+          })
+
+          //set sub regional
+          const findSubRegional = findRegional && listAllRegional.filter((it)=> it.province === findRegional.province);
+          findSubRegional && setSubRegionals(findSubRegional)        
+        }
+
 
       }
 
@@ -154,7 +172,11 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
   const submitEvent = async () => {
     if (isEmptyObject(tunnel)) {
       message.error("Pilih Jalur dahulu!")
-    } else {
+    }
+    else if (regional == null) {
+      message.error("Pilih Regional terlebih dahulu")
+    }
+    else {
       setLoadingButton(true)
 
       try {
@@ -165,7 +187,8 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
             'Authorization': `Bearer ${cookieLogin}`
           },
           data: {
-            TunnelId: tunnel.id
+            TunnelId: tunnel.id,
+            RegionalId: regional.RegionalId
           }
         })
 
@@ -206,12 +229,18 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
     const listRegional = nameReg[0].data;
     setSubRegionals(listRegional)
 
+    setRegional({
+      province: value
+    })
+
   }
 
-  const handleChangeSubRegional = (value) => {
-
+  const handleChangeSubRegional = (selectvalue) => {
+    setRegional({
+      ...regional,
+      RegionalId:selectvalue
+    })
   }
-
 
   return (<Fragment>
 
@@ -222,17 +251,17 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
         <h1>{tunnel.name}</h1>
 
         <div className="choose-regional-wrapper">
-          <span style={{marginBottom:'10px'}}>Rencana kamu setelah mengikuti Pelatihan FIM 22</span>
-          <Select size="large" placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+          <span style={{ marginBottom: '10px' }}>Rencana kamu setelah mengikuti Pelatihan FIM 22</span>
+          <Select size="large" value={regional && regional.province} placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
             {regionals.map((value) => {
               return <Option value={value.province}>{value.province}</Option>
             })}
           </Select>
 
           {subRegionals.length > 0 && (
-            <Select size="large" placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+            <Select size="large" value={regional && regional.RegionalId} placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
               {subRegionals.map((value) => {
-                return <Option value={value.name}>{value.name} ({value.city})</Option>
+                return <Option value={value.id}>{value.name} ({value.city})</Option>
               })}
             </Select>
           )}
