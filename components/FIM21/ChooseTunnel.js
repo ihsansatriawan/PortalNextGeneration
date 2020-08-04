@@ -1,8 +1,21 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { BackTop, Divider, Skeleton, Empty, message, List, Card, Button } from 'antd';
+import {
+  BackTop,
+  Divider,
+  Skeleton,
+  Empty,
+  message,
+  List,
+  Card,
+  Select,
+  Button
+} from 'antd';
 import { fetch } from '@helper/fetch';
 import { sendPageview } from '@tracker';
 import "./ChooseTunnel.css";
+
+const { Option } = Select;
+
 
 function isEmptyObject(obj) {
   return Object.keys(obj).length === 0 && obj.constructor === Object
@@ -53,50 +66,90 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
   const [loadingButton, setLoadingButton] = useState(false)
   const [tunnels, setTunnels] = useState([])
   const [tunnel, setTunnel] = useState({})
+  const [regionals, setRegionals] = useState([])
+  const [subRegionals, setSubRegionals] = useState([])
+  const [regional, setRegional] = useState({})
 
   useEffect(() => {
     sendPageview({ pathName: '/chooseTunnel' })
   }, [])
 
   useEffect(() => {
-    const fetchTunnel = async () => {
-      setLoading(true)
-      try {
-        const response = await fetch({
-          url: '/tunnel/list',
-          method: 'get',
-          headers: {
-            'Authorization': `Bearer ${cookieLogin}`
-          },
-        })
+    fetchTunnel();
+    fetchRegional();
+  }, [dataUser])
 
-        const status = (response.data.status || false)
+  const fetchTunnel = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch({
+        url: '/tunnel/list',
+        method: 'get',
+        headers: {
+          'Authorization': `Bearer ${cookieLogin}`
+        },
+      })
 
-        if (!status) {
-          message.error("Server Error")
-          setTunnels(null)
-          setLoading(false)
-        } else {
-          const responseData = response.data.data || []
-          setTunnels(responseData)
-          setLoading(false)
+      const status = (response.data.status || false)
 
-          if (dataUser.TunnelId) {
-            const findData = responseData.find(item => item.id === dataUser.TunnelId)
-            findData && setTunnel(findData)
-          }
-
-        }
-
-      } catch (error) {
+      if (!status) {
         message.error("Server Error")
         setTunnels(null)
         setLoading(false)
-      }
-    }
+      } else {
+        const responseData = response.data.data || []
+        setTunnels(responseData)
+        setLoading(false)
 
-    fetchTunnel();
-  }, [dataUser])
+        if (dataUser.TunnelId) {
+          const findData = responseData.find(item => item.id === dataUser.TunnelId)
+          findData && setTunnel(findData)
+        }
+
+      }
+
+    } catch (error) {
+      message.error("Server Error")
+      setTunnels(null)
+      setLoading(false)
+    }
+  }
+
+  const fetchRegional = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch({
+        url: '/regional/list',
+        method: 'get',
+        headers: {
+          'Authorization': `Bearer ${cookieLogin}`
+        },
+      })
+
+      const status = (response.data.status || false)
+
+      if (!status) {
+        message.error("Server Error")
+        setRegionals(null)
+        setLoading(false)
+      } else {
+        const responseData = response.data.data || []
+        setRegionals(responseData)
+        setLoading(false)
+
+        // if (dataUser.RegionalId) {
+        //   const findData = responseData.find(item => item.id === dataUser.TunnelId)
+        //   findData && setTunnel(findData)
+        // }
+
+      }
+
+    } catch (error) {
+      message.error("Server Error")
+      setRegionals(null)
+      setLoading(false)
+    }
+  }
 
   const submitEvent = async () => {
     if (isEmptyObject(tunnel)) {
@@ -145,6 +198,21 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
     }
   }
 
+  const handleChangeRegional = (value) => {
+    const nameReg = regionals.filter((region) => {
+      return region.province == value
+    })
+
+    const listRegional = nameReg[0].data;
+    setSubRegionals(listRegional)
+
+  }
+
+  const handleChangeSubRegional = (value) => {
+
+  }
+
+
   return (<Fragment>
 
     {!isEmptyObject(tunnel) && (
@@ -152,13 +220,34 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
         <Divider />
         Pilihan mu:
         <h1>{tunnel.name}</h1>
-        <Button {...buttonSubmitProps()} >Submit</Button>
+
+        <div className="choose-regional-wrapper">
+          <span style={{marginBottom:'10px'}}>Rencana kamu setelah mengikuti Pelatihan FIM 22</span>
+          <Select size="large" placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+            {regionals.map((value) => {
+              return <Option value={value.province}>{value.province}</Option>
+            })}
+          </Select>
+
+          {subRegionals.length > 0 && (
+            <Select size="large" placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+              {subRegionals.map((value) => {
+                return <Option value={value.name}>{value.name} ({value.city})</Option>
+              })}
+            </Select>
+          )}
+        </div>
+
+
       </div>
     )}
     <Divider>Tentukan Pilihan mu</Divider>
     <div className="tunnel-wrapper">
       <Content tunnel={tunnel} setTunnel={setTunnel} loading={loading} tunnels={tunnels} />
     </div>
+    <div className="you-choose" style={{ marginTop: '40px' }}>
+      <Button {...buttonSubmitProps()} size="large" >Submit</Button>
+    </div >
     <BackTop />
 
   </Fragment>)

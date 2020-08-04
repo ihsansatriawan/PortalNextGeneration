@@ -376,10 +376,10 @@ class Question extends Component {
                       const nilainya = findAnswer && findAnswer.answer[q[0]] && findAnswer.answer[q[0]];
                       if (optionitem.conditionalnest !== null) {
 
-                        // saat ini hanya mendukung tipe text saja, kedepan bisa pengembangan per type field
+                        // nested conditional input saat ini hanya mendukung tipe text saja, kedepan bisa pengembangan per type field
                         if (findAnswer !== undefined && optionitem.value === findAnswer.answer[q[0]]) {
-                          const arrayNestedConditionalSelect = Object.entries(optionitem.conditionalnest);
-                          conditionalnest = <Input size="large" onChange={(e) => { this.handleChange(e, question.id, q, optionitem.value) }} placeholder={arrayNestedConditionalSelect[0][1].placeholder}></Input>
+                          const arrayNestedConditionalSelect = Object.entries(optionitem.conditionalnest);                          
+                          conditionalnest = <Input size="large" value={findAnswer.answer[optionitem.value] ? findAnswer.answer[optionitem.value] : null} onChange={(e) => { this.handleChange(e, question.id, q, optionitem.value) }} placeholder={arrayNestedConditionalSelect[0][1].placeholder}></Input>
                         }
                       }
                       return <Option value={optionitem.value} key={index}>{optionitem.label}</Option>
