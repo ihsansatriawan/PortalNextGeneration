@@ -387,12 +387,13 @@ class Question extends Component {
                   </Select>
                   {conditionalnest}
                 </>
+                break;
 
               case "upload":
                 inputvar = <UploadInput
                   filetype="pdf"
                   valueUrl={findAnswer ? findAnswer.answer[q[0]] : null}
-                  onChange={(e) => { this.handleChange(e, question.id, q) }}                  
+                  onChange={(e) => { this.handleChange(e, question.id, q) }}
                 />
 
 

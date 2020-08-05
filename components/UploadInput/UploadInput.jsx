@@ -30,7 +30,8 @@ const UploadInput = (props) => {
     };
 
     const beforeUpload = (file) => {
-        const isJPG = file.type === 'file/pdf';
+        console.log(file.type)
+        const isJPG = file.type === 'application/pdf';
         if (!isJPG) {
             message.error('You can only upload PDF file');
         }
@@ -63,11 +64,11 @@ const UploadInput = (props) => {
                 {uploadButton}
             </Upload>
 
-            {urlFile ? <Button>
+            {urlFile && <Button>
                 <a href={urlFile} target="_blank">
                     Download file
                     </a>
-            </Button> : uploadButton}
+            </Button>}
         </>
     )
 }
