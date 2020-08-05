@@ -16,6 +16,7 @@ import { debounce } from "debounce";
 import { sendPageview } from '@tracker';
 import "./Question.css";
 import moment from 'moment';
+import UploadInput from '../UploadInput/UploadInput';
 
 const { Option } = Select;
 const { confirm } = Modal;
@@ -245,14 +246,14 @@ class Question extends Component {
 
           let conditionalvalue;
           let yangdiketik2;
-          if (conditionalitem) {            
+          if (conditionalitem) {
             yangdiketik2 = event.target.value
             conditionalvalue = {
               ...value.answer,
               // ...[header[0]],
               [conditionalitem]: yangdiketik2
             }
-          } else {            
+          } else {
             conditionalvalue = {
               ...value.answer,
               [header[0]]: yangdiketik,
@@ -270,8 +271,6 @@ class Question extends Component {
 
 
           }
-
-          console.log(newJawaban)
 
           newArray.splice(index, 1, newJawaban)
 
@@ -378,7 +377,7 @@ class Question extends Component {
 
                         // nested conditional input saat ini hanya mendukung tipe text saja, kedepan bisa pengembangan per type field
                         if (findAnswer !== undefined && optionitem.value === findAnswer.answer[q[0]]) {
-                          const arrayNestedConditionalSelect = Object.entries(optionitem.conditionalnest);                          
+                          const arrayNestedConditionalSelect = Object.entries(optionitem.conditionalnest);
                           conditionalnest = <Input size="large" value={findAnswer.answer[optionitem.value] ? findAnswer.answer[optionitem.value] : null} onChange={(e) => { this.handleChange(e, question.id, q, optionitem.value) }} placeholder={arrayNestedConditionalSelect[0][1].placeholder}></Input>
                         }
                       }
@@ -388,6 +387,14 @@ class Question extends Component {
                   </Select>
                   {conditionalnest}
                 </>
+
+              case "upload":
+                inputvar = <UploadInput
+                  filetype="pdf"
+                  valueUrl={findAnswer ? findAnswer.answer[q[0]] : null}
+                  onChange={(e) => { this.handleChange(e, question.id, q) }}                  
+                />
+
 
                 break;
               default:
