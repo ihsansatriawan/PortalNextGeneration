@@ -30,7 +30,7 @@ const UploadInput = (props) => {
     };
 
     const beforeUpload = (file) => {
-        console.log(file.type)
+       
         const isJPG = file.type === 'application/pdf';
         if (!isJPG) {
             message.error('You can only upload PDF file');

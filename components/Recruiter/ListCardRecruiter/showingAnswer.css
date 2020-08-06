@@ -1,0 +1,36 @@
+.answer-wrapper{
+    margin-top:20px;
+}
+
+.the-question{
+    font-weight: 300;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.ant-card-head-title{
+    white-space: normal !important;
+}
+
+.the-answer{
+    background: #f5f5f5;
+    padding:20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;    
+}
+
+.ant-descriptions-item > span {
+    display: inline-block;
+    width: 100% !important;
+}
+
+.the-answer .avatar{
+    margin-right: 15px;
+    width: 10%;
+}
+
+.the-answer .value-answer{
+    flex-grow: 2;
+    width: 90%;
+}

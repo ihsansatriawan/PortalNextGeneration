@@ -54,7 +54,7 @@ function Content({ loading, tunnels, setTunnel, tunnel }) {
           <Card style={styleObj} cover={<img alt="example" src={item.urlPicture || fallbackImage} />} hoverable onClick={() => {
             message.info(`Kamu memilih jalur ${item.name}`)
             setTunnel(item)
-            window.scrollTo(0, 0)
+            // window.scrollTo(0, 0)
           }} title={item.name}>{item.description || 'Wait Input'}
           </Card>
         </List.Item>
@@ -253,8 +253,8 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
         <div className="choose-regional-wrapper">
           <span style={{ marginBottom: '10px' }}>Rencana kamu setelah mengikuti Pelatihan FIM 22</span>
           <Select size="large" value={regional && regional.province} placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
-            {regionals.map((value) => {
-              return <Option value={value.province}>{value.province}</Option>
+            {regionals.map((value, inde) => {
+              return <Option key={inde} value={value.province}>{value.province}</Option>
             })}
           </Select>
 
