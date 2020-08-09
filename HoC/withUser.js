@@ -31,8 +31,6 @@ export const withUser = async ctx => {
     return {}
   }
 
-  console.log("HALAAAAA")
-
   try {
     const response = await fetch({
       url: '/auth/get-profile',
