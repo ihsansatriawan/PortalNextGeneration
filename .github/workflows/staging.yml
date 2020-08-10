@@ -17,6 +17,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    - uses: actions/checkout@master
     - shell: bash
       env:
         SUPER_SECRET: ${{ secrets.STAGING_VERCEL_KEY }}
