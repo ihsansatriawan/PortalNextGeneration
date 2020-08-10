@@ -55,17 +55,17 @@ class Thank extends Component {
       </Button>
     ]
 
-    if (isCanMultiple) {
-      extraButton.push(
-        <Button onClick={() => { onChangeStep(2) }} key="buy">Memilih Jalur Lain</Button>
-      )
-    }
+    // if (isCanMultiple) {
+    //   extraButton.push(
+    //     <Button onClick={() => { onChangeStep(2) }} key="buy">Memilih Jalur Lain</Button>
+    //   )
+    // }
 
     return (
       <Result
         status="success"
         title="Data Kamu sudah masuk, silahkan tunggu!"
-        subTitle={isCanMultiple ? "untuk kamu alumni FIM 20, dapat memilih jalur Next Gen dan jalur Non Next Gen sekaligus, dengan total maksimal 2 jalur yang didaftarkan" : "Silahkan Menunggu Pengumuman"}
+        // subTitle={isCanMultiple ? "untuk kamu alumni FIM 20, dapat memilih jalur Next Gen dan jalur Non Next Gen sekaligus, dengan total maksimal 2 jalur yang didaftarkan" : "Silahkan Menunggu Pengumuman"}
         extra={extraButton}
       />
     )

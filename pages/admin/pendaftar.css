@@ -1,0 +1,10 @@
+.card-dashboard-statistic{
+    display: flex;
+    flex-direction: row;
+}
+
+.card-statistic {
+    background: white;
+    margin-right: 20px;
+    padding: 10px;
+}

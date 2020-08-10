@@ -46,7 +46,7 @@ export const withUser = async ctx => {
       redirectForbidden()
       return {}
     }
-
+    
     console.log("response profile: ", response.data.data)
 
     return {
