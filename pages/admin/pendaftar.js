@@ -139,7 +139,7 @@ const PendaftarPage = (props) => {
             // this.setState({
             //   isLoading: false,
             //   recruiters: response.data.data
-            // })
+            // }) 
           }
     
         } catch (error) {
