@@ -317,6 +317,7 @@ class Question extends Component {
           {entriesQ.map((q, idx) => {
             const pertanyaanHeader = q[0];
             const type = typeof (q[1]) == "object" ? q[1].type : q[1];
+            const placeholder = typeof (q[1]) == "object" ? q[1].placeholder : q[1];
 
             let inputvar = <Input
               // value={findAnswer.answer[q[0]]} 
@@ -330,6 +331,7 @@ class Question extends Component {
             switch (type) {
               case "text":
                 inputvar = <Input size="large"
+                  placeholder={placeholder !== "text" && placeholder}
                   value={findAnswer ? findAnswer.answer[q[0]] : null}
                   onChange={(e) => { this.handleChange(e, question.id, q) }}
                 />
@@ -358,6 +360,7 @@ class Question extends Component {
                 break;
               case "textarea":
                 inputvar = <TextArea size="large"
+                  placeholder={placeholder !== "textarea" && placeholder}
                   rows={4}
                   value={findAnswer && findAnswer.answer[q[0]]}
                   onChange={(e) => { this.handleChange(e, question.id, q) }}
