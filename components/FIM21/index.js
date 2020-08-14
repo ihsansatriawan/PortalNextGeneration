@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react';
+import Router from 'next/router';
+
 
 import {
   Divider,
@@ -8,10 +10,13 @@ import {
   Steps,
   Result,
   Button,
+  message
 } from 'antd';
 import { fetch } from '@helper/fetch';
 import { KTP, DataDiri, ChooseTunnel, Question, Thank, Pengumuman } from './Dynamic';
 const { Step } = Steps;
+import { logout } from '@helper/googleSession';
+
 
 class ContainerFIM21 extends Component {
 
@@ -32,6 +37,11 @@ class ContainerFIM21 extends Component {
     });
   };
 
+  redirectAfterSuccessLogout = () => {
+    message.success('Berhasil Logout')
+    Router.push('/')
+  }
+
   onChangeStep = (index) => {
     const { stepReal } = this.state;
 
@@ -51,8 +61,8 @@ class ContainerFIM21 extends Component {
     return (
       <Steps current={step === 0 ? step : step - 1} onChange={this.onChangeStep}>
         <Step title="KTP" description="Data identitas formal" />
-        <Step title="Data Diri" description="Isian data diri calon peserta" />
         <Step title="Pilih Jalur" description="Silahkan Pilih Jalur Anda" />
+        <Step title="Data Diri" description="Isian data diri calon peserta" />
         <Step title="Isi Formulir Jalur" description="Silahkan Isi Jalur Anda" />
       </Steps>
     )
@@ -82,7 +92,7 @@ class ContainerFIM21 extends Component {
 
     } catch (error) {
       console.log("error: ", error);
-      
+
       this.setState({ step: -2 })
     }
   }
@@ -100,9 +110,11 @@ class ContainerFIM21 extends Component {
           'Authorization': `Bearer ${cookieLogin}`
         },
       })
-  
+
+
+
       const status = (response.data.status || false)
-  
+
       if (!status) {
         this.setState({
           dataUser: {},
@@ -115,8 +127,13 @@ class ContainerFIM21 extends Component {
       })
 
       this.toggleLoading(false)
-  
+
     } catch (error) {
+      // Jika error auto logout
+      logout({
+        onLogoutSuccess: () => { this.redirectAfterSuccessLogout() }
+      })
+
       console.log("error: ", error)
       this.setState({
         dataUser: {},
@@ -157,9 +174,9 @@ class ContainerFIM21 extends Component {
     } else if (step === 1) {
       return <KTP refetchStep={this.refetchData} />
     } else if (step === 2) {
-      return <DataDiri refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
-    } else if (step === 3) {
       return <ChooseTunnel refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
+    } else if (step === 3) {
+      return <DataDiri refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
     } else if (step === 4) {
       return <Question refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
     } else if (step === 5) {

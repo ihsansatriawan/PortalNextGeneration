@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import jwtDecode from 'jwt-decode';
-import { Result, Icon, Button, Divider, List, Avatar, Carousel, Table, message } from 'antd';
+import { Result, Icon, Button, Skeleton, List, Avatar, Carousel, Table, message } from 'antd';
 import { fetch } from '@helper/fetch';
 import Router from 'next/router';
 import { newAuth } from '@HoC/withNewAuth';

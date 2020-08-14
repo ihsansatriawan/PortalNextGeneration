@@ -41,11 +41,11 @@ function Index(props) {
       eventAction: 'clickButton',
       eventLabel: 'Daftar FIM'
     })
-    Router.push('/fim21')
+    Router.push('/fim')
   }
 
   let extraButton = [
-    <Button key={1} onClick={() => { _onClickHandler() }} type="primary">Daftar FIM 21</Button>
+    <Button className="cta-button" key={1} onClick={() => { _onClickHandler() }} type="primary">Daftar FIM 22</Button>
   ]
 
   return (
@@ -55,29 +55,33 @@ function Index(props) {
           <img style={{ maxHeight: '100%', maxWidth: '100%' }} alt="all-fim" src="https://res.cloudinary.com/fim-indonesia/image/upload/q_auto:low/v1563261128/banner_primary.jpg" />
         </div>
       </Carousel>
-      <Result
-        icon={<Icon type="smile" theme="twoTone" />}
-        title="Halo Pemuda Pemudi Indonesia!"
-        subTitle={`Hi ${decode.email || ''} Mari Bergabung ke Keluarga Besar Forum Indonesia Muda`}
-        extra={extraButton}
-      />
-      <Divider>File Format Berkas Terbaru</Divider>
-      <p>
-        Berikut ini list file berformat yang dibutuhkan untuk diupload di tahap pendaftaran
+
+      <div className="welcome-wrapper">
+        <h1>Halo Pemuda Pemudi Indonesia!</h1>
+        <span>{`Hi ${decode.email || ''} Mari Bergabung ke Keluarga Besar Forum Indonesia Muda`}</span>
+        {extraButton}
+      </div>
+
+
+      <div className="file-attach-info">
+        <Divider>File Format Berkas Terbaru</Divider>
+        <p>
+          Berikut ini list file berformat yang dibutuhkan untuk diupload di tahap pendaftaran
       </p>
-      <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={item => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar icon="file-word" />}
-              title={<a href={item.urlFile}>{item.title}</a>}
-              description={item.description}
-            />
-          </List.Item>
-        )}
-      />
+        <List
+          itemLayout="horizontal"
+          dataSource={data}
+          renderItem={item => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar icon="file-word" />}
+                title={<a href={item.urlFile}>{item.title}</a>}
+                description={item.description}
+              />
+            </List.Item>
+          )}
+        />
+      </div>
     </div>
   )
 }

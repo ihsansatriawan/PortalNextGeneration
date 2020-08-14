@@ -69,6 +69,14 @@ class RegistrationForm extends React.Component {
         headline: Identity.headline,
         otherReligion: Identity.otherReligion,
         bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
+        occupation: Identity.occupation,
+        instagram: Identity.instagram,
+        twitter: Identity.twitter,
+        facebook: Identity.facebook,
+        website: Identity.website,
+        reference_by: Identity.reference_by,
+        video_editing: Identity.video_editing
+
       })
     }
 
@@ -86,7 +94,33 @@ class RegistrationForm extends React.Component {
   handleOnSubmit = async (values) => {
     const { cookieLogin, refetchStep } = this.props;
     const { urlKtp } = this.state;
-    const { otherReligion, bloodGroup, headline, expertise, emergencyPhone, hoby, gender, provinceAddress, cityAddress, address, name, phone, prefix, religion, bornDate, bornPlace, institution } = values
+    const {
+      otherReligion,
+      bloodGroup,
+      headline,
+      expertise,
+      emergencyPhone,
+      hoby,
+      gender,
+      provinceAddress,
+      cityAddress,
+      address,
+      name,
+      phone,
+      prefix,
+      religion,
+      bornDate,
+      bornPlace,
+      institution,
+
+      occupation,
+      instagram,
+      twitter,
+      facebook,
+      website,
+      reference_by,
+      video_editing
+    } = values
 
     this.setState({ isLoadingButton: true })
 
@@ -114,6 +148,13 @@ class RegistrationForm extends React.Component {
         expertise: expertise,
         institution: institution,
         otherReligion: otherReligion,
+        occupation: occupation,
+        instagram: instagram,
+        twitter: twitter,
+        facebook: facebook,
+        website: website,
+        reference_by: reference_by,
+        video_editing: video_editing,
 
         // photoUrl: urlKtp,
         // name: name,
@@ -231,6 +272,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldValue } = this.props.form;
+
     const { autoCompleteResult, isLoadingButton } = this.state;
 
     const formItemLayout = {
@@ -241,7 +283,8 @@ class RegistrationForm extends React.Component {
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 20 }
-      }
+      },
+      layout: "vertical"
     };
     const tailFormItemLayout = {
       wrapperCol: {
@@ -281,6 +324,36 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input placeholder="nama lengkap sesuai identitas" />)}
         </Form.Item>
+
+        <Form.Item label="Tempat Lahir">
+          {getFieldDecorator("bornPlace", {
+            rules: [
+              { required: true, message: "Tolong isi tempat lahir anda!" }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Tanggal Lahir">
+          {getFieldDecorator("bornDate", {
+            rules: [
+              { required: true, message: "Tolong isi tanggal lahir anda" }
+            ]
+          })(<DatePicker />)}
+        </Form.Item>
+
+        <Form.Item label="Jenis Kelamin">
+          {getFieldDecorator("gender", {
+            rules: [
+              { required: true, message: "Pilih jenis kelamin anda" }
+            ]
+          })(
+            <Select>
+              <Option value="Pria">Pria</Option>
+              <Option value="Wanita">Wanita</Option>
+            </Select>
+          )}
+        </Form.Item>
+
         <Form.Item label="Alamat">
           {getFieldDecorator("address", {
             rules: [
@@ -302,67 +375,7 @@ class RegistrationForm extends React.Component {
             ]
           })(<Input placeholder="provinsi domisili saat ini" />)}
         </Form.Item>
-        <Form.Item label="Nomor Darurat">
-          {getFieldDecorator("emergencyPhone", {
-            rules: [
-              { required: true, message: "Isi Nomor Darurat Anda!" }
-            ]
-          })(<Input placeholder="nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789" />)}
-        </Form.Item>
-        <Form.Item label="Keahlian">
-          {getFieldDecorator("expertise", {
-            rules: [
-              { required: true, message: "Isi Keahlian Anda!" }
-            ]
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Nomor Telpon">
-          {getFieldDecorator("phone", {
-            rules: [
-              { required: true, message: "Please input your phone number!" }
-            ]
-          })(<Input placeholder="nomor telepon pribadi" style={{ width: "100%" }} />)}
-        </Form.Item>
-        <Form.Item label="Tempat Lahir">
-          {getFieldDecorator("bornPlace", {
-            rules: [
-              { required: true, message: "Tolong isi tempat lahir anda!" }
-            ]
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Institusi">
-          {getFieldDecorator("institution", {
-            rules: [
-              { required: true, message: "Tolong isi Institusi asal anda!" }
-            ]
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Hobi">
-          {getFieldDecorator("hoby", {
-            rules: [
-              { required: true, message: "Tolong isi Hobi Anda!" }
-            ]
-          })(<Input />)}
-        </Form.Item>
-        <Form.Item label="Tanggal Lahir">
-          {getFieldDecorator("bornDate", {
-            rules: [
-              { required: true, message: "Tolong isi tanggal lahir anda" }
-            ]
-          })(<DatePicker />)}
-        </Form.Item>
-        <Form.Item label="Jenis Kelamin">
-          {getFieldDecorator("gender", {
-            rules: [
-              { required: true, message: "Pilih jenis kelamin anda" }
-            ]
-          })(
-            <Select>
-              <Option value="Pria">Pria</Option>
-              <Option value="Wanita">Wanita</Option>
-            </Select>
-          )}
-        </Form.Item>
+
         <Form.Item label="Golongan Darah">
           {getFieldDecorator("bloodGroup", {
             rules: [
@@ -377,6 +390,7 @@ class RegistrationForm extends React.Component {
             </Select>
           )}
         </Form.Item>
+
         <Form.Item label="Agama">
           {getFieldDecorator("religion", {
             rules: [
@@ -394,6 +408,59 @@ class RegistrationForm extends React.Component {
             </Select>
           )}
         </Form.Item>
+
+        <Form.Item label="Institusi">
+          {getFieldDecorator("institution", {
+            rules: [
+              { required: true, message: "Tolong isi Institusi asal anda!" }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Profesi / Jabatan">
+          {getFieldDecorator("occupation", {
+            rules: [
+              { required: true, message: "Tolong isi Profesi jabatan / aktivitas Anda saat ini " }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Sertifikasi Keahlian (lisensi)">
+          {getFieldDecorator("expertise", {
+            rules: [
+              { required: true, message: "Isi Keahlian Anda!" }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Nomor HP">
+          {getFieldDecorator("phone", {
+            rules: [
+              { required: true, message: "Please input your phone number!" }
+            ]
+          })(<Input placeholder="nomor telepon pribadi" style={{ width: "100%" }} />)}
+        </Form.Item>
+
+        <Form.Item label="Nomor HP Darurat">
+          {getFieldDecorator("emergencyPhone", {
+            rules: [
+              { required: true, message: "Isi Nomor Darurat Anda!" }
+            ]
+          })(<Input placeholder="nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789" />)}
+        </Form.Item>
+
+
+        <Form.Item label="Hobi">
+          {getFieldDecorator("hoby", {
+            rules: [
+              { required: true, message: "Tolong isi Hobi Anda!" }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        
+        
+       
         {
           religionss.includes('Kepercayaan') && <Form.Item label="Kepercayaan Lain nya">
             {getFieldDecorator("otherReligion", {
@@ -403,13 +470,7 @@ class RegistrationForm extends React.Component {
             })(<Input />)}
           </Form.Item>
         }
-        <Form.Item label="Foto Pribadi">
-          {getFieldDecorator("profPic", {
-            rules: [
-              { required: true, message: "Please set your photo" }
-            ]
-          })(this.renderUpload())}
-        </Form.Item>
+        
         {/* <Form.Item label="Website">
           {getFieldDecorator("website", {
             rules: [{ required: true, message: "Please input website!" }]
@@ -423,6 +484,73 @@ class RegistrationForm extends React.Component {
             </AutoComplete>
           )}
           </Form.Item> */}
+
+
+
+
+        <Form.Item label="Akun Instagram">
+          {getFieldDecorator("instagram", {
+            rules: [
+              { required: true, message: "Jika anda tidak memiliki sosial media apapun silahkan ketik alasan Anda di sini" }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Akun Twitter">
+          {getFieldDecorator("twitter", {
+            rules: [
+              { required: false, message: null }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Link Facebook">
+          {getFieldDecorator("facebook", {
+            rules: [
+              { required: false, message: null }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Website">
+          {getFieldDecorator("website", {
+            rules: [
+              { required: false, message: null }
+            ]
+          })(<Input />)}
+        </Form.Item>
+
+        <Form.Item label="Referensi alumni FIM ">
+          {getFieldDecorator("reference_by", {
+            rules: [
+              { required: true, message: "Silahkan tuliskan Nama, Nomor HP, Angkatan anggota FIM yang merekomendasikan" }
+            ]
+          })(<Input placeholder="Pastikan kamu menuliskan Nama, Nomor HP, dan Angkatan" />)}
+        </Form.Item>
+
+        <Form.Item label="Apakah kamu mempunyai skill editing video?">
+          {getFieldDecorator("video_editing", {
+            rules: [
+              { required: true, message: "Pilihan wajib diisi" }
+            ]
+          })(
+            <Select>
+              <Option value="BISA">BISA </Option>
+              <Option value="TIDAK BISA">TIDAK BISA</Option>
+            </Select>
+          )}
+        </Form.Item>
+
+        <Form.Item label="Foto Pribadi">
+          {getFieldDecorator("profPic", {
+            rules: [
+              { required: true, message: "Please set your photo" }
+            ]
+          })(this.renderUpload())}
+        </Form.Item>
+
+
+
         <Form.Item {...tailFormItemLayout}>
           <Button loading={isLoadingButton} type="primary" htmlType="submit">
             Submit

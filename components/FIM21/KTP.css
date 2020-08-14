@@ -1,0 +1,10 @@
+.upload-ktp-file-wrapper{
+    text-align: center;
+}
+
+.ant-upload-picture-card-wrapper{
+    width: 100%;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+}

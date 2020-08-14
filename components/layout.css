@@ -1,0 +1,31 @@
+.inner-layout{
+    /* background: white; */
+    border-radius: 11px;
+    overflow: hidden;
+    min-height: 80vh;
+    padding:24px;
+}
+
+.ant-btn-primary{
+    background: #e11c26;
+    border-color: #e11c26;
+}
+
+.ant-btn-primary:hover{ 
+    background: #a0131a;
+    border-color: #a0131a;
+}
+
+.welcome-wrapper{
+    padding:24px;
+    padding-bottom: 0px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.cta-button{
+    margin-top:20px;
+}

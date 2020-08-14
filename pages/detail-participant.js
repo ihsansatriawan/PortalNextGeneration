@@ -59,12 +59,54 @@ class DetailParticipant extends React.Component {
 
     componentDidMount() {
         this.fetchDetailData();
+        this.fetchQuestion();
     }
+
+    fetchQuestion = async (cb) => {
+        const newQuery = queryString.parse(this.props.router.asPath.split(/\?/)[1]);
+        const payload = {
+            ktpNumber: newQuery.ktpNumber,
+            TunnelId: newQuery.TunnelId
+        }
+
+        const { cookieLogin, refetchStep } = this.props;
+
+
+        try {
+            const response = await fetch({
+                url: '/question/list',
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`
+                },
+                data: {
+                    "TunnelId": payload.TunnelId || 1
+                }
+            })
+
+            const status = (response.data.status || false)
+
+            if (status) {
+                this.setState({
+                    dataQuestion: response.data.data,
+                })
+            } else {
+                message.error("Failed to Fetch")
+            }
+
+        } catch (error) {
+            console.log(error)
+            message.error("Server Error")
+        }
+
+    }
+
+
 
     render() {
         const { router: { query } } = this.props
         return (
-            <>
+            <div className="detail-result-page-wrapper">
                 <h1>{this.state.name ? this.state.name : 'loading...'}  |  {this.state.Summaries ? this.state.Summaries[0].Tunnel.name : 'loading...'}</h1>
                 <div>
                     <Descriptions
@@ -99,23 +141,36 @@ class DetailParticipant extends React.Component {
                     </Descriptions>
 
 
-                    <h2>Pertanyaan dan Jawaban {this.state.Summaries ? this.state.Summaries[0].Tunnel.name : 'loading...'}</h2>
 
-                    {this.state.Answers ? (
-                        <>
-                            {this.state.Answers.map((value, index) => (
-                                <Card key={index}
-                                    title={value.Question.question}
-                                >
-                                   
-                                        <ShowingAnswer
-                                            question={value.Question.question}
-                                            answer={value.answer ? value.answer : {}}
-                                        />
-                                    
-                                </Card>
-                            ))}
-                        </>
+                    {this.state.dataQuestion ? (
+                        <div style={{ maxWidth: '800px', margin: 'auto', marginTop: '50px' }}>
+                            <h2 style={{ textAlign: 'center', marginBottom: '50px' }}>Pertanyaan dan Jawaban Jalur {this.state.Summaries ? this.state.Summaries[0].Tunnel.name : 'loading...'}</h2>
+
+                            {this.state.dataQuestion.map((question, index) => {
+                                const { Answers } = this.state;
+                                const headerQuestion = JSON.parse(question.header)
+                                const entriesQ = Object.entries(headerQuestion)
+                                const findAnswer = Answers.find(answer => answer.QuestionId === question.id)
+                                
+                                return <>
+                                    <h1 style={{ marginTop: '50px', textAlign: 'center' }}> {question.headline}</h1>
+                                    <Card key={index}
+                                        title={question.question}
+                                        style={{ marginTop: '20px' }}
+                                    >
+
+                                        {findAnswer !== undefined && (
+                                            <ShowingAnswer
+                                                question={question.question}
+                                                answer={findAnswer ? findAnswer : null}
+                                                photoUrl={this.state.photoUrl ? this.state.photoUrl : null}
+                                            />
+                                        )}
+
+                                    </Card>
+                                </>
+                            })}
+                        </div>
                     ) : null}
 
 
@@ -128,7 +183,7 @@ class DetailParticipant extends React.Component {
                 <style jsx>{`
                     
                 `}</style>
-            </>
+            </div>
         )
     }
 }

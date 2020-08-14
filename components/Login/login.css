@@ -1,0 +1,11 @@
+.login-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    flex-direction: column;
+}
+
+.button-wrapper{
+    margin-top: 20px;
+}

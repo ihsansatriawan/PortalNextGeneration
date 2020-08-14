@@ -12,6 +12,7 @@ import Router from 'next/router';
 import MenuItem from 'antd/lib/menu/MenuItem';
 import ListMenu from './ListMenu';
 import { LoginComponent } from '@components/Login';
+import "./layout.css";
 
 const { Header, Footer, Sider, Content } = LayoutAntd;
 const { SubMenu } = Menu;
@@ -63,11 +64,11 @@ function Layout(props) {
       </Menu>
       <LayoutAntd>
         <Content style={{ margin: '16px' }}>
-          <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+          <div className="inner-layout">
           {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>FIM Engineering ©2019</Footer>
+        <Footer style={{ textAlign: 'center' }}>FIM Engineering ©2020</Footer>
       </LayoutAntd>
     </LayoutAntd>
   )
