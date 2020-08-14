@@ -31,9 +31,18 @@ const PendaftarPage = (props) => {
         allregistration: '...'
     })
 
+    const [isLoadingRecruiter, setIsLoadingRecruiter] = useState(true);
+
+    const [recruiters, setRecruiters] = useState([]);
+
     useEffect(() => {
         fetchSemuaPendaftar()
+        fetchRecruiter()
     }, [])
+
+    const onChangeRecruiter = (value, ktpNumber) => {
+        assignRecruiterToParticipant(value, ktpNumber)
+    }
 
     const [allParticipants, setAllParticipants] = useState([
         {
@@ -78,31 +87,35 @@ const PendaftarPage = (props) => {
             title: 'Recruiter',
             key: 'recruiter',
             render: (text, record) => (
-                <span>
-                    <div style={{
-                        background: '#f0f2f5',
-                        padding: '5px',
-                        paddingRight: '10px',
-                        marginTop: '2px',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        fontSize: '9px',
-                        position: 'relative'
-                    }}>
-                        Bagus Dwi Utama
-                        <div style={{
-                            background: 'grey',
-                            color: 'white',
-                            width: '15px',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            position: 'absolute',
-                            right: '0'
-                        }}>x</div>
-                    </div>
-                </span>
+                console.log(record)
+                // record.ParticipantRecruiters && record.ParticipantRecruiters.map((value, index) => {
+                //     return <span>
+                //     <div style={{
+                //         background: '#f0f2f5',
+                //         padding: '5px',
+                //         paddingRight: '10px',
+                //         marginTop: '2px',
+                //         display: 'flex',
+                //         flexDirection: 'row',
+                //         fontSize: '9px',
+                //         position: 'relative'
+                //     }}>
+                //         {value.User.Identity.name}
+                //         <div style={{
+                //             background: 'grey',
+                //             color: 'white',
+                //             width: '15px',
+                //             display: 'flex',
+                //             justifyContent: 'center',
+                //             alignItems: 'center',
+                //             cursor: 'pointer',
+                //             position: 'absolute',
+                //             right: '0'
+                //         }}>x</div>
+                //     </div>
+                // </span>
+                // })
+
             ),
         },
         {
@@ -110,7 +123,7 @@ const PendaftarPage = (props) => {
             key: 'assign',
             render: (text, record) => (
                 <span>
-                    <Assign />
+                    <Assign lists={recruiters} onChange={(e) => onChangeRecruiter(e, record.ktpNumber)} />
                     {/* <a onClick={(e) => onNilaiSekarang(e, record.ktp, record.TunnelId)}>Nilai Sekarang</a> */}
                 </span>
             ),
@@ -118,36 +131,70 @@ const PendaftarPage = (props) => {
     ]
 
     const fetchRecruiter = async () => {
-        const { cookieLogin, refetchStep } = this.props;
-        this.setState({ isLoading: true })
+        const { cookieLogin, refetchStep } = props;
+        setIsLoading(true)
+
         try {
-          const response = await fetch({
-            url: '/recruiter/lists',
-            method: 'get',
-            headers: {
-              'Authorization': `Bearer ${cookieLogin}`
+            const response = await fetch({
+                url: '/recruiter/lists',
+                method: 'get',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`
+                }
+            })
+
+            const status = (response.data.status || false)
+
+            if (!status) {
+                message.error(response.data.message)
+                setIsLoading(false)
+            } else {
+                setRecruiters(response.data.data)
+                message.success(response.data.message)
+                setIsLoading(false)
             }
-          })
-    
-          const status = (response.data.status || false)
-    
-          if (!status) {
-            message.error(response.data.message)
-            // this.setState({ isLoading: false })
-          } else {
-            // message.success(response.data.message)
-            // this.setState({
-            //   isLoading: false,
-            //   recruiters: response.data.data
-            // }) 
-          }
-    
+
         } catch (error) {
-          message.error("Server Error")
-        //   this.setState({ isLoading: false })
+            message.error("Server Error")
+            setIsLoading(false)
+            //   this.setState({ isLoading: false })
         }
-      }
-    
+    }
+
+    const assignRecruiterToParticipant = async (email, ktpParticipant) => {
+        const { cookieLogin, refetchStep } = props;
+        setIsLoadingRecruiter(true)
+
+        try {
+            const response = await fetch({
+                url: '/recruiter/new-assign',
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`
+                }, data: {
+                    emailRecruiter: email,
+                    ktpParticipant: ktpParticipant
+                }
+            })
+
+            const status = (response.data.status || false)
+
+            if (!status) {
+                message.error(response.data.message)
+                setIsLoadingRecruiterRecruiter(false)
+            } else {
+                fetchSemuaPendaftar();
+                message.success(response.data.message)
+                setIsLoadingRecruiter(false)
+            }
+
+        } catch (error) {
+            message.error("Server Error")
+            setIsLoadingRecruiter(false)
+            //   this.setState({ isLoading: false })
+        }
+    }
+
 
     const fetchSemuaPendaftar = async () => {
         setIsLoading(true);

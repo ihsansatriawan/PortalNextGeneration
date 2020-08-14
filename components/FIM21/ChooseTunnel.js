@@ -251,17 +251,17 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
         <h1>{tunnel.name}</h1>
 
         <div className="choose-regional-wrapper">
-          <span style={{ marginBottom: '10px' }}>Rencana kamu setelah mengikuti Pelatihan FIM 22</span>
-          <Select size="large" value={regional && regional.province} placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+          <span style={{ marginBottom: '10px' }}>Pilih Regional domisili kamu setelah mengikuti pelatihan FIM 22</span>
+          <Select showSearch size="large" value={regional && regional.province} placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
             {regionals.map((value, inde) => {
               return <Option key={inde} value={value.province}>{value.province}</Option>
             })}
           </Select>
 
           {subRegionals.length > 0 && (
-            <Select size="large" value={regional && regional.RegionalId} placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+            <Select showSearch size="large" value={regional && regional.RegionalId} placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
               {subRegionals.map((value) => {
-                return <Option value={value.id}>{value.name} ({value.city})</Option>
+                return <Option value={value.id}>{value.city}</Option>
               })}
             </Select>
           )}
