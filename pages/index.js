@@ -11,12 +11,12 @@ const data = [
   {
     title: 'File Rekomendasi',
     description: 'File ini digunakan untuk diisi oleh perekomendasi kamu',
-    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1563327650/document/Surat_Rekomendasi_FIM_21_non_next_gen.docx'
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597501765/document/SURAT_REKOMENDASI_FIM_22.docx'
   },
   {
     title: 'File Surat Pernyataan Komitmen Diri',
     description: 'File ini sebagai bukti komitmen kamu',
-    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1563242868/document/SURAT_PERNYATAAN_KOMITMEN_DIRI.docx'
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597501764/document/SURAT_PERNYATAAN_KOMITMEN_DIRI_FIM_22.docx'
   }
 ];
 
@@ -51,8 +51,8 @@ function Index(props) {
   return (
     <div>
       <Carousel autoplay effect="fade">
-        <div>
-          <img style={{ maxHeight: '100%', maxWidth: '100%' }} alt="all-fim" src="https://res.cloudinary.com/fim-indonesia/image/upload/q_auto:low/v1563261128/banner_primary.jpg" />
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <img style={{ maxHeight: '100%', maxWidth: '200px', margin:'auto' }} alt="all-fim" src="https://res.cloudinary.com/fim-indonesia/image/upload/q_auto:low/v1597501520/Screen_Shot_2020-08-15_at_21.23.27.png" />
         </div>
       </Carousel>
 
