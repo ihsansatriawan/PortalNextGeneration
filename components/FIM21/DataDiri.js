@@ -173,7 +173,7 @@ class RegistrationForm extends React.Component {
     if (!status) {
       message.error(messageAPI);
     } else {
-      message.success(`${messageAPI} ${nullData.length > 0 && nullData.toString()}`);
+      message.success(`${messageAPI}`);
       refetchStep();
     }
 

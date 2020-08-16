@@ -9,14 +9,14 @@ import '../static/css/carousel.css';
 
 const data = [
   {
-    title: 'File Rekomendasi',
+    title: 'File Surat Rekomendasi',
     description: 'File ini digunakan untuk diisi oleh perekomendasi kamu',
-    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597501765/document/SURAT_REKOMENDASI_FIM_22.docx'
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597596652/document/SURAT_REKOMENDASI_FIM_22.docx'
   },
   {
     title: 'File Surat Pernyataan Komitmen Diri',
     description: 'File ini sebagai bukti komitmen kamu',
-    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597501764/document/SURAT_PERNYATAAN_KOMITMEN_DIRI_FIM_22.docx'
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597596652/document/SURAT_PERNYATAAN_KOMITMEN_DIRI_FIM_22.docx'
   }
 ];
 
