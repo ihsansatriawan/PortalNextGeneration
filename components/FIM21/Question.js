@@ -210,15 +210,15 @@ class Question extends Component {
   }
 
   handleChange = (event, id, header, conditionalitem) => {
-
+    console.log(event)
     let yangdiketik;
-    if (event.target !== undefined && conditionalitem === undefined) {
+    if (event !== null && event.target !== undefined && conditionalitem === undefined) {
       event.preventDefault()
       yangdiketik = event.target.value;
     } else {
-      if (event.constructor === Array) {
+      if (event !== null && event.constructor === Array) {
         yangdiketik = event;
-      } else if (typeof (event) === "object") {
+      } else if (event !== null &&  typeof (event) === "object") {
         yangdiketik = event;
       } else {
         yangdiketik = event;

@@ -148,15 +148,15 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
             })
           })
 
-          const findRegional = listAllRegional.find((item)=> item.id === dataUser.RegionalId)
+          const findRegional = listAllRegional.find((item) => item.id === dataUser.RegionalId)
           findRegional && setRegional({
-            province:findRegional.province,
-            RegionalId:findRegional.id
+            province: findRegional.province,
+            RegionalId: findRegional.id
           })
 
           //set sub regional
-          const findSubRegional = findRegional && listAllRegional.filter((it)=> it.province === findRegional.province);
-          findSubRegional && setSubRegionals(findSubRegional)        
+          const findSubRegional = findRegional && listAllRegional.filter((it) => it.province === findRegional.province);
+          findSubRegional && setSubRegionals(findSubRegional)
         }
 
 
@@ -238,39 +238,42 @@ function ChooseTunnel({ refetchStep, cookieLogin, dataUser }) {
   const handleChangeSubRegional = (selectvalue) => {
     setRegional({
       ...regional,
-      RegionalId:selectvalue
+      RegionalId: selectvalue
     })
   }
 
   return (<Fragment>
+    
+    <div className="you-choose" style={{marginTop:'40px'}}>
+
+      <div className="choose-regional-wrapper">
+        <span style={{ marginBottom: '10px' }}>Pilih regional domisili kamu saat ini sesuai regional FIM yang sudah ada</span>
+        <Select showSearch size="large" value={regional && regional.province} placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+          {regionals.map((value, inde) => {
+            return <Option key={inde} value={value.province}>{value.province}</Option>
+          })}
+        </Select>
+
+        {subRegionals.length > 0 && (
+          <Select showSearch size="large" value={regional && regional.RegionalId} placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
+            {subRegionals.map((value) => {
+              return <Option value={value.id}>{value.city}</Option>
+            })}
+          </Select>
+        )}
+
+        <small style={{ marginTop: '10px' }}>Jika tidak ada yang sesuai dengan domisili kamu saat ini, pilih regional yang paling dekat.</small>
+      </div>
+    </div>
 
     {!isEmptyObject(tunnel) && (
       <div className="you-choose">
         <Divider />
-        Pilihan mu:
+        Pilihanmu:
         <h1>{tunnel.name}</h1>
-
-        <div className="choose-regional-wrapper">
-          <span style={{ marginBottom: '10px' }}>Pilih Regional domisili kamu setelah mengikuti pelatihan FIM 22</span>
-          <Select showSearch size="large" value={regional && regional.province} placeholder="Pilih Provinsi" onChange={(e) => handleChangeRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
-            {regionals.map((value, inde) => {
-              return <Option key={inde} value={value.province}>{value.province}</Option>
-            })}
-          </Select>
-
-          {subRegionals.length > 0 && (
-            <Select showSearch size="large" value={regional && regional.RegionalId} placeholder="Pilih Regional" onChange={(e) => handleChangeSubRegional(e)} style={{ width: '100%', textAlign: 'center' }}>
-              {subRegionals.map((value) => {
-                return <Option value={value.id}>{value.city}</Option>
-              })}
-            </Select>
-          )}
-        </div>
-
-
       </div>
     )}
-    <Divider>Tentukan Pilihan mu</Divider>
+    <Divider>Tentukan Pilihanmu</Divider>
     <div className="tunnel-wrapper">
       <Content tunnel={tunnel} setTunnel={setTunnel} loading={loading} tunnels={tunnels} />
     </div>
