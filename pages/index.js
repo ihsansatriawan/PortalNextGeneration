@@ -16,7 +16,7 @@ const data = [
   {
     title: 'File Surat Pernyataan Komitmen Diri',
     description: 'File ini sebagai bukti komitmen kamu',
-    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597596652/document/SURAT_PERNYATAAN_KOMITMEN_DIRI_FIM_22.docx'
+    urlFile: 'https://res.cloudinary.com/fim-indonesia/raw/upload/v1597659663/document/SURAT_PERNYATAAN_KOMITMEN_DIRI_FIM_22.docx'
   }
 ];
 
