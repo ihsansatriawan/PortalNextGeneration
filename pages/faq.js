@@ -27,15 +27,19 @@ const dataFaqFIM = [
     body: 'Di pelatihan FIM 22 ini, peserta dari seluruh jalur (Alumni FIM 20, Volunteer FIM, & Sahabat FIM) yang telah mengikuti seluruh rangkaian FIM 22  akan menjadi Kader Next-Gen untuk regionalnya dan bertugas membangun kegiatan di regionalnya serta berkomitmen untuk meningkatkan potensi regional melalui pelatihan nasional.'
   },  
   {
-    header: 'Apakah calon peserta yang berasal dari alumni FIM 20 dapat memilih jalur non next-gen?',
+    header: 'Apakah calon peserta yang berasal dari alumni FIM 20 dapat memilih jalur Volunteer FIM atau Sahabat FIM?',
     body: '<b>Tidak</b>, alumni FIM 20 hanya dapat mendaftar di jalur alumni FIM 20 sesuai deskripsi jalur pendaftaran di atas.'
   },
   {
-    header: 'Jalur apa saja yang ada di non next-gen dan apa deskripsinya?',
+    header: 'Jalur apa saja di FIM 22 dan apa deskripsinya?',
     body: `<ul>
       <li><i>Alumni FIM 20</i> adalah calon peserta FIM yang telah mengikuti Rangkaian Pelatihan FIM Wilayah angkatan 20 pada 2018 lalu untuk meningkatkan kapasitas dan memperluas jejaring dalam skala nasional</li>
       <li><i>Volunteer FIM</i> adalah calon peserta FIM yang menjadi anggota relawan FIM Regional dan ditetapkan dalam SK Keanggotaan dari FIM Regional.</li>
-      <li><i>Sahabat FIM</i> adalah calon peserta FIM yang merupakan pemuda, mahasiswa, dan profesional dengan berbagai latar belakang (Non Alumni FIM) dan pernah memiliki pengalaman mengikuti kegiatan FIM baik di FIM Pusat, FIM Regional, maupun kegiatan FIM Club (misal: pernah mengikuti Public Seminar, Webinar FIM, kerjasama komunitas, dll).</li>
+      <li><i>Sahabat FIM</i> adalah calon peserta FIM yang merupakan pemuda, mahasiswa, dan
+      profesional dengan berbagai latar belakang (Non Alumni FIM) dan pernah memiliki
+      pengalaman mengikuti kegiatan FIM baik di FIM Pusat, FIM Regional, maupun kegiatan
+      FIM Club (misal: pernah mengikuti Public Seminar, Webinar FIM, kerjasama komunitas,
+      d).</li>
     </ul>`
   },
   {
@@ -58,27 +62,27 @@ const dataFaqFIM21 = [
   },
   {
     header: 'Bagaimana jika peserta mengalami kendala teknis seperti koneksi internet?',
-    footer: 'Untuk menjaga kelancaran dan efektivitas pelatihan, peserta diharapkan dapat menyiapkan paket data yang memadai dan berada di tempat yang memiliki jaringan baik selama mengikuti pelatihan.'
+    body: 'Untuk menjaga kelancaran dan efektivitas pelatihan, peserta diharapkan dapat menyiapkan paket data yang memadai dan berada di tempat yang memiliki jaringan baik selama mengikuti pelatihan.'
   },
   {
     header: 'Bagaimana jika peserta mengalami kendala dalam hal biaya penunjang pelatihan FIM?',
-    footer: 'Pengalaman dari para peserta sebelumnya, peserta dapat mengajukan proposal ke pihak terkait yang dapat menjadi donatur. Panitia akan membantu dengan mengirimkan surat keterangan mengikuti acara dan proposal kegiatan. Permohonan surat keterangan tersebut bisa diajukan kepada panitia paling lambat 1 (satu) pekan setelah pengumuman daftar nama peserta fiks dari panitia.'
+    body: 'Pengalaman dari para peserta sebelumnya, peserta dapat mengajukan proposal ke pihak terkait yang dapat menjadi donatur. Panitia akan membantu dengan mengirimkan surat keterangan mengikuti acara dan proposal kegiatan. Permohonan surat keterangan tersebut bisa diajukan kepada panitia paling lambat 1 (satu) pekan setelah pengumuman daftar nama peserta fiks dari panitia.'
   },
   {
     header: 'Bagaimana bila jadwal acara bersamaan dengan jadwal kuliah dan ujian, tetapi calon peserta ingin sekali mengikuti acara ini?',
-    footer: 'Panitia akan membantu dengan mengirimkan surat keterangan lolos seleksi yang ditujukan kepada dekan atau dosen yang bersangkutan. Materi pelatihan FIM disusun sedemikian rupa dan saling berkaitan. Peserta wajib mengikuti keseluruhan rangkaian acara dengan mengaktifkan video. Tidak ada toleransi izin untuk keluar masuk room pelatihan.'
+    body: 'Panitia akan membantu dengan mengirimkan surat keterangan lolos seleksi yang ditujukan kepada dekan atau dosen yang bersangkutan. Materi pelatihan FIM disusun sedemikian rupa dan saling berkaitan. Peserta wajib mengikuti keseluruhan rangkaian acara dengan mengaktifkan video. Tidak ada toleransi izin untuk keluar masuk room pelatihan.'
   },
   {
     header: 'Surat rekomendasi itu seperti apa?',
-    footer: 'Surat rekomendasi adalah salah satu berkas pendaftaran yang berisi rekomendasi untuk mengikuti pelatihan FIM 22. Surat rekomendasi ini hanya boleh diberikan oleh alumni FIM. Rekomendasi diminta kepada orang yang kenal baik dengan calon peserta. Setiap calon peserta hanya diperkenankan untuk melampirkan ​​satu rekomendasi saja. Format surat rekomendasi telah dibuat oleh panitia dan calon peserta dapat mengunduhnya saat mengisi isian pendaftaran.'
+    body: 'Surat rekomendasi adalah salah satu berkas pendaftaran yang berisi rekomendasi untuk mengikuti pelatihan FIM 22. Surat rekomendasi ini hanya boleh diberikan oleh alumni FIM. Rekomendasi diminta kepada orang yang kenal baik dengan calon peserta. Setiap calon peserta hanya diperkenankan untuk melampirkan ​​satu rekomendasi saja. Format surat rekomendasi telah dibuat oleh panitia dan calon peserta dapat mengunduhnya saat mengisi isian pendaftaran.'
   },
   {
     header: 'Bagaimana memasukkan surat rekomendasi bertanda tangan?',
-    footer: 'Sebelumnya, surat rekomendasi bertanda tangan dapat di-scan atau difoto terlebih dahulu, atau pada softcopy dapat dimasukkan gambar tanda tangan (asli ditandatangani oleh pemberi rekomendasi) dalam format gambar atau dokumen. Setelah itu, file softcopy diunggah ke dalam formulir pendaftaran. Mekanisme yang sama untuk surat pernyataan komitmen bertanda tangan.'
+    body: 'Sebelumnya, surat rekomendasi bertanda tangan dapat di-scan atau difoto terlebih dahulu, atau pada softcopy dapat dimasukkan gambar tanda tangan (asli ditandatangani oleh pemberi rekomendasi) dalam format gambar atau dokumen. Setelah itu, file softcopy diunggah ke dalam formulir pendaftaran. Mekanisme yang sama untuk surat pernyataan komitmen bertanda tangan.'
   },
   {
     header: 'Apakah surat rekomendasi boleh lebih dari satu?',
-    footer: 'Tidak. Cukup lampirkan satu surat rekomendasi terbaik, sesuai dengan format yang telah disediakan di portal pendaftaran.'
+    body: 'Tidak. Cukup lampirkan satu surat rekomendasi terbaik, sesuai dengan format yang telah disediakan di portal pendaftaran.'
   },
 
 ]
