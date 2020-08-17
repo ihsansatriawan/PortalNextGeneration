@@ -38,8 +38,7 @@ const dataFaqFIM = [
       <li><i>Sahabat FIM</i> adalah calon peserta FIM yang merupakan pemuda, mahasiswa, dan
       profesional dengan berbagai latar belakang (Non Alumni FIM) dan pernah memiliki
       pengalaman mengikuti kegiatan FIM baik di FIM Pusat, FIM Regional, maupun kegiatan
-      FIM Club (misal: pernah mengikuti Public Seminar, Webinar FIM, kerjasama komunitas,
-      d).</li>
+      FIM Club (misal: pernah mengikuti Public Seminar, Webinar FIM, kerjasama komunitas, atau kegiatan lain yang diselenggarakan oleh FIM)</li>
     </ul>`
   },
   {
