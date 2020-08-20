@@ -86,35 +86,34 @@ const PendaftarPage = (props) => {
         {
             title: 'Recruiter',
             key: 'recruiter',
-            render: (text, record) => (
-                console.log(record)
-                // record.ParticipantRecruiters && record.ParticipantRecruiters.map((value, index) => {
-                //     return <span>
-                //     <div style={{
-                //         background: '#f0f2f5',
-                //         padding: '5px',
-                //         paddingRight: '10px',
-                //         marginTop: '2px',
-                //         display: 'flex',
-                //         flexDirection: 'row',
-                //         fontSize: '9px',
-                //         position: 'relative'
-                //     }}>
-                //         {value.User.Identity.name}
-                //         <div style={{
-                //             background: 'grey',
-                //             color: 'white',
-                //             width: '15px',
-                //             display: 'flex',
-                //             justifyContent: 'center',
-                //             alignItems: 'center',
-                //             cursor: 'pointer',
-                //             position: 'absolute',
-                //             right: '0'
-                //         }}>x</div>
-                //     </div>
-                // </span>
-                // })
+            render: (text, record) => (                
+                record.recruiters && record.recruiters.map((value, index) => {
+                    return <span>
+                    <div style={{
+                        background: '#f0f2f5',
+                        padding: '5px',
+                        paddingRight: '10px',
+                        marginTop: '2px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        fontSize: '9px',
+                        position: 'relative'
+                    }}>
+                        {value.nameRecruiter}
+                        <div style={{
+                            background: 'grey',
+                            color: 'white',
+                            width: '15px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            position: 'absolute',
+                            right: '0'
+                        }}>x</div>
+                    </div>
+                </span>
+                })
 
             ),
         },
@@ -217,7 +216,7 @@ const PendaftarPage = (props) => {
 
                 message.success(response.data.message)
                 setIsLoading(false);
-                setAllParticipants(response.data.data.rows)
+                setAllParticipants(response.data.data)
                 setStatistics({
                     allregistration: response.data.data.count
                 })
