@@ -100,7 +100,9 @@ const PendaftarPage = (props) => {
                         position: 'relative'
                     }}>
                         {value.nameRecruiter}
-                        <div style={{
+                        <div 
+                        onClick={(e)=>getRemoveAction(e,value.recruiterId,value.ktpNumber)}
+                        style={{
                             background: 'grey',
                             color: 'white',
                             width: '15px',
@@ -173,6 +175,40 @@ const PendaftarPage = (props) => {
                 }, data: {
                     emailRecruiter: email,
                     ktpParticipant: ktpParticipant
+                }
+            })
+
+            const status = (response.data.status || false)
+
+            if (!status) {
+                message.error(response.data.message)
+                setIsLoadingRecruiterRecruiter(false)
+            } else {
+                fetchSemuaPendaftar();
+                message.success(response.data.message)
+                setIsLoadingRecruiter(false)
+            }
+
+        } catch (error) {
+            message.error("Server Error")
+            setIsLoadingRecruiter(false)
+            //   this.setState({ isLoading: false })
+        }
+    }
+
+    const getRemoveAction = async (e,recruiterId,ktpNumber)=> {
+        const { cookieLogin, refetchStep } = props;
+        setIsLoadingRecruiter(true)
+
+        try {
+            const response = await fetch({
+                url: '/recruiter/remove-assign',
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`
+                }, data: {
+                    recruiterId: recruiterId,
+                    ktpParticipant: ktpNumber
                 }
             })
 
