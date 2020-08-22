@@ -20,11 +20,15 @@ const dataFaqFIM = [
   },
   {
     header: 'Apa itu FIM regional?',
-    body: 'Setelah 6 tahun bergerak, FIM mulai membangun model gerakan yang berbasis <b>regional tingkat Kabupaten/Kota</b> agar visi pemberdayaan dimulai tidak hanya dari Jakarta. Sejak 2017, para penggerak regional disebut Kader Next-Gen. Program regional berbasis pada pemberdayaan masyarakat di daerah masing-masing.'
+    body: 'Setelah 6 tahun bergerak, FIM mulai membangun model gerakan yang berbasis <b>regional tingkat Kabupaten/Kota</b> agar visi pemberdayaan dimulai tidak hanya dari Jakarta. Sejak 2017, para penggerak regional disebut Kader Next-Gen. Program regional berbasis pada pemberdayaan masyarakat di daerah masing-masing.Calon peserta bisa mencari tahu lebih detail tentang regional melalui sosial media FIM regional '
   },
   {
     header: 'Kader Next-Gen itu siapa dan apa tugasnya?',
     body: 'Di pelatihan FIM 22 ini, peserta dari seluruh jalur (Alumni FIM 20, Volunteer FIM, & Sahabat FIM) yang telah mengikuti seluruh rangkaian FIM 22  akan menjadi Kader Next-Gen untuk regionalnya dan bertugas membangun kegiatan di regionalnya serta berkomitmen untuk meningkatkan potensi regional melalui pelatihan nasional.'
+  },  
+  {
+    header: 'Bagaimana cara menentukan pilihan regional?',
+    body: 'Silahkan memilih regional sesuai domisili saat ini atau rencana domisili satu tahun kedepan. Jika tidak ada kota domisili saat ini silahkan pilih regional terdekat dari domisili saat ini.'
   },  
   {
     header: 'Apakah calon peserta yang berasal dari alumni FIM 20 dapat memilih jalur Volunteer FIM atau Sahabat FIM?',
@@ -45,11 +49,18 @@ const dataFaqFIM = [
     header: 'Bagaimana alur pendaftarannya ?',
     body: `<ol>
       <li>Login dengan google account (gmail) di portal.forumindonesiamuda.org</li>
-      <li>Unduh format surat pernyataan komitmen dan surat rekomendasi untuk diisi, di-scan, lalu diunggah di bagian akhir formulir pendaftaran.</li>
+      <li>Unduh format dokumen yang dibutuhkan sesuai jalurnya untuk diisi, di-scan, lalu diunggah di bagian akhir formulir pendaftaran.</li>
+      <li>Dokumen yang dibutuhkan berdasarkan jalurnya adalah sebagai berikut:
+        <ul>
+          <li>Jalur Volunteer FIM : Surat Pernyataan Komitmen dan SK Volunteer</li>
+          <li>Alumni FIM 20 & Sahabat FIM : Surat Pernyataan Komitmen & Surat Rekomendasi</li>
+        </ul>
+      </li>
       <li>Pilih jalur yang sesuai dengan profil kamu.</li>
       <li>Isi data diri.</li>
       <li>Pastikan kamu mengisi seluruh data pada formulir pendaftaran dengan benar.</li>
       <li>Klik submit setelah semua data lengkap.</li>
+      <li>Ingat setelah submit, semua data akan tersimpan oleh sistem dan tidak bisa diubah lagi.</li>
     </ol>`
   },
 ]
@@ -82,6 +93,32 @@ const dataFaqFIM21 = [
   {
     header: 'Apakah surat rekomendasi boleh lebih dari satu?',
     body: 'Tidak. Cukup lampirkan satu surat rekomendasi terbaik, sesuai dengan format yang telah disediakan di portal pendaftaran.'
+  },
+  {
+    header: 'Apakah surat rekomendasi boleh lebih dari satu?',
+    body: 'Tidak. Cukup lampirkan satu surat rekomendasi terbaik, sesuai dengan format yang telah disediakan di portal pendaftaran.'
+  },
+  {
+    header: 'Siapakah yang dimaksud dengan pemberi Referensi?',
+    body: 'Pemberi Referensi adalah alumni FIM yang dapat memberikan informasi tentang pribadi calon peserta kepada panitia seleksi FIM 22.'
+  },
+  {
+    header: 'Apakah calon peserta boleh mencantumkan referensi/rekomendasi yang sama dengan calon peserta yang lain?',
+    body: 'Boleh. Selama pemberi referensi/rekomendasi dapat mempertanggungjawabkan referensi yang diberikan.'
+  },
+  {
+    header: 'Saya terdaftar sebagai Volunteer di Regional A, namun saat ini berdomisili di Regional B, regional mana yang saya pilih saat mendaftar?',
+    body: 'Regional dipilih berdasarkan domisili saat ini atau rencana domisili satu tahun kedepan. Dalam hal kasus di atas, kamu dapat mendaftar melalui Regional B. Namun, jangan lupa untuk mencari tahu informasi mengenai Regional yang kamu tuju melalui sosial media Regional FIM & berkenalan dengan pengurus regionalnya.'
+  },
+  {
+    header: 'Saya sudah login, namun tertulis KTP/alamat email sudah pernah digunakan, padahal saya belum mendaftar di FIM 22. Apa yang harus saya lakukan?',
+    body: `Sistem pendaftaran FIM 22 menggunakan single ID identification, jika tidak bisa login karena KTP/alamat email yang sudah terdaftar, maka ada kemungkinan berikut:
+    <ul>
+      <li>Apabila KTP/alamat email sudah digunakan maka akan muncul pemberitahuan dalam web nama pengguna nomor KTP sekaligus emailnya. Calon peserta bisa menggunakan email yang tertulis dalam notifikasi untuk Log-In</li>
+      <li>Alumni FIM 20, sehingga akan otomatis masuk ke jalur Alumni FIM 20.</li>
+      <li>Jika kedua hal di atas sudah dilakukan namun tetap belum bisa log in maka hubungi CP Pendaftaran untuk segera kami tindak lanjuti.</li>
+    </ul>
+    `
   },
 
 ]
