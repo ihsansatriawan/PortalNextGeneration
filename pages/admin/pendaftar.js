@@ -86,35 +86,36 @@ const PendaftarPage = (props) => {
         {
             title: 'Recruiter',
             key: 'recruiter',
-            render: (text, record) => (
-                console.log(record)
-                // record.ParticipantRecruiters && record.ParticipantRecruiters.map((value, index) => {
-                //     return <span>
-                //     <div style={{
-                //         background: '#f0f2f5',
-                //         padding: '5px',
-                //         paddingRight: '10px',
-                //         marginTop: '2px',
-                //         display: 'flex',
-                //         flexDirection: 'row',
-                //         fontSize: '9px',
-                //         position: 'relative'
-                //     }}>
-                //         {value.User.Identity.name}
-                //         <div style={{
-                //             background: 'grey',
-                //             color: 'white',
-                //             width: '15px',
-                //             display: 'flex',
-                //             justifyContent: 'center',
-                //             alignItems: 'center',
-                //             cursor: 'pointer',
-                //             position: 'absolute',
-                //             right: '0'
-                //         }}>x</div>
-                //     </div>
-                // </span>
-                // })
+            render: (text, record) => (                
+                record.recruiters && record.recruiters.map((value, index) => {
+                    return <span>
+                    <div style={{
+                        background: '#f0f2f5',
+                        padding: '5px',
+                        paddingRight: '10px',
+                        marginTop: '2px',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        fontSize: '9px',
+                        position: 'relative'
+                    }}>
+                        {value.nameRecruiter}
+                        <div 
+                        onClick={(e)=>getRemoveAction(e,value.recruiterId,value.ktpNumber)}
+                        style={{
+                            background: 'grey',
+                            color: 'white',
+                            width: '15px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            cursor: 'pointer',
+                            position: 'absolute',
+                            right: '0'
+                        }}>x</div>
+                    </div>
+                </span>
+                })
 
             ),
         },
@@ -195,6 +196,40 @@ const PendaftarPage = (props) => {
         }
     }
 
+    const getRemoveAction = async (e,recruiterId,ktpNumber)=> {
+        const { cookieLogin, refetchStep } = props;
+        setIsLoadingRecruiter(true)
+
+        try {
+            const response = await fetch({
+                url: '/recruiter/remove-assign',
+                method: 'post',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`
+                }, data: {
+                    recruiterId: recruiterId,
+                    ktpParticipant: ktpNumber
+                }
+            })
+
+            const status = (response.data.status || false)
+
+            if (!status) {
+                message.error(response.data.message)
+                setIsLoadingRecruiterRecruiter(false)
+            } else {
+                fetchSemuaPendaftar();
+                message.success(response.data.message)
+                setIsLoadingRecruiter(false)
+            }
+
+        } catch (error) {
+            message.error("Server Error")
+            setIsLoadingRecruiter(false)
+            //   this.setState({ isLoading: false })
+        }
+    }
+
 
     const fetchSemuaPendaftar = async () => {
         setIsLoading(true);
@@ -217,7 +252,7 @@ const PendaftarPage = (props) => {
 
                 message.success(response.data.message)
                 setIsLoading(false);
-                setAllParticipants(response.data.data.rows)
+                setAllParticipants(response.data.data)
                 setStatistics({
                     allregistration: response.data.data.count
                 })

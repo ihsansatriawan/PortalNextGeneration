@@ -182,7 +182,9 @@ const ListCardRecruiter = (props) => {
 
   return (
     <Fragment>
-      <div className="card-list-name" onClick={() => setToggle(!isToggle)}>
+      <div className="card-list-name" 
+      onClick={() => setToggle(!isToggle)}
+      >
         <div className="name">
           {props.dataRecruiter.email}
         </div>
@@ -194,7 +196,7 @@ const ListCardRecruiter = (props) => {
         </div>
       </div>
 
-      {isToggle ? (
+      {/* {isToggle ? (
         <div className="list-peserta-wrapper">
           <div className="all-peserta">
             <h2>List Semua Peserta</h2>
@@ -226,7 +228,7 @@ const ListCardRecruiter = (props) => {
             }
           </div>
         </div>
-      ) : null}
+      ) : null} */}
 
 
       <style jsx>{`
