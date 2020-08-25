@@ -28,7 +28,8 @@ import Assign from '../../components/Recruiter/Assign/Assign';
 const PendaftarPage = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [statistics, setStatistics] = useState({
-        allregistration: '...'
+        allregistration: '...',
+        allTunnel: []
     })
 
     const [isLoadingRecruiter, setIsLoadingRecruiter] = useState(true);
@@ -38,6 +39,7 @@ const PendaftarPage = (props) => {
     useEffect(() => {
         fetchSemuaPendaftar()
         fetchRecruiter()
+        fetchStatisticCurrentBatch()
     }, [])
 
     const onChangeRecruiter = (value, ktpNumber) => {
@@ -86,35 +88,35 @@ const PendaftarPage = (props) => {
         {
             title: 'Recruiter',
             key: 'recruiter',
-            render: (text, record) => (                
+            render: (text, record) => (
                 record.recruiters && record.recruiters.map((value, index) => {
                     return <span>
-                    <div style={{
-                        background: '#f0f2f5',
-                        padding: '5px',
-                        paddingRight: '10px',
-                        marginTop: '2px',
-                        display: 'flex',
-                        flexDirection: 'row',
-                        fontSize: '9px',
-                        position: 'relative'
-                    }}>
-                        {value.nameRecruiter}
-                        <div 
-                        onClick={(e)=>getRemoveAction(e,value.recruiterId,value.ktpNumber)}
-                        style={{
-                            background: 'grey',
-                            color: 'white',
-                            width: '15px',
+                        <div style={{
+                            background: '#f0f2f5',
+                            padding: '5px',
+                            paddingRight: '10px',
+                            marginTop: '2px',
                             display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'pointer',
-                            position: 'absolute',
-                            right: '0'
-                        }}>x</div>
-                    </div>
-                </span>
+                            flexDirection: 'row',
+                            fontSize: '9px',
+                            position: 'relative'
+                        }}>
+                            {value.nameRecruiter}
+                            <div
+                                onClick={(e) => getRemoveAction(e, value.recruiterId, value.ktpNumber)}
+                                style={{
+                                    background: 'grey',
+                                    color: 'white',
+                                    width: '15px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    position: 'absolute',
+                                    right: '0'
+                                }}>x</div>
+                        </div>
+                    </span>
                 })
 
             ),
@@ -196,7 +198,7 @@ const PendaftarPage = (props) => {
         }
     }
 
-    const getRemoveAction = async (e,recruiterId,ktpNumber)=> {
+    const getRemoveAction = async (e, recruiterId, ktpNumber) => {
         const { cookieLogin, refetchStep } = props;
         setIsLoadingRecruiter(true)
 
@@ -230,6 +232,37 @@ const PendaftarPage = (props) => {
         }
     }
 
+    const fetchStatisticCurrentBatch = async () => {
+
+        const { cookieLogin, refetchStep } = props;
+        try {
+            const response = await fetch({
+                url: 'summary/statistic-in-batch',
+                method: 'get',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`,
+                }, data: {}
+            })
+
+            const status = (response.data.status || false)
+            console.log(response.data.data)
+            if (!status) {
+                message.error(response.data.message)
+            } else {
+                message.success(response.data.message)
+                setStatistics({
+                    allregistration: response.data.total,
+                    allTunnel: response.data.data
+                })
+            }
+
+        } catch (error) {
+            console.log(error)
+            message.error("Server Error")
+            setIsLoading(false);
+        }
+    }
+
 
     const fetchSemuaPendaftar = async () => {
         setIsLoading(true);
@@ -253,9 +286,6 @@ const PendaftarPage = (props) => {
                 message.success(response.data.message)
                 setIsLoading(false);
                 setAllParticipants(response.data.data)
-                setStatistics({
-                    allregistration: response.data.data.count
-                })
             }
 
         } catch (error) {
@@ -269,10 +299,15 @@ const PendaftarPage = (props) => {
         <AdminPage>
             <div className="card-dashboard-statistic">
                 <div className="card-statistic">
-                    <h4>Jumlah Pendaftar Final Submit</h4>
+                    <h4>Jumlah Pendaftar</h4>
                     <h2>{statistics.allregistration}</h2>
                 </div>
-
+                {statistics.allTunnel.map((value) => {
+                    return <div className="card-statistic">
+                        <h4>{value.nameTunnel}</h4>
+                        <h2>{value.countFinal}/{value.count}</h2>
+                    </div>
+                })}
             </div>
 
             <div className="table-wrapper" style={{ marginTop: '20px', background: 'white' }}>

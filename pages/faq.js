@@ -95,10 +95,6 @@ const dataFaqFIM21 = [
     body: 'Tidak. Cukup lampirkan satu surat rekomendasi terbaik, sesuai dengan format yang telah disediakan di portal pendaftaran.'
   },
   {
-    header: 'Apakah surat rekomendasi boleh lebih dari satu?',
-    body: 'Tidak. Cukup lampirkan satu surat rekomendasi terbaik, sesuai dengan format yang telah disediakan di portal pendaftaran.'
-  },
-  {
     header: 'Siapakah yang dimaksud dengan pemberi Referensi?',
     body: 'Pemberi Referensi adalah alumni FIM yang dapat memberikan informasi tentang pribadi calon peserta kepada panitia seleksi FIM 22.'
   },
