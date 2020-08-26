@@ -11,7 +11,8 @@ import ShowingAnswer from '../components/Recruiter/ListCardRecruiter/showingAnsw
 
 class DetailParticipant extends React.Component {
     state = {
-
+        Answers: [],
+        dataQuestion: []
     }
 
     static async getInitialProps({ query }) {
@@ -85,7 +86,7 @@ class DetailParticipant extends React.Component {
             })
 
             const status = (response.data.status || false)
-
+            
             if (status) {
                 this.setState({
                     dataQuestion: response.data.data,
@@ -94,9 +95,9 @@ class DetailParticipant extends React.Component {
                 message.error("Failed to Fetch")
             }
 
-        } catch (error) {
+        } catch (error) {            
             console.log(error)
-            message.error("Server Error")
+            message.error("Server Error 2")
         }
 
     }
@@ -147,10 +148,11 @@ class DetailParticipant extends React.Component {
                             <h2 style={{ textAlign: 'center', marginBottom: '50px' }}>Pertanyaan dan Jawaban Jalur {this.state.Summaries ? this.state.Summaries[0].Tunnel.name : 'loading...'}</h2>
 
                             {this.state.dataQuestion.map((question, index) => {
-                                const { Answers } = this.state;
+                                const { Answers } = this.state;       
+                                console.log(Answers)                         
                                 const headerQuestion = JSON.parse(question.header)
                                 const entriesQ = Object.entries(headerQuestion)
-                                const findAnswer = Answers !== undefined && Answers.find(answer => answer.QuestionId === question.id)
+                                const findAnswer = Answers.find(answer => answer.QuestionId === question.id)
                                 
                                 return <>
                                     <h1 style={{ marginTop: '50px', textAlign: 'center' }}> {question.headline}</h1>
