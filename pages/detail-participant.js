@@ -150,7 +150,7 @@ class DetailParticipant extends React.Component {
                                 const { Answers } = this.state;
                                 const headerQuestion = JSON.parse(question.header)
                                 const entriesQ = Object.entries(headerQuestion)
-                                const findAnswer = Answers.find(answer => answer.QuestionId === question.id)
+                                const findAnswer = Answers !== undefined && Answers.find(answer => answer.QuestionId === question.id)
                                 
                                 return <>
                                     <h1 style={{ marginTop: '50px', textAlign: 'center' }}> {question.headline}</h1>

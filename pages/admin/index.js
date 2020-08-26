@@ -47,7 +47,7 @@ const AdminPage = (props) => {
             if (status) {
                 if (response.data.data) {
                     // console.log(response.data.data.data.Identity.role !== 3)
-                    if (response.data.data.Identity.role !== 2) {
+                    if (response.data.data.Identity.role !== 3) {
                         message.success('Mohon maaf kamu belum bisa untuk mengakses halaman ini')
                         Router.push('/')
                     }

@@ -79,6 +79,7 @@ const PendaftarPage = (props) => {
             title: 'Regional',
             dataIndex: 'User.Regional.city',
             key: 'User.Regional.city',
+            sorter: (a,b)=> a.User.Regional.city - b.User.Regional.city
         },
         {
             title: 'Jalur',
