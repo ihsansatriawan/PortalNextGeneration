@@ -149,7 +149,7 @@ class DetailParticipant extends React.Component {
 
                             {this.state.dataQuestion.map((question, index) => {
                                 const { Answers } = this.state;       
-                                console.log(Answers)                         
+                                                       
                                 const headerQuestion = JSON.parse(question.header)
                                 const entriesQ = Object.entries(headerQuestion)
                                 const findAnswer = Answers.find(answer => answer.QuestionId === question.id)
