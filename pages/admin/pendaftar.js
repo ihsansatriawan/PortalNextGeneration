@@ -74,19 +74,23 @@ const PendaftarPage = (props) => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            sorter: (a,b)=> {return a.name.localeCompare(b.name)}
+            sorter: (a, b) => { return a.name.localeCompare(b.name) }
         },
         {
             title: 'Regional',
             dataIndex: 'User.Regional.city',
             key: 'User.Regional.city',
-            sorter: (a,b)=> {return a.User.Regional.city.localeCompare(b.User.Regional.city)}
+            sorter: (a, b) => {
+                a = a.User.Regional !== null ? a.User.Regional.city : '';
+                a = b.User.Regional !== null ? b.User.Regional.city : '';
+                return a.localeCompare(b)
+            }
         },
         {
             title: 'Jalur',
             dataIndex: 'Summaries[0].Tunnel.name',
             key: 'Summaries[0].Tunnel.name',
-            sorter: (a,b)=> {return a.Summaries[0].Tunnel.name.localeCompare(b.Summaries[0].Tunnel.name)}
+            sorter: (a, b) => { return a.Summaries[0].Tunnel.name.localeCompare(b.Summaries[0].Tunnel.name) }
         },
         {
             title: 'Recruiter',
