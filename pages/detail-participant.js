@@ -86,7 +86,7 @@ class DetailParticipant extends React.Component {
             })
 
             const status = (response.data.status || false)
-            
+
             if (status) {
                 this.setState({
                     dataQuestion: response.data.data,
@@ -95,7 +95,7 @@ class DetailParticipant extends React.Component {
                 message.error("Failed to Fetch")
             }
 
-        } catch (error) {            
+        } catch (error) {
             console.log(error)
             message.error("Server Error 2")
         }
@@ -122,6 +122,31 @@ class DetailParticipant extends React.Component {
 
                         <Descriptions.Item label="Nama Lengkap">{this.state.name ? this.state.name : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Nomor HP">{this.state.phone ? this.state.phone : 'loading...'}</Descriptions.Item>
+
+                        <Descriptions.Item label="Profesi">{this.state.occupation ? this.state.occupation : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Instagram">{this.state.instagram ?
+                            <a href={this.state.instagram} target="_blank">
+                                <Button>{this.state.instagram}</Button>
+                            </a>
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Twitter">{this.state.twitter ?
+                            <a href={this.state.twitter} target="_blank">
+                                <Button>{this.state.twitter}</Button>
+                            </a>
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="facebook">{this.state.facebook ?
+                            this.state.facebook
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="website">{this.state.website ?
+
+                            <a href={this.state.website} target="_blank">
+                                <Button>{this.state.website}</Button>
+                            </a>
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Referensi">{this.state.reference_by ? this.state.reference_by : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Bisa Video Editing">{this.state.video_editing ? this.state.video_editing : ''}</Descriptions.Item>
+
+
                         <Descriptions.Item label="Email">{this.state.email ? this.state.email : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Alamat">{this.state.address ? this.state.address : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Kota">{this.state.cityAddress ? this.state.cityAddress : 'loading...'}</Descriptions.Item>
@@ -148,12 +173,12 @@ class DetailParticipant extends React.Component {
                             <h2 style={{ textAlign: 'center', marginBottom: '50px' }}>Pertanyaan dan Jawaban Jalur {this.state.Summaries ? this.state.Summaries[0].Tunnel.name : 'loading...'}</h2>
 
                             {this.state.dataQuestion.map((question, index) => {
-                                const { Answers } = this.state;       
-                                                       
+                                const { Answers } = this.state;
+
                                 const headerQuestion = JSON.parse(question.header)
                                 const entriesQ = Object.entries(headerQuestion)
                                 const findAnswer = Answers.find(answer => answer.QuestionId === question.id)
-                                
+
                                 return <>
                                     <h1 style={{ marginTop: '50px', textAlign: 'center' }}> {question.headline}</h1>
                                     <Card key={index}
