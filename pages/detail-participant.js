@@ -162,7 +162,7 @@ class DetailParticipant extends React.Component {
                         <Descriptions.Item label="Institusi">{this.state.institution ? this.state.institution : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Nomor KTP">{this.state.ktpNumber ? this.state.ktpNumber : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Gambar KTP">
-                            <img style={{ width: '100%' }} src={this.state.ktpUrl ? this.state.ktpUrl : null} />
+                            <img style={{ maxWidth: '400px' }} src={this.state.ktpUrl ? this.state.ktpUrl : null} />
                         </Descriptions.Item>
                     </Descriptions>
 
