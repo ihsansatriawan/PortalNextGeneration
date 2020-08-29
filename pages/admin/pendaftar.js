@@ -74,7 +74,11 @@ const PendaftarPage = (props) => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            sorter: (a, b) => { return a.name.localeCompare(b.name) }
+            sorter: (a, b) => { 
+                a = a.name !== null ? a.name : '';
+                b = b.name !== null ? b.name : '';
+                return a.localeCompare(b) 
+            }
         },
         {
             title: 'Regional',
@@ -82,7 +86,7 @@ const PendaftarPage = (props) => {
             key: 'User.Regional.city',
             sorter: (a, b) => {
                 a = a.User.Regional !== null ? a.User.Regional.city : '';
-                a = b.User.Regional !== null ? b.User.Regional.city : '';
+                b = b.User.Regional !== null ? b.User.Regional.city : '';
                 return a.localeCompare(b)
             }
         },
