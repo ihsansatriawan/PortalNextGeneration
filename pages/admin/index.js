@@ -72,11 +72,11 @@ const AdminPage = (props) => {
                     >
                         <Menu.Item key="9" onClick={() => { Router.push('/admin/pendaftar') }}>Pendaftar</Menu.Item>
                         <Menu.Item key="8" onClick={() => { Router.push('/admin/recruiter') }}>Recruiter</Menu.Item>
-                        <Menu.Item key="12">Hasil Penilaian</Menu.Item>
+                        {/* <Menu.Item key="12">Hasil Penilaian</Menu.Item> */}
 
                         <hr></hr>
-                        <Menu.Item key="13">Regional</Menu.Item>
-                        <Menu.Item key="14">Angkatan FIM</Menu.Item>                        
+                        {/* <Menu.Item key="13">Regional</Menu.Item> */}
+                        {/* <Menu.Item key="14">Angkatan FIM</Menu.Item>                         */}
                         
 
                     </Menu>
