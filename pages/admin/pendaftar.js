@@ -317,6 +317,9 @@ const PendaftarPage = (props) => {
                     return <div className="card-statistic">
                         <h4>{value.nameTunnel}</h4>
                         <h2>{value.countFinal}/{value.count}</h2>
+                        {value.detailByRegional.map((value,index)=> (
+                            <span>{value.city} : {value.count}</span>
+                        ))}
                     </div>
                 })}
             </div>
