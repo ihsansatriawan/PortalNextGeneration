@@ -74,10 +74,10 @@ const PendaftarPage = (props) => {
             title: 'Name',
             dataIndex: 'name',
             key: 'name',
-            sorter: (a, b) => { 
+            sorter: (a, b) => {
                 a = a.name !== null ? a.name : '';
                 b = b.name !== null ? b.name : '';
-                return a.localeCompare(b) 
+                return a.localeCompare(b)
             }
         },
         {
@@ -317,9 +317,13 @@ const PendaftarPage = (props) => {
                     return <div className="card-statistic">
                         <h4>{value.nameTunnel}</h4>
                         <h2>{value.countFinal}/{value.count}</h2>
-                        {value.detailByRegional.map((value,index)=> (
-                            <span>{value.city} : {value.count}</span>
-                        ))}
+                        {value.detailByRegional.map((valudes, index) => {
+                            const filtering = value.detailByRegionalFinal.filter((item)=> {
+                                return valudes == item
+                            })
+
+                           return <span>{valudes.city} : {filtering.length} /{valudes.count}</span>
+                        })}
                     </div>
                 })}
             </div>
