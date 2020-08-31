@@ -322,7 +322,9 @@ const PendaftarPage = (props) => {
                                 const filtering = value.detailByRegionalFinal.filter((item) => {
                                     return valudes.city == item.city
                                 })
-                                return <li>{valudes.city} : {filtering[0].count} /{valudes.count}</li>
+
+                                console.log(filtering)
+                                return <li>{valudes.city} :  /{valudes.count}</li>
                             })}
                         </ul>
                     </div>
