@@ -318,8 +318,8 @@ const PendaftarPage = (props) => {
                         <h4>{value.nameTunnel}</h4>
                         <h2>{value.countFinal}/{value.count}</h2>
                         <ul>
-                            {value.detailByRegional.map((valudes, index) => {
-                                const filtering = value.detailByRegionalFinal.filter((item) => {
+                            {value.detailByRegional.map( async (valudes, index) => {
+                                const filtering = await value.detailByRegionalFinal.filter((item) => {
                                     return valudes == item
                                 })
                                 return <li>{valudes.city} : {filtering.length} /{valudes.count}</li>
