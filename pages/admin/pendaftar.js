@@ -320,9 +320,9 @@ const PendaftarPage = (props) => {
                         <ul>
                             {value.detailByRegional.map( (valudes, index) => {
                                 const filtering = value.detailByRegionalFinal.filter((item) => {
-                                    return valudes == item
+                                    return valudes.city == item.city
                                 })
-                                return <li>{valudes.city} : {filtering.length} /{valudes.count}</li>
+                                return <li>{valudes.city} : {filtering[0].count} /{valudes.count}</li>
                             })}
                         </ul>
                     </div>
