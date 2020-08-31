@@ -324,7 +324,7 @@ const PendaftarPage = (props) => {
                                 })
 
                                 console.log(filtering)
-                                return <li>{valudes.city} :  /{valudes.count}</li>
+                                return <li>{valudes.city} : {filtering[0] && filtering[0].count} /{valudes.count}</li>
                             })}
                         </ul>
                     </div>
