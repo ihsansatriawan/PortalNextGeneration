@@ -317,16 +317,17 @@ const PendaftarPage = (props) => {
                     return <div className="card-statistic">
                         <h4>{value.nameTunnel}</h4>
                         <h2>{value.countFinal}/{value.count}</h2>
-                        <ul>
-                            {value.detailByRegional.map( (valudes, index) => {
+                        <table>
+                            {value.detailByRegional.map((valudes, index) => {
                                 const filtering = value.detailByRegionalFinal.filter((item) => {
                                     return valudes.city == item.city
                                 })
 
-                                console.log(filtering)
-                                return <li>{valudes.city} : {filtering[0] ? filtering[0].count : 0} /{valudes.count}</li>
+                                return <tr>
+                                    <td>{valudes.city}</td>  <td>:</td> <td>{filtering[0] ? filtering[0].count : 0} /{valudes.count}</td>
+                                </tr>
                             })}
-                        </ul>
+                        </table>
                     </div>
                 })}
             </div>
