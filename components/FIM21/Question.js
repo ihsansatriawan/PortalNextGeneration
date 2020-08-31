@@ -457,7 +457,7 @@ class Question extends Component {
       const status = (response.data.status || false)
 
       if (!status) {
-        message.error("Gagal menyimpan Data")
+        message.error(response.data.message)
       } else {
         message.success(response.data.message)
       }
