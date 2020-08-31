@@ -85,8 +85,8 @@ const PendaftarPage = (props) => {
             dataIndex: 'User.Regional.city',
             key: 'User.Regional.city',
             sorter: (a, b) => {
-                a = a.User.Regional !== null ? a.User.Regional.city : '';
-                b = b.User.Regional !== null ? b.User.Regional.city : '';
+                a = a.User !== null && a.User.Regional !== null ? a.User.Regional.city : '';
+                b = b.User !== null && b.User.Regional !== null ? b.User.Regional.city : '';
                 return a.localeCompare(b)
             }
         },
