@@ -421,6 +421,19 @@ class Question extends Component {
   renderContent = () => {
     const { dataQuestion, currentTunnel } = this.state;
 
+    if (dataQuestion.length == 0) {
+      return <Fragment>
+      <div className="question-wrapper">
+        <div className="you-choose">
+          <Divider />
+          <span>Sayang sekali,</span>
+          <h1 style={{ fontWeight: 'bold' }}>pendaftaran FIM 22 untuk Jalur Alumni FIM 20 dan Volunteer FIM sudah di tutup :(. Sampai jumpa di pendaftaran FIM selanjutnya 😊.</h1>
+        </div>
+        <Divider />        
+      </div>
+    </Fragment>
+    }
+
     return <Fragment>
       <div className="question-wrapper">
         <div className="you-choose">
