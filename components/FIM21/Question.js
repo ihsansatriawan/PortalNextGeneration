@@ -565,7 +565,7 @@ class Question extends Component {
     }
 
     return (<Fragment>
-      {isLoadQ ? <Skeleton active /> : this.renderContent()}
+      {isLoadQ && this.state.dataQuestion.length > 0 ? <Skeleton active /> : this.renderContent()}
       <div className="submit-question-button">
         <Button {...this.buttonSubmitProps} >
           Submit
