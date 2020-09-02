@@ -81,7 +81,8 @@ class DetailParticipant extends React.Component {
                     'Authorization': `Bearer ${cookieLogin}`
                 },
                 data: {
-                    "TunnelId": payload.TunnelId || 1
+                    "TunnelId": payload.TunnelId || 1,
+                    "isRecruiter": true
                 }
             })
 
