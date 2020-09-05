@@ -16,7 +16,7 @@ const ShowingAnswer = (props) => {
     >
       {theKey.map((value, index) => {
         let theanswertype = theAswer[value];
-        if (theAswer[value].substring(0, 4) === "http") {
+        if (theAswer[value] !== null && theAswer[value].substring(0, 4) === "http") {
           theanswertype = <a href={theAswer[value]} target="_blank">
             <Button>Download</Button>
           </a>
