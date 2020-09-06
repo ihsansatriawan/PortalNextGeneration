@@ -23,11 +23,16 @@ const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 const AdminPage = (props) => {
-
+    
 
     useEffect(() => {
         fetchDataProfile()
     }, [])
+
+    redirectAfterSuccessLogout = () => {
+        message.success('Berhasil Logout')
+        Router.push('/')
+      }
 
     const fetchDataProfile = async () => {
         // mengatur hak akses yang hanya boleh masuk halaman admin berdasarkan table identity role
@@ -51,6 +56,10 @@ const AdminPage = (props) => {
                         message.success('Mohon maaf kamu belum bisa untuk mengakses halaman ini')
                         Router.push('/')
                     }
+                }else{
+                    logout({
+                        onLogoutSuccess: () => { redirectAfterSuccessLogout() }
+                      })
                 }
             }
 
