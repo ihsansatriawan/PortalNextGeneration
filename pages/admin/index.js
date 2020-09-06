@@ -51,6 +51,10 @@ const AdminPage = (props) => {
                         message.success('Mohon maaf kamu belum bisa untuk mengakses halaman ini')
                         Router.push('/')
                     }
+                }else{
+                    logout({
+                        onLogoutSuccess: () => { this.redirectAfterSuccessLogout() }
+                      })
                 }
             }
 
