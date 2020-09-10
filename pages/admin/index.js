@@ -57,8 +57,6 @@ const AdminPage = (props) => {
                         Router.push('/')
                     }
                 }
-            }else{
-                Router.push('/')
             }
 
 
