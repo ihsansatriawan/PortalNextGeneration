@@ -58,9 +58,7 @@ const AdminPage = (props) => {
                     }
                 }
             }else{
-                logout({
-                    onLogoutSuccess: () => { redirectAfterSuccessLogout() }
-                  })
+                Router.push('/')
             }
 
 
