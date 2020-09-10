@@ -29,7 +29,7 @@ const AdminPage = (props) => {
         fetchDataProfile()
     }, [])
 
-    redirectAfterSuccessLogout = () => {
+    const redirectAfterSuccessLogout = () => {
         message.success('Berhasil Logout')
         Router.push('/')
       }
@@ -48,7 +48,7 @@ const AdminPage = (props) => {
             })
 
             const status = (response.data.status || false)
-
+            
             if (status) {
                 if (response.data.data) {
                     // console.log(response.data.data.data.Identity.role !== 3)
@@ -56,11 +56,11 @@ const AdminPage = (props) => {
                         message.success('Mohon maaf kamu belum bisa untuk mengakses halaman ini')
                         Router.push('/')
                     }
-                }else{
-                    logout({
-                        onLogoutSuccess: () => { redirectAfterSuccessLogout() }
-                      })
                 }
+            }else{
+                logout({
+                    onLogoutSuccess: () => { redirectAfterSuccessLogout() }
+                  })
             }
 
 
