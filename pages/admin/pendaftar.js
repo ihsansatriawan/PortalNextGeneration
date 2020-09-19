@@ -38,10 +38,11 @@ const PendaftarPage = (props) => {
     })
 
     const [isDownloadExcelOpen, setIsDownloadExcelOpen] = useState(false);
-    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status', 'Regional Pengembangan'])
+    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Jalur', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status','Next Activity', 'Regional Pengembangan' ])
     const [indeterminate, setindeterminate] = useState(true);
     const [checkAll, setCheckAll] = useState(false);
     const [checkedList, setCheckedList] = useState([]);
+    const [isLoadingExcel, setIsLoadingExcel] = useState(false);
 
     const [isLoadingRecruiter, setIsLoadingRecruiter] = useState(true);
 
@@ -335,7 +336,7 @@ const PendaftarPage = (props) => {
 
         e.preventDefault();
         const { cookieLogin, refetchStep } = props;
-
+        setIsLoadingExcel(true);
         try {
             const response = await fetch({
                 url: 'data/download-excel',
@@ -353,55 +354,71 @@ const PendaftarPage = (props) => {
             const wb = new ExcelJS.Workbook()
             const ws = wb.addWorksheet()
 
-            ws.columns = [
+            const kolomnya = [
                 { header: 'Nama', key: 'name', },
                 { header: 'Email', key: 'email', },
                 { header: 'Phone', key: 'phone', },
                 { header: 'KTP', key: 'ktpNumber', },
+                { header: 'Jalur', key: 'jalur', },
                 { header: 'Regional Saat Ini', key: 'regional', },
                 { header: 'Editing Video Status', key: 'videoEdit', },
                 { header: 'Next Activity', key: 'nextActivity', },
-                { header: 'Regional Pengembangan', key: 'newRegional', },                        
-              ];
+                { header: 'Regional Pengembangan', key: 'newRegional', },
+            ];
 
-              responData.map((value)=> {
-                  ws.addRow({
-                      ...value
-                  })
-              })
+            const selectedColom = kolomnya.filter((kol) => {
+                return checkedList.includes(kol.header);
+            })
+
+            ws.columns = selectedColom;
+            responData.map((value) => {
+                ws.addRow({
+                    ...value
+                })
+            })
 
             const buf = await wb.xlsx.writeBuffer()
-            saveAs(new Blob([buf]), 'abc.xlsx')
+            saveAs(new Blob([buf]), 'data-calon-pendaftar-fim.xlsx')
+            setIsLoadingExcel(false);
 
         } catch (error) {
             console.log(error)
             message.error("Server Error")
             setIsLoading(false);
+            setIsLoadingExcel(false);
         }
     }
 
     return (
         <AdminPage>
             <div className="buttonwrapper-excel">
-                <Button onClick={() => setIsDownloadExcelOpen(true)}>Download Data Excel</Button>
-                <Checkbox
-                    style={{ marginLeft: '20px' }}
-                    indeterminate={indeterminate}
-                    onChange={onCheckAllChange}
-                    checked={checkAll}
-                >   Check all
-                </Checkbox>
+                <Button onClick={() => setIsDownloadExcelOpen(!isDownloadExcelOpen)}>Download Data Excel</Button>
+
+                {isDownloadExcelOpen ? (
+                    <Checkbox
+                        style={{ marginLeft: '20px' }}
+                        indeterminate={indeterminate}
+                        onChange={onCheckAllChange}
+                        checked={checkAll}
+                    >   Check all
+                    </Checkbox>
+                ) : null}
             </div>
 
-            <div className="checklist-check-excel-download">
-                <CheckboxGroup
-                    options={plainOptions}
-                    value={checkedList}
-                    onChange={onChangeCheck}
-                />
+            {isDownloadExcelOpen ? (
+                <div className="checklist-check-excel-download">
+                    <CheckboxGroup
+                        options={plainOptions}
+                        value={checkedList}
+                        onChange={onChangeCheck}
+                    />
 
-                <Button onClick={(e) => onClickDownloadExcel(e)} color="success">Download</Button>
-            </div>
+                    {!isLoadingExcel ? (
+                        <Button style={{marginTop:'10px'}} onClick={(e) => onClickDownloadExcel(e)} type="primary">Download</Button>
+                    ) : "Downloading..."}
+                </div>
+            ) : null}
+
 
             <div className="card-dashboard-statistic">
                 <div className="card-statistic">
