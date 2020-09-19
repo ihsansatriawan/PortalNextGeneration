@@ -24,6 +24,11 @@ import {
 
 import './pendaftar.css';
 import Assign from '../../components/Recruiter/Assign/Assign';
+import ExcelJS from 'exceljs'
+import { saveAs } from 'file-saver'
+import WrapperStatistic from 'antd/lib/statistic/Statistic';
+
+const CheckboxGroup = Checkbox.Group;
 
 const PendaftarPage = (props) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +36,12 @@ const PendaftarPage = (props) => {
         allregistration: '...',
         allTunnel: []
     })
+
+    const [isDownloadExcelOpen, setIsDownloadExcelOpen] = useState(false);
+    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status', 'Regional Pengembangan'])
+    const [indeterminate, setindeterminate] = useState(true);
+    const [checkAll, setCheckAll] = useState(false);
+    const [checkedList, setCheckedList] = useState([]);
 
     const [isLoadingRecruiter, setIsLoadingRecruiter] = useState(true);
 
@@ -306,8 +317,92 @@ const PendaftarPage = (props) => {
         }
     }
 
+    const onChangeCheck = checkedList => {
+        setCheckedList(checkedList);
+        setindeterminate(!!checkedList.length && checkedList.length < plainOptions.length)
+        setCheckAll(checkedList.length === plainOptions.length);
+    };
+
+    const onCheckAllChange = e => {
+
+        setCheckedList(e.target.checked ? plainOptions : []);
+        setindeterminate(false)
+        setCheckAll(e.target.checked);
+
+    };
+
+    const onClickDownloadExcel = async (e) => {
+
+        e.preventDefault();
+        const { cookieLogin, refetchStep } = props;
+
+        try {
+            const response = await fetch({
+                url: 'data/download-excel',
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${cookieLogin}`,
+                },
+                data: {
+                    listCheck: checkedList
+                }
+            })
+
+            const responData = response.data.data;
+
+            const wb = new ExcelJS.Workbook()
+            const ws = wb.addWorksheet()
+
+            ws.columns = [
+                { header: 'Nama', key: 'name', },
+                { header: 'Email', key: 'email', },
+                { header: 'Phone', key: 'phone', },
+                { header: 'KTP', key: 'ktpNumber', },
+                { header: 'Regional Saat Ini', key: 'regional', },
+                { header: 'Editing Video Status', key: 'videoEdit', },
+                { header: 'Next Activity', key: 'nextActivity', },
+                { header: 'Regional Pengembangan', key: 'newRegional', },                        
+              ];
+
+              responData.map((value)=> {
+                  ws.addRow({
+                      ...value
+                  })
+              })
+
+            const buf = await wb.xlsx.writeBuffer()
+            saveAs(new Blob([buf]), 'abc.xlsx')
+
+        } catch (error) {
+            console.log(error)
+            message.error("Server Error")
+            setIsLoading(false);
+        }
+    }
+
     return (
         <AdminPage>
+            <div className="buttonwrapper-excel">
+                <Button onClick={() => setIsDownloadExcelOpen(true)}>Download Data Excel</Button>
+                <Checkbox
+                    style={{ marginLeft: '20px' }}
+                    indeterminate={indeterminate}
+                    onChange={onCheckAllChange}
+                    checked={checkAll}
+                >   Check all
+                </Checkbox>
+            </div>
+
+            <div className="checklist-check-excel-download">
+                <CheckboxGroup
+                    options={plainOptions}
+                    value={checkedList}
+                    onChange={onChangeCheck}
+                />
+
+                <Button onClick={(e) => onClickDownloadExcel(e)} color="success">Download</Button>
+            </div>
+
             <div className="card-dashboard-statistic">
                 <div className="card-statistic">
                     <h4>Jumlah Pendaftar</h4>
