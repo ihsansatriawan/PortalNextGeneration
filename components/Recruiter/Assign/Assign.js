@@ -26,11 +26,6 @@ const { Option } = Select;
 
 const Assign = (props) => {
 
-    const onSearch = (val) => {
-        console.log('search:', val);
-    }
-
-
     return (
         <Select
             showSearch
