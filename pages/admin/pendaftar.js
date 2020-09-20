@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AdminPage from '.';
 import { fetch } from '@helper/fetch';
+import { SearchOutlined } from '@ant-design/icons';
 
 import {
     Form,
@@ -19,7 +20,8 @@ import {
     Radio,
     DatePicker,
     Upload,
-    Skeleton
+    Skeleton,
+    Space
 } from "antd";
 
 import './pendaftar.css';
@@ -38,15 +40,16 @@ const PendaftarPage = (props) => {
     })
 
     const [isDownloadExcelOpen, setIsDownloadExcelOpen] = useState(false);
-    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Jalur', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status','Next Activity', 'Regional Pengembangan' ])
+    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Jalur', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status', 'Next Activity', 'Regional Pengembangan'])
     const [indeterminate, setindeterminate] = useState(true);
     const [checkAll, setCheckAll] = useState(false);
     const [checkedList, setCheckedList] = useState([]);
     const [isLoadingExcel, setIsLoadingExcel] = useState(false);
-
     const [isLoadingRecruiter, setIsLoadingRecruiter] = useState(true);
-
     const [recruiters, setRecruiters] = useState([]);
+
+    // Search state
+    
 
     useEffect(() => {
         fetchSemuaPendaftar()
@@ -57,6 +60,8 @@ const PendaftarPage = (props) => {
     const onChangeRecruiter = (value, ktpNumber) => {
         assignRecruiterToParticipant(value, ktpNumber)
     }
+
+
 
     const [allParticipants, setAllParticipants] = useState([
         {
@@ -75,6 +80,8 @@ const PendaftarPage = (props) => {
             regional: 'Loading Data...',
         },
     ])
+
+    const [filteredParticipant, setFilteredParticipant] = useState(null)
 
     const columns = [
         {
@@ -389,6 +396,20 @@ const PendaftarPage = (props) => {
         }
     }
 
+
+    const searchHandling = value => {
+        
+        const filterTable = allParticipants.filter(o =>
+          Object.keys(o).some(k =>
+            String(o[k])
+              .toLowerCase()
+              .includes(value.toLowerCase())
+          )
+        );
+    
+        setFilteredParticipant(filterTable);
+      };
+
     return (
         <AdminPage>
             <div className="buttonwrapper-excel">
@@ -414,10 +435,11 @@ const PendaftarPage = (props) => {
                     />
 
                     {!isLoadingExcel ? (
-                        <Button style={{marginTop:'10px'}} onClick={(e) => onClickDownloadExcel(e)} type="primary">Download</Button>
+                        <Button style={{ marginTop: '10px' }} onClick={(e) => onClickDownloadExcel(e)} type="primary">Download</Button>
                     ) : "Downloading..."}
                 </div>
             ) : null}
+
 
 
             <div className="card-dashboard-statistic">
@@ -444,8 +466,17 @@ const PendaftarPage = (props) => {
                 })}
             </div>
 
+            <div>
+                <Input.Search
+                    style={{ marginTop: '20px' }}
+                    placeholder="Search by..."
+                    enterButton
+                    onSearch={searchHandling}
+                />
+            </div>
+
             <div className="table-wrapper" style={{ marginTop: '20px', background: 'white' }}>
-                <Table dataSource={allParticipants} columns={columns} />
+                <Table dataSource={filteredParticipant == null ? allParticipants : filteredParticipant} columns={columns} />
             </div>
         </AdminPage>
     )
