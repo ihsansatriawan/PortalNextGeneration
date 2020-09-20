@@ -231,7 +231,7 @@ const PendaftarPage = (props) => {
                 setIsLoading(false)
             } else {
                 setRecruiters(response.data.data)
-                message.success(response.data.message)
+                // message.success(response.data.message)
                 setIsLoading(false)
             }
 
@@ -265,7 +265,7 @@ const PendaftarPage = (props) => {
                 setIsLoadingRecruiterRecruiter(false)
             } else {
                 fetchSemuaPendaftar();
-                message.success(response.data.message)
+                // message.success(response.data.message)
                 setIsLoadingRecruiter(false)
             }
 
@@ -299,7 +299,7 @@ const PendaftarPage = (props) => {
                 setIsLoadingRecruiterRecruiter(false)
             } else {
                 fetchSemuaPendaftar();
-                message.success(response.data.message)
+                // message.success(response.data.message)
                 setIsLoadingRecruiter(false)
             }
 
@@ -326,7 +326,7 @@ const PendaftarPage = (props) => {
             if (!status) {
                 message.error(response.data.message)
             } else {
-                message.success(response.data.message)
+                // message.success(response.data.message)
                 setStatistics({
                     allregistration: response.data.total,
                     allTunnel: response.data.data
@@ -360,7 +360,7 @@ const PendaftarPage = (props) => {
                 setIsLoading(false);
             } else {
 
-                message.success(response.data.message)
+                // message.success(response.data.message)
                 setIsLoading(false);
                 setAllParticipants(response.data.data)
             }
