@@ -1,0 +1,14 @@
+.pengumuman-wrapper{
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    height: 70vh;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.high-emphasis{
+    font-size: 18pt;
+}
