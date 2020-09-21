@@ -18,7 +18,7 @@ class Pengumuman extends Component {
     const { dataUser } = this.props;
 
     return (<div className="pengumuman-wrapper" style={{ fontWeight: 'bold' }}>
-      <p>Dear {dataUser.Identity.name}, aplikasi pendaftaranmu sudah kami terima, namun mohon maaf kali ini kamu belum dapat kami terima sebagai peserta Pelatihan Forum Indonesia angkatan 22. Semoga di pelatihan berikutnya kita akan bertemu yah, kalau kata Pak Elmir: "Jangan menyerah sebelum ditolak 21 kali!", tetap semangat teman!</p>
+      <p>Dear {dataUser.Identity.name}, aplikasi pendaftaranmu sudah kami terima, namun mohon maaf kali ini kamu belum dapat kami terima sebagai peserta Pelatihan Forum Indonesia Muda angkatan 22. Semoga di pelatihan berikutnya kita akan bertemu yah, kalau kata Pak Elmir: "Jangan menyerah sebelum ditolak 21 kali!", tetap semangat teman!</p>
       <p><br /><br /></p>
       <p>Salam pemuda Indonesia!</p>
       <p>Panitia FIM 22</p>
