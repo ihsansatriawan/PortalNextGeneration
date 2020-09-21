@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import jwtDecode from 'jwt-decode';
-import { Result, Icon, Button, Skeleton, List, Avatar, Carousel, Table, message } from 'antd';
+import { Result, Input, Icon, Button, Skeleton, List, Avatar, Carousel, Table, message } from 'antd';
 import { fetch } from '@helper/fetch';
 import Router from 'next/router';
 import { newAuth } from '@HoC/withNewAuth';
@@ -49,25 +49,30 @@ const Assesment = (props) => {
       key: 'jalur',
     },
     {
-      title: 'Data Diri',
-      dataIndex: 'datadiri',
-      key: 'datadiri',
+      title: 'Regional',
+      dataIndex: 'regional',
+      key: 'regional',
     },
-    {
-      title: 'Aktivitas',
-      dataIndex: 'aktivitas',
-      key: 'aktivitas',
-    },
-    {
-      title: 'Project',
-      dataIndex: 'project',
-      key: 'project',
-    },
-    {
-      title: 'Lainnya',
-      dataIndex: 'lainnya',
-      key: 'lainnya',
-    },
+    // {
+    //   title: 'Data Diri',
+    //   dataIndex: 'datadiri',
+    //   key: 'datadiri',
+    // },
+    // {
+    //   title: 'Aktivitas',
+    //   dataIndex: 'aktivitas',
+    //   key: 'aktivitas',
+    // },
+    // {
+    //   title: 'Project',
+    //   dataIndex: 'project',
+    //   key: 'project',
+    // },
+    // {
+    //   title: 'Lainnya',
+    //   dataIndex: 'lainnya',
+    //   key: 'lainnya',
+    // },
 
     {
       title: 'Action',
@@ -85,7 +90,7 @@ const Assesment = (props) => {
     Router.push(`/detail-participant?ktpNumber=${ktpNumber}&TunnelId=${TunnelId}`)
   }
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchDataAgain = async () => {
       const { token_FIM, step } = await newAuth(props.cookieLogin);
       token_FIM && fetchListPeserta();
@@ -94,7 +99,7 @@ const Assesment = (props) => {
 
   }, [])
 
-  const fetchListPeserta = async () => {
+  const fetchListPeserta = async (ktpNumber) => {
     const payload = {
       emailRecruiter: decode.email,
     }
@@ -105,7 +110,7 @@ const Assesment = (props) => {
     const { cookieLogin, refetchStep } = props;
     try {
       const response = await fetch({
-        url: 'recruiter/participant/by-recruiter',
+        url: ktpNumber ? `recruiter/participant/by-recruiter?ktpNum=${ktpNumber}` : 'recruiter/participant/by-recruiter',
         method: 'post',
         headers: {
           'Authorization': `Bearer ${cookieLogin}`,
@@ -129,7 +134,8 @@ const Assesment = (props) => {
             datadiri: value.scoreDataDiri,
             lainnya: value.scoreOther,
             project: value.scoreProject,
-            TunnelId: value.TunnelId
+            TunnelId: value.TunnelId,
+            regional: value.Identity.User.Regional.city
           })
         })
 
@@ -148,12 +154,24 @@ const Assesment = (props) => {
     }
   }
 
+  const searchHandling = (ktpNumber) => {
+    fetchListPeserta(ktpNumber)
+  }
+
 
   return (
     <Fragment>
       <div>
         <h1>Halo Selamat Datang {decode.email || ''} </h1>
-        <p>Ada {dataSource.length} Kandidat FIM yang harus kamu nilai untuk lolos mengikuti pelatihan FIM</p>
+        <div>
+          <Input.Search
+            style={{ marginTop: '20px' }}
+            placeholder="Masukkan Nomor KTP"
+            enterButton
+            onSearch={searchHandling}
+          />
+        </div>
+        {/* <p>Ada {dataSource.length} Kandidat FIM yang harus kamu nilai untuk lolos mengikuti pelatihan FIM</p> */}
         <Table dataSource={dataSource} columns={columns} />
       </div>
     </Fragment>
