@@ -135,7 +135,7 @@ const Assesment = (props) => {
             lainnya: value.scoreOther,
             project: value.scoreProject,
             TunnelId: value.TunnelId,
-            regional: value.Identity.User.Regional !== null ? value.Identity.User.Regional.city : null
+            regional: value.Identity.User && value.Identity.User.Regional !== null ? value.Identity.User.Regional.city : null
           })
         })
 
