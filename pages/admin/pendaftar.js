@@ -200,6 +200,7 @@ const PendaftarPage = (props) => {
                     >
                         <Option value="0">Seleksi Administrasi</Option>
                         <Option value="1">Berhasil ke Tahap Interview</Option>
+                        <Option value="2">Lolos Interview & Menunggu Konfirmasi</Option>
                         <Option value="999999">Belum Lolos FIM 22</Option>
 
                         <OptGroup label="Diterima">
