@@ -253,8 +253,8 @@ class Pengumuman extends Component {
     const data = [
       {
         title: 'Catatan Seputar FIM 22',
-        description: 'File ini digunakan untuk diisi oleh perekomendasi kamu',
-        urlFile: 'https://res.cloudinary.com/fim-indonesia/image/upload/v1602314284/document/Catatan_Seputar_Pelatihan_FIM_22.pdf'
+        description: 'File ini berisi informasi seputar pelatihan FIM 22',
+        urlFile: 'https://res.cloudinary.com/fim-indonesia/image/upload/v1602336984/document/Catatan_Seputar_Pelatihan_FIM_22.pdf'
       }
     ];
 
