@@ -30,6 +30,11 @@ class Pengumuman extends Component {
     return launchTime.unix() <= today.unix()
   }
 
+  componentDidMount(){
+    // clearing cache
+    // window.location.reload(false);
+  }
+
 
 
   renderTidakLolos = () => {
@@ -147,6 +152,7 @@ class Pengumuman extends Component {
         }).then(result => {
           if (result.data.status) {
             message.success('Sukses Update Pembayaran');
+            location.reload()
           } else {
             message.error(result.data.message);
           }
