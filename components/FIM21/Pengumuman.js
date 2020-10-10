@@ -11,7 +11,7 @@ import { fetch } from '@helper/fetch';
 
 class Pengumuman extends Component {
   state = {
-    kehadiran: this.props.dataUser.Identity.batchFim !== null ? (this.props.dataUser.Identity.batchFim == '22' ? 1 : 0) : null,
+    kehadiran: this.props.dataUser.Identity.batchFim !== null && this.props.dataUser.Identity.batchFim !== '22' ? (this.props.dataUser.Identity.batchFim == '22' ? 1 : 0) : null,
     isLoading: false,
     batchFim: this.props.dataUser.Identity.batchFim,
     mbti: this.props.dataUser.Identity.mbti,
@@ -388,12 +388,12 @@ class Pengumuman extends Component {
 
                       <span>Tanggal dan Waktu Transfer</span>
                       {
-                        this.state.tanggal_bayar !== null ? <span><br /> <b> {this.state.tanggal_bayar}</b><br /></span> : (
+                        dataUser.Identity.paymentDate !== null ? <span><br /> <b> {this.state.tanggal_bayar}</b><br /></span> : (
                           <DatePicker style={{ width: '100%' }} size="large" showTime onChange={this.onChangeTimeTransfer} />
                         )
                       }
                       <span>Bank yang digunakan</span>
-                      {this.state.bank_transfer !== null ? <span> <br /> <b>{this.state.bank_transfer}</b> <br /></span> : (
+                      {dataUser.Identity.bankTransfer !== null ? <span> <br /> <b>{this.state.bank_transfer}</b> <br /></span> : (
                         <Input onChange={this.onChangeBankName} size="large" placeholder="ketik nama Bank" />
                       )}
                       <span>Upload Bukti Transfer</span>
@@ -412,7 +412,7 @@ class Pengumuman extends Component {
                           }
                         }}
                       >
-                        {(this.state.urlTransferPhoto !== null && !this.state.isLoading) ? <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={this.state.urlTransferPhoto} alt="avatar" /> :
+                        {(dataUser.Identity.urlTransferPhoto !== null && !this.state.isLoading) ? <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={this.state.urlTransferPhoto} alt="avatar" /> :
                           <div>
                             <Icon type={this.state.isLoading ? 'loading' : 'plus'} />
                             <div className="ant-upload-text">Upload</div>
