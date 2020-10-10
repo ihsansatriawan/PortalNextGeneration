@@ -512,8 +512,8 @@ class Pengumuman extends Component {
     return isLolos ?
       this.renderLolosFim()
       :
-      <h1 style={{ width: '100%', textAlign: 'center' }}>Sedang menyiapkan pengumuman, silahkan kembali lagi beberapa saat lagi ya :)</h1>
-    //  this.renderTidakLolos() 
+      // <h1 style={{ width: '100%', textAlign: 'center' }}>Sedang menyiapkan pengumuman, silahkan kembali lagi beberapa saat lagi ya :)</h1>
+     this.renderTidakLolos() 
   }
 
   render() {
