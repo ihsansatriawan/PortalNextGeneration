@@ -55,7 +55,7 @@ const PendaftarFim22Page = (props) => {
     useEffect(() => {
         fetchSemuaPendaftar()
         fetchRecruiter()
-        fetchStatisticCurrentBatch()
+        // fetchStatisticCurrentBatch()
     }, [])
 
     const onChangeRecruiter = (value, ktpNumber) => {
