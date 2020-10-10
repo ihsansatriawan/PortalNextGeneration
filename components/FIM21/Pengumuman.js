@@ -11,10 +11,12 @@ import { fetch } from '@helper/fetch';
 
 class Pengumuman extends Component {
   state = {
-    kehadiran: this.props.dataUser.Identity.batchFim !== null && this.props.dataUser.Identity.batchFim !== '22' ? (this.props.dataUser.Identity.batchFim == '22' ? 1 : 0) : null,
+    kehadiran: this.props.dataUser.Identity.batchFim !== null && this.props.dataUser.Identity.batchFim !== '20' ? (this.props.dataUser.Identity.batchFim == '22' ? 1 : 0) : null,
     isLoading: false,
     batchFim: this.props.dataUser.Identity.batchFim,
     mbti: this.props.dataUser.Identity.mbti,
+
+    confirmed: this.props.dataUser.Identity.batchFim == '22' || this.props.dataUser.Identity.batchFim == '22x' ? true : false,
 
     tanggal_bayar: this.props.dataUser.Identity.paymentDate,
     bank_transfer: this.props.dataUser.Identity.bankTransfer,
@@ -109,8 +111,9 @@ class Pengumuman extends Component {
           }
         }).then(result => {
           const batchFim = result.data.data.batchFim;
+          this.setState({ confirmed: batchFim == '22', batchFim: batchFim, isLoading:false })
           message.success('Sukses Update Konfirmasi');
-          this.setState({ batchFim: batchFim });
+          
         })
 
       } catch (error) {
@@ -278,13 +281,13 @@ class Pengumuman extends Component {
       )}
     </div>
 
-    if (this.state.kehadiran !== null && this.state.batchFim !== null) {
+    if (this.state.kehadiran !== null && this.state.batchFim !== null && this.state.confirmed == true) {
       konfirmasiComponent = this.state.kehadiran == 1 ? (
         <>
           <p>Hasil Konfirmasi: </p>
           <h1 style={{ color: '#8bc34a' }}>Saya KONFIRMASI kehadiran Saya di FIM {this.state.batchFim}</h1>
 
-          <p>Sedikit lagi. Kami membutuhkan data personality MBTI kamu. Update di kolom ini ya. Jika kamu belum pernah tes MBTI, kamu bisa menggunakan file ini<a href="https://drive.google.com/file/d/1Qy0_yxlLM3YtOYFbNZ7QUlkVDqSAk2oF/view?usp=sharing" target="_blank">di sini</a>  </p>
+          <p>Sedikit lagi. Kami membutuhkan data personality MBTI kamu. Update di kolom ini ya. Jika kamu belum pernah tes MBTI, kamu bisa menggunakan <a href="https://drive.google.com/file/d/1Qy0_yxlLM3YtOYFbNZ7QUlkVDqSAk2oF/view?usp=sharing" target="_blank">file ini</a>  </p>
           <Select
             showSearch
             size="large"
@@ -374,7 +377,7 @@ class Pengumuman extends Component {
 
         </li>
 
-        {this.state.kehadiran !== null && this.state.batchFim !== null ?
+        {this.state.kehadiran !== null && this.state.kehadiran == 1 && this.state.confirmed == true ?
           (
             <>
               <li>
@@ -412,7 +415,7 @@ class Pengumuman extends Component {
                           }
                         }}
                       >
-                        {(dataUser.Identity.urlTransferPhoto !== null && !this.state.isLoading) ? <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={this.state.urlTransferPhoto} alt="avatar" /> :
+                        {(dataUser.Identity.urlTransferPhoto !== null || this.state.urlTransferPhoto !== null && !this.state.isLoading) ? <img style={{ maxWidth: '100%', maxHeight: '100%' }} src={this.state.urlTransferPhoto} alt="avatar" /> :
                           <div>
                             <Icon type={this.state.isLoading ? 'loading' : 'plus'} />
                             <div className="ant-upload-text">Upload</div>
@@ -465,18 +468,18 @@ class Pengumuman extends Component {
           ) : null}
       </ol>
 
-      {/* {this.state.kehadiran !== null && this.state.batchFim !== null ? ( */}
-      {/* <> */}
-      <p>
-        Kami yakin kamu dapat memanfaatkan kesempatan ini dengan sebaik-baiknya. Kami ingatkan kembali bahwa kesediaan untuk mengikuti pelatihan artinya kamu telah berkomitmen untuk hadir di Pelatihan Nasional Forum Indonesia Muda 22 dan mengikuti seluruh rangkaian kegiatan secara penuh tanpa terkecuali (dispensasi bagi kejadian darurat tiba-tiba, seperti bencana alam, kedukaan, dsb.) Konsekuensi dari pelanggaran komitmen tersebut adalah blacklist bagi peserta untuk pelatihan FIM selanjutnya, serta biaya training kit yang telah dibayarkan tidak dapat dikembalikan.
+      {this.state.kehadiran !== null && this.state.kehadiran !== 0 ? (
+        <>
+          <p>
+            Kami yakin kamu dapat memanfaatkan kesempatan ini dengan sebaik-baiknya. Kami ingatkan kembali bahwa kesediaan untuk mengikuti pelatihan artinya kamu telah berkomitmen untuk hadir di Pelatihan Nasional Forum Indonesia Muda 22 dan mengikuti seluruh rangkaian kegiatan secara penuh tanpa terkecuali (dispensasi bagi kejadian darurat tiba-tiba, seperti bencana alam, kedukaan, dsb.) Konsekuensi dari pelanggaran komitmen tersebut adalah blacklist bagi peserta untuk pelatihan FIM selanjutnya, serta biaya training kit yang telah dibayarkan tidak dapat dikembalikan.
       </p>
 
-      <p>
-        Demikian informasi kali ini. Kami sungguh berharap dapat bertemu dan berbagi dengan para pemuda pilihan di bulan Oktober ini.
+          <p>
+            Demikian informasi kali ini. Kami sungguh berharap dapat bertemu dan berbagi dengan para pemuda pilihan di bulan Oktober ini.
       </p>
 
-      {/* </> */}
-      {/* ) : null} */}
+        </>
+      ) : null}
 
       <p>Salam pemuda Indonesia!</p>
       <p><br />Panitia FIM 22</p>
@@ -501,10 +504,10 @@ class Pengumuman extends Component {
     const isLolos = dataUser.Identity.status_accept == 2;
 
     return isLolos ?
-    this.renderLolosFim()
-    : 
-    <h1 style={{width:'100%', textAlign:'center'}}>Sedang menyiapkan pengumuman, silahkan kembali lagi beberapa saat lagi ya :)</h1>
-      //  this.renderTidakLolos() 
+      this.renderLolosFim()
+      :
+      <h1 style={{ width: '100%', textAlign: 'center' }}>Sedang menyiapkan pengumuman, silahkan kembali lagi beberapa saat lagi ya :)</h1>
+    //  this.renderTidakLolos() 
   }
 
   render() {
