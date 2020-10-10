@@ -77,6 +77,7 @@ const AdminPage = (props) => {
                 >
                     <Menu.Item key="9" onClick={() => { Router.push('/admin/pendaftar') }}>Pendaftar FIM Berjalan</Menu.Item>
                     <Menu.Item key="8" onClick={() => { Router.push('/admin/recruiter') }}>List Recruiter</Menu.Item>
+                    <Menu.Item key="8" onClick={() => { Router.push('/admin/fim22') }}>FIM 22</Menu.Item>
                 </Menu>
 
                 <Layout style={{ padding: '0 24px 24px' }}>
