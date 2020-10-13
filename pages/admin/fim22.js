@@ -183,7 +183,10 @@ const PendaftarFim22Page = (props) => {
         {
             title: 'Status Penerimaan',
             key: 'status_accept',
-            sorter: (a, b) => { return a.status_accept.localeCompare(b.status_accept) },
+            // sorter: (a, b) => {
+            //     console.log(a)
+            //     return a.status_accept.localeCompare(b.status_accept)
+            // },
             render: (text, record) => {
                 let statusString = null;
                 switch (record.status_accept) {
