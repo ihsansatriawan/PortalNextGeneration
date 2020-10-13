@@ -112,7 +112,7 @@ const PendaftarFim22Page = (props) => {
             key: 'phone',
             render: (text, record) => (
                 <span>
-                    <a href={`https://api.whatsapp.com/send?phone=62${record}`} target="_blank">{record.phone}</a>
+                    <a href={`https://api.whatsapp.com/send?phone=62${record.phone}`} target="_blank">{record.phone}</a>
                 </span>
             ),
         },
