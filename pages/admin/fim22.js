@@ -94,7 +94,7 @@ const PendaftarFim22Page = (props) => {
             key: 'ktpNumber',
             render: (text, record) => (
                 <span>
-                    <a onClick={(e) => onLihatSekarang(e, record.ktp, record.TunnelId)}>{record.ktpNumber}</a>
+                    <a onClick={(e) => onLihatSekarang(e, record.ktpNumber, record.User.TunnelId)}>{record.ktpNumber}</a>
                 </span>
             ),
         },
