@@ -88,8 +88,13 @@ const PendaftarFim22Page = (props) => {
     const columns = [
         {
             title: 'Nomor KTP',
-            dataIndex: 'ktpNumber',
-            key: 'ktpNumber'
+            // dataIndex: 'ktpNumber',
+            key: 'ktpNumber',
+            render: (text, record) => (
+                <span>
+                    <a onClick={(e) => onLihatSekarang(e, record.ktp, record.TunnelId)}>{record.ktpNumber}</a>
+                </span>
+            ),
         },
         {
             title: 'Name',
@@ -100,6 +105,16 @@ const PendaftarFim22Page = (props) => {
                 b = b.name !== null ? b.name : '';
                 return a.localeCompare(b)
             }
+        },
+        {
+            title: 'HP',
+            dataIndex: 'phone',
+            key: 'phone',
+            render: (text, record) => (
+                <span>
+                    <a href={`https://api.whatsapp.com/send?phone=62${record}`} target="_blank">{record.phone}</a>
+                </span>
+            ),
         },
         {
             title: 'Regional',
@@ -529,6 +544,11 @@ const PendaftarFim22Page = (props) => {
                 setIsLoadingRecruiter(false)
             }
         }
+    }
+
+    const onLihatSekarang = (e, ktpNumber, TunnelId) => {
+        e.preventDefault();
+        Router.push(`/detail-participant?ktpNumber=${ktpNumber}&TunnelId=${TunnelId}`)
     }
 
     return (
