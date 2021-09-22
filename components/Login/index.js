@@ -24,7 +24,7 @@ class Login extends React.Component {
   };
 
   redirectAfterSuccess = () => {
-    Router.push("/fim");
+    Router.push("/fim23");
   };
 
   redirectAfterSuccessLogout = () => {

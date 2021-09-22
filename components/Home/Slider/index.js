@@ -5,6 +5,7 @@ import {
   stySliderWrapper,
   styPrimaryHomeHeader,
   styLogoWrapper,
+  styImageWrapper,
 } from "./style";
 import PrimaryPicture from "./assets/primary-picture.svg";
 import LogoFim from "./assets/logo-fim.svg";
@@ -14,11 +15,11 @@ const Slider = (props) => {
 
   return (
     <div css={stySliderWrapper}>
-      <div>
+      <div css={styImageWrapper}>
         <div css={styLogoWrapper}>
           <LogoFim />
         </div>
-        <PrimaryPicture />
+        <PrimaryPicture className="primary-illustration" />
       </div>
       <div css={styPrimaryHomeHeader}>
         <h1>
