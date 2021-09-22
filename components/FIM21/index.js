@@ -180,7 +180,8 @@ class ContainerFIM21 extends Component {
     } else if (step === 4) {
       return <Question refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} />
     } else if (step === 5) {
-      return <Thank refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} onChangeStep={this.onChangeStep} />
+      // return <Thank refetchStep={this.refetchData} cookieLogin={cookieLogin} dataUser={dataUser} onChangeStep={this.onChangeStep} />
+      return <Pengumuman cookieLogin={cookieLogin}  dataUser={dataUser} />
     }
 
     return <Empty />

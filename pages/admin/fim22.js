@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import AdminPage from '.';
 import { fetch } from '@helper/fetch';
 import { SearchOutlined } from '@ant-design/icons';
+import Router from 'next/router';
+
 
 import {
     Form,
@@ -33,7 +35,7 @@ import WrapperStatistic from 'antd/lib/statistic/Statistic';
 const { Option, OptGroup } = Select;
 const CheckboxGroup = Checkbox.Group;
 
-const PendaftarPage = (props) => {
+const PendaftarFim22Page = (props) => {
     const [isLoading, setIsLoading] = useState(false);
     const [statistics, setStatistics] = useState({
         allregistration: '...',
@@ -41,7 +43,7 @@ const PendaftarPage = (props) => {
     })
 
     const [isDownloadExcelOpen, setIsDownloadExcelOpen] = useState(false);
-    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Jalur', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status', 'Next Activity', 'Regional Pengembangan'])
+    const [plainOptions, setPlainOptions] = useState(['Nama', 'Email', 'Jalur', 'Phone', 'KTP', 'Regional Saat Ini', 'Editing Video Status', 'Next Activity', 'Regional Pengembangan', 'mbti'])
     const [indeterminate, setindeterminate] = useState(true);
     const [checkAll, setCheckAll] = useState(false);
     const [checkedList, setCheckedList] = useState([]);
@@ -55,7 +57,7 @@ const PendaftarPage = (props) => {
     useEffect(() => {
         fetchSemuaPendaftar()
         fetchRecruiter()
-        fetchStatisticCurrentBatch()
+        // fetchStatisticCurrentBatch()
     }, [])
 
     const onChangeRecruiter = (value, ktpNumber) => {
@@ -88,8 +90,13 @@ const PendaftarPage = (props) => {
     const columns = [
         {
             title: 'Nomor KTP',
-            dataIndex: 'ktpNumber',
-            key: 'ktpNumber'
+            // dataIndex: 'ktpNumber',
+            key: 'ktpNumber',
+            render: (text, record) => (
+                <span>
+                    <a onClick={(e) => onLihatSekarang(e, record.ktpNumber, record.User.TunnelId)}>{record.ktpNumber}</a>
+                </span>
+            ),
         },
         {
             title: 'Name',
@@ -100,6 +107,16 @@ const PendaftarPage = (props) => {
                 b = b.name !== null ? b.name : '';
                 return a.localeCompare(b)
             }
+        },
+        {
+            title: 'HP',
+            dataIndex: 'phone',
+            key: 'phone',
+            render: (text, record) => (
+                <span>
+                    <a href={`https://api.whatsapp.com/send?phone=62${record.phone}`} target="_blank">{record.phone}</a>
+                </span>
+            ),
         },
         {
             title: 'Regional',
@@ -134,7 +151,7 @@ const PendaftarPage = (props) => {
                             position: 'relative'
                         }}>
                             {value.nameRecruiter}
-                            <div
+                            {/* <div
                                 onClick={(e) => getRemoveAction(e, value.recruiterId, value.ktpNumber)}
                                 style={{
                                     background: 'grey',
@@ -146,26 +163,30 @@ const PendaftarPage = (props) => {
                                     cursor: 'pointer',
                                     position: 'absolute',
                                     right: '0'
-                                }}>x</div>
+                                }}>x</div> */}
                         </div>
                     </span>
                 })
 
             ),
         },
-        {
-            title: 'Assign',
-            key: 'assign',
-            render: (text, record) => (
-                <span>
-                    <Assign lists={recruiters} onChange={(e) => onChangeRecruiter(e, record.ktpNumber)} />
-                    {/* <a onClick={(e) => onNilaiSekarang(e, record.ktp, record.TunnelId)}>Nilai Sekarang</a> */}
-                </span>
-            ),
-        },
+        // {
+        //     title: 'Assign',
+        //     key: 'assign',
+        //     render: (text, record) => (
+        //         <span>
+        //             <Assign lists={recruiters} onChange={(e) => onChangeRecruiter(e, record.ktpNumber)} />
+        //             {/* <a onClick={(e) => onNilaiSekarang(e, record.ktp, record.TunnelId)}>Nilai Sekarang</a> */}
+        //         </span>
+        //     ),
+        // },
         {
             title: 'Status Penerimaan',
             key: 'status_accept',
+            // sorter: (a, b) => {
+            //     console.log(a)
+            //     return a.status_accept.localeCompare(b.status_accept)
+            // },
             render: (text, record) => {
                 let statusString = null;
                 switch (record.status_accept) {
@@ -175,11 +196,19 @@ const PendaftarPage = (props) => {
                     case 1:
                         statusString = "1. Berhasil ke Tahap Interview"
                         break;
+                    case 2:
+                        statusString = "2. Menunggu Konfirmasi"
+                        if (record.batchFim == '22') {
+                            statusString = "Hadir", <smal> <br /> {record.attendenceConfirmationDate}</smal>
+                        } else if (record.batchFim == '22x') {
+                            statusString = "Tidak Hadir", <smal> <br /> {record.attendenceConfirmationDate}</smal>
+                        }
+                        break;
                     case 100:
-                        statusString = "2. Lolos FIM 22"
+                        statusString = "3. Lolos FIM 22"
                         break;
                     case 999999:
-                        statusString = "3. Belum Lolos FIM 22"
+                        statusString = "4. Belum Lolos FIM 22"
                         break;
                     default:
                         break;
@@ -189,7 +218,7 @@ const PendaftarPage = (props) => {
                     <div>
                         {statusString}
                     </div>
-                    <Select
+                    {/* <Select
                         showSearch
                         style={{ width: 200 }}
                         placeholder="Select Status"
@@ -206,7 +235,37 @@ const PendaftarPage = (props) => {
                         <OptGroup label="Diterima">
                             <Option value="22">Lolos FIM 22</Option>
                         </OptGroup>
-                    </Select>
+                    </Select> */}
+                </span>
+            }
+        },
+        {
+            title: 'Status Pembayaran',
+            key: 'status_payment',
+            render: (text, record) => {
+
+                return <span>
+                    <div>
+                        {record.urlTransferPhoto !== null ? (<a href={record.urlTransferPhoto} target="_blank"><Button> {record.bankTransfer} ({record.paymentDate})</Button></a>) : "Belum ada Bukti Pembayaran"}
+                    </div>
+                    {/* <Select
+                        showSearch
+                        style={{ width: 200 }}
+                        placeholder="Select Status"
+                        optionFilterProp="children"
+                        onChange={onChangeStatusAccept}
+                        allowClear
+                        onChange={(e) => onChangeStatusAccept(e, record.ktpNumber)}
+                    >
+                        <Option value="0">Seleksi Administrasi</Option>
+                        <Option value="1">Berhasil ke Tahap Interview</Option>
+                        <Option value="2">Lolos Interview & Menunggu Konfirmasi</Option>
+                        <Option value="999999">Belum Lolos FIM 22</Option>
+
+                        <OptGroup label="Diterima">
+                            <Option value="22">Lolos FIM 22</Option>
+                        </OptGroup>
+                    </Select> */}
                 </span>
             }
         }
@@ -316,7 +375,7 @@ const PendaftarPage = (props) => {
         const { cookieLogin, refetchStep } = props;
         try {
             const response = await fetch({
-                url: 'summary/statistic-in-batch',
+                url: 'summary/statistic-in-batch?fimBatch=22',
                 method: 'get',
                 headers: {
                     'Authorization': `Bearer ${cookieLogin}`,
@@ -347,7 +406,7 @@ const PendaftarPage = (props) => {
         const { cookieLogin, refetchStep } = props;
         try {
             const response = await fetch({
-                url: 'recruiter/participant/submited',
+                url: 'recruiter/participant/submited?fimBatch=22',
                 method: 'get',
                 headers: {
                     'Authorization': `Bearer ${cookieLogin}`,
@@ -394,7 +453,7 @@ const PendaftarPage = (props) => {
         setIsLoadingExcel(true);
         try {
             const response = await fetch({
-                url: 'data/download-excel',
+                url: 'data/download-excel?fimBatch=22',
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${cookieLogin}`,
@@ -419,6 +478,7 @@ const PendaftarPage = (props) => {
                 { header: 'Editing Video Status', key: 'videoEdit', },
                 { header: 'Next Activity', key: 'nextActivity', },
                 { header: 'Regional Pengembangan', key: 'newRegional', },
+                { header: 'mbti', key: 'mbti', },
             ];
 
             const selectedColom = kolomnya.filter((kol) => {
@@ -492,6 +552,11 @@ const PendaftarPage = (props) => {
         }
     }
 
+    const onLihatSekarang = (e, ktpNumber, TunnelId) => {
+        e.preventDefault();
+        Router.push(`/detail-participant?ktpNumber=${ktpNumber}&TunnelId=${TunnelId}`)
+    }
+
     return (
         <AdminPage>
             <div className="buttonwrapper-excel">
@@ -524,9 +589,9 @@ const PendaftarPage = (props) => {
 
 
 
-            <div className="card-dashboard-statistic">
+            {/* <div className="card-dashboard-statistic">
                 <div className="card-statistic">
-                    <h4>Jumlah Pendaftar</h4>
+                    <h4>Jumlah</h4>
                     <h2>{statistics.allregistration}</h2>
                 </div>
                 {statistics.allTunnel.map((value) => {
@@ -546,7 +611,7 @@ const PendaftarPage = (props) => {
                         </table>
                     </div>
                 })}
-            </div>
+            </div> */}
 
             <div>
                 <Input.Search
@@ -564,4 +629,4 @@ const PendaftarPage = (props) => {
     )
 }
 
-export default PendaftarPage;
+export default PendaftarFim22Page;

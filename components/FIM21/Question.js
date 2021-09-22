@@ -421,6 +421,19 @@ class Question extends Component {
   renderContent = () => {
     const { dataQuestion, currentTunnel } = this.state;
 
+    if (dataQuestion.length == 0) {
+      return <Fragment>
+      <div className="question-wrapper">
+        <div className="you-choose">
+          <Divider />
+          <span>Sayang sekali,</span>
+          <h1 style={{ fontWeight: 'bold' }}>pendaftaran FIM 22 untuk Jalur Alumni FIM 20 dan Volunteer FIM sudah di tutup :(. Sampai jumpa di pendaftaran FIM selanjutnya 😊.</h1>
+        </div>
+        <Divider />        
+      </div>
+    </Fragment>
+    }
+
     return <Fragment>
       <div className="question-wrapper">
         <div className="you-choose">
@@ -457,7 +470,11 @@ class Question extends Component {
       const status = (response.data.status || false)
 
       if (!status) {
-        message.error("Gagal menyimpan Data")
+        if (response.data.message) {          
+          message.error(response.data.message)
+        }else{
+          message.error("Gagal menyimpan data")
+        }
       } else {
         message.success(response.data.message)
       }
@@ -548,7 +565,7 @@ class Question extends Component {
     }
 
     return (<Fragment>
-      {isLoadQ ? <Skeleton active /> : this.renderContent()}
+      {isLoadQ && this.state.dataQuestion.length > 0 ? <Skeleton active /> : this.renderContent()}
       <div className="submit-question-button">
         <Button {...this.buttonSubmitProps} >
           Submit

@@ -30,7 +30,6 @@ import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver'
 import WrapperStatistic from 'antd/lib/statistic/Statistic';
 
-const { Option, OptGroup } = Select;
 const CheckboxGroup = Checkbox.Group;
 
 const PendaftarPage = (props) => {
@@ -50,7 +49,7 @@ const PendaftarPage = (props) => {
     const [recruiters, setRecruiters] = useState([]);
 
     // Search state
-
+    
 
     useEffect(() => {
         fetchSemuaPendaftar()
@@ -81,7 +80,6 @@ const PendaftarPage = (props) => {
             regional: 'Loading Data...',
         },
     ])
-
 
     const [filteredParticipant, setFilteredParticipant] = useState(null)
 
@@ -162,53 +160,6 @@ const PendaftarPage = (props) => {
                     {/* <a onClick={(e) => onNilaiSekarang(e, record.ktp, record.TunnelId)}>Nilai Sekarang</a> */}
                 </span>
             ),
-        },
-        {
-            title: 'Status Penerimaan',
-            key: 'status_accept',
-            render: (text, record) => {
-                let statusString = null;
-                switch (record.status_accept) {
-                    case 0:
-                        statusString = "0. Seleksi Administrasi"
-                        break;
-                    case 1:
-                        statusString = "1. Berhasil ke Tahap Interview"
-                        break;
-                    case 100:
-                        statusString = "2. Lolos FIM 22"
-                        break;
-                    case 999999:
-                        statusString = "3. Belum Lolos FIM 22"
-                        break;
-                    default:
-                        break;
-                }
-
-                return <span>
-                    <div>
-                        {statusString}
-                    </div>
-                    <Select
-                        showSearch
-                        style={{ width: 200 }}
-                        placeholder="Select Status"
-                        optionFilterProp="children"
-                        onChange={onChangeStatusAccept}
-                        allowClear
-                        onChange={(e) => onChangeStatusAccept(e, record.ktpNumber)}
-                    >
-                        <Option value="0">Seleksi Administrasi</Option>
-                        <Option value="1">Berhasil ke Tahap Interview</Option>
-                        <Option value="2">Lolos Interview & Menunggu Konfirmasi</Option>
-                        <Option value="999999">Belum Lolos FIM 22</Option>
-
-                        <OptGroup label="Diterima">
-                            <Option value="22">Lolos FIM 22</Option>
-                        </OptGroup>
-                    </Select>
-                </span>
-            }
         }
     ]
 
@@ -232,7 +183,7 @@ const PendaftarPage = (props) => {
                 setIsLoading(false)
             } else {
                 setRecruiters(response.data.data)
-                // message.success(response.data.message)
+                message.success(response.data.message)
                 setIsLoading(false)
             }
 
@@ -266,7 +217,7 @@ const PendaftarPage = (props) => {
                 setIsLoadingRecruiterRecruiter(false)
             } else {
                 fetchSemuaPendaftar();
-                // message.success(response.data.message)
+                message.success(response.data.message)
                 setIsLoadingRecruiter(false)
             }
 
@@ -300,7 +251,7 @@ const PendaftarPage = (props) => {
                 setIsLoadingRecruiterRecruiter(false)
             } else {
                 fetchSemuaPendaftar();
-                // message.success(response.data.message)
+                message.success(response.data.message)
                 setIsLoadingRecruiter(false)
             }
 
@@ -324,10 +275,11 @@ const PendaftarPage = (props) => {
             })
 
             const status = (response.data.status || false)
+            console.log(response.data.data)
             if (!status) {
                 message.error(response.data.message)
             } else {
-                // message.success(response.data.message)
+                message.success(response.data.message)
                 setStatistics({
                     allregistration: response.data.total,
                     allTunnel: response.data.data
@@ -361,7 +313,7 @@ const PendaftarPage = (props) => {
                 setIsLoading(false);
             } else {
 
-                // message.success(response.data.message)
+                message.success(response.data.message)
                 setIsLoading(false);
                 setAllParticipants(response.data.data)
             }
@@ -446,51 +398,17 @@ const PendaftarPage = (props) => {
 
 
     const searchHandling = value => {
-
+        
         const filterTable = allParticipants.filter(o =>
-            Object.keys(o).some(k =>
-                String(o[k])
-                    .toLowerCase()
-                    .includes(value.toLowerCase())
-            )
+          Object.keys(o).some(k =>
+            String(o[k])
+              .toLowerCase()
+              .includes(value.toLowerCase())
+          )
         );
-
+    
         setFilteredParticipant(filterTable);
-    };
-
-    const onChangeStatusAccept = async (value, ktpNumber) => {
-
-        if (value) {
-            const { cookieLogin, refetchStep } = props;
-
-            try {
-                const response = await fetch({
-                    url: '/participant/update-status-accept',
-                    method: 'post',
-                    headers: {
-                        'Authorization': `Bearer ${cookieLogin}`
-                    }, data: {
-                        value: value,
-                        ktpNumber: ktpNumber
-                    }
-                })
-
-                const status = (response.data.status || false)
-
-                if (!status) {
-                    message.error(response.data.message)
-                } else {
-                    fetchSemuaPendaftar();
-                    setFilteredParticipant(null)
-                    message.success(response.data.message)
-                }
-
-            } catch (error) {
-                message.error("Server Error")
-                setIsLoadingRecruiter(false)
-            }
-        }
-    }
+      };
 
     return (
         <AdminPage>

@@ -29,6 +29,11 @@ const AdminPage = (props) => {
         fetchDataProfile()
     }, [])
 
+    const redirectAfterSuccessLogout = () => {
+        message.success('Berhasil Logout')
+        Router.push('/')
+    }
+
     const fetchDataProfile = async () => {
         // mengatur hak akses yang hanya boleh masuk halaman admin berdasarkan table identity role
         const { cookieLogin } = props;
@@ -47,7 +52,7 @@ const AdminPage = (props) => {
             if (status) {
                 if (response.data.data) {
                     // console.log(response.data.data.data.Identity.role !== 3)
-                    if (response.data.data.Identity.role !== 2) {
+                    if (response.data.data.Identity.role !== 3) {
                         message.success('Mohon maaf kamu belum bisa untuk mengakses halaman ini')
                         Router.push('/')
                     }
@@ -63,24 +68,18 @@ const AdminPage = (props) => {
     return (
         <Layout>
             <Layout>
-                <Sider width={200} className="site-layout-background">
-                    <Menu
-                        mode="inline"
-                        defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['sub1']}
-                        style={{ height: '100%', borderRight: 0 }}
-                    >
-                        <Menu.Item key="9" onClick={() => { Router.push('/admin/pendaftar') }}>Pendaftar</Menu.Item>
-                        <Menu.Item key="8" onClick={() => { Router.push('/admin/recruiter') }}>Recruiter</Menu.Item>
-                        <Menu.Item key="12">Hasil Penilaian</Menu.Item>
 
-                        <hr></hr>
-                        <Menu.Item key="13">Regional</Menu.Item>
-                        <Menu.Item key="14">Angkatan FIM</Menu.Item>                        
-                        
+                <Menu
+                    mode="horizontal"
+                    defaultSelectedKeys={['1']}
+                    defaultOpenKeys={['sub1']}
+                    style={{ height: '100%', borderRight: 0 }}
+                >
+                    <Menu.Item key="9" onClick={() => { Router.push('/admin/pendaftar') }}>Pendaftar FIM Berjalan</Menu.Item>
+                    <Menu.Item key="8" onClick={() => { Router.push('/admin/recruiter') }}>List Recruiter</Menu.Item>
+                    <Menu.Item key="8" onClick={() => { Router.push('/admin/fim22') }}>FIM 22</Menu.Item>
+                </Menu>
 
-                    </Menu>
-                </Sider>
                 <Layout style={{ padding: '0 24px 24px' }}>
                     <Content
                         className="site-layout-background"

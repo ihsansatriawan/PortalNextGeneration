@@ -11,7 +11,8 @@ import ShowingAnswer from '../components/Recruiter/ListCardRecruiter/showingAnsw
 
 class DetailParticipant extends React.Component {
     state = {
-
+        Answers: [],
+        dataQuestion: []
     }
 
     static async getInitialProps({ query }) {
@@ -80,7 +81,8 @@ class DetailParticipant extends React.Component {
                     'Authorization': `Bearer ${cookieLogin}`
                 },
                 data: {
-                    "TunnelId": payload.TunnelId || 1
+                    "TunnelId": payload.TunnelId || 1,
+                    "isRecruiter": true
                 }
             })
 
@@ -96,7 +98,7 @@ class DetailParticipant extends React.Component {
 
         } catch (error) {
             console.log(error)
-            message.error("Server Error")
+            message.error("Server Error 2")
         }
 
     }
@@ -112,7 +114,7 @@ class DetailParticipant extends React.Component {
                     <Descriptions
                         // title="Responsive Descriptions"
                         bordered
-                        column={{ xxl: 4, xl: 3, lg: 3, md: 3, sm: 2, xs: 1 }}
+                        column={{ xxl: 1, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }}
                     >
 
                         <Descriptions.Item label="Foto">
@@ -121,6 +123,31 @@ class DetailParticipant extends React.Component {
 
                         <Descriptions.Item label="Nama Lengkap">{this.state.name ? this.state.name : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Nomor HP">{this.state.phone ? this.state.phone : 'loading...'}</Descriptions.Item>
+
+                        <Descriptions.Item label="Profesi">{this.state.occupation ? this.state.occupation : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Instagram">{this.state.instagram ?
+                            <a href={this.state.instagram} target="_blank">
+                                <Button>{this.state.instagram}</Button>
+                            </a>
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Twitter">{this.state.twitter ?
+                            <a href={this.state.twitter} target="_blank">
+                                <Button>{this.state.twitter}</Button>
+                            </a>
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="facebook">{this.state.facebook ?
+                            this.state.facebook
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="website">{this.state.website ?
+
+                            <a href={this.state.website} target="_blank">
+                                <Button>{this.state.website}</Button>
+                            </a>
+                            : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Referensi">{this.state.reference_by ? this.state.reference_by : ''}</Descriptions.Item>
+                        <Descriptions.Item label="Bisa Video Editing">{this.state.video_editing ? this.state.video_editing : ''}</Descriptions.Item>
+
+
                         <Descriptions.Item label="Email">{this.state.email ? this.state.email : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Alamat">{this.state.address ? this.state.address : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Kota">{this.state.cityAddress ? this.state.cityAddress : 'loading...'}</Descriptions.Item>
@@ -136,7 +163,7 @@ class DetailParticipant extends React.Component {
                         <Descriptions.Item label="Institusi">{this.state.institution ? this.state.institution : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Nomor KTP">{this.state.ktpNumber ? this.state.ktpNumber : 'loading...'}</Descriptions.Item>
                         <Descriptions.Item label="Gambar KTP">
-                            <img style={{ width: '100%' }} src={this.state.ktpUrl ? this.state.ktpUrl : null} />
+                            <img style={{ maxWidth: '400px' }} src={this.state.ktpUrl ? this.state.ktpUrl : null} />
                         </Descriptions.Item>
                     </Descriptions>
 
@@ -148,10 +175,11 @@ class DetailParticipant extends React.Component {
 
                             {this.state.dataQuestion.map((question, index) => {
                                 const { Answers } = this.state;
+
                                 const headerQuestion = JSON.parse(question.header)
                                 const entriesQ = Object.entries(headerQuestion)
                                 const findAnswer = Answers.find(answer => answer.QuestionId === question.id)
-                                
+
                                 return <>
                                     <h1 style={{ marginTop: '50px', textAlign: 'center' }}> {question.headline}</h1>
                                     <Card key={index}
