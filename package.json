@@ -19,6 +19,7 @@
     "@emotion/babel-preset-css-prop": "^11.2.0",
     "@emotion/react": "^11.4.1",
     "@sentry/browser": "^5.5.0",
+    "@svgr/webpack": "^5.5.0",
     "@zeit/next-css": "^1.0.1",
     "@zeit/next-sass": "^1.0.1",
     "@zeit/next-source-maps": "0.0.3",

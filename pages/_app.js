@@ -1,6 +1,6 @@
 import React from 'react';
 import App, { Container } from 'next/app';
-import Layout from '@components/Layout';
+import Layout from '@components/Layout23';
 import withGA from "next-ga";
 import { getCookieUniversal } from '@Cookie';
 import * as Sentry from '@sentry/browser';
