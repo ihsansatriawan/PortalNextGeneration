@@ -42,7 +42,7 @@ function Layout(props) {
   };
 
   return (
-    <LayoutAntd style={{ minHeight: "100vh" }}>
+    <div style={{ minHeight: "100vh" }}>
       <Head>
         <title>Portal Forum Indonesia Muda</title>
         <meta
@@ -72,11 +72,11 @@ function Layout(props) {
         <meta name="theme-color" content="#ffffff" />
       </Head>
 
-      <LayoutAntd>
+      <div>
         {children}
         <Footer style={{ textAlign: "center" }}>FIM Engineering ©2020</Footer>
-      </LayoutAntd>
-    </LayoutAntd>
+      </div>
+    </div>
   );
 }
 

@@ -24,12 +24,12 @@ class Login extends React.Component {
   };
 
   redirectAfterSuccess = () => {
-    Router.push("/fim23");
+    Router.push("/pendaftaran");
   };
 
   redirectAfterSuccessLogout = () => {
     message.success("Berhasil Logout");
-    Router.push("/");
+    Router.push("/fim23");
   };
 
   onSuccessLogin = async (res) => {
