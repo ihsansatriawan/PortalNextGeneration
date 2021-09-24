@@ -12,6 +12,7 @@ import Header from "./Header";
 import Progress from "./Progress";
 import StepMobile from "./StepMobile";
 import StepDesktop from "./StepDesktop";
+import DataDiri from "./DataDiri";
 
 const step = [
   {
@@ -53,6 +54,7 @@ const ContinerFIM23 = () => {
         <Header />
         <Progress />
         <StepMobile liststep={step} />
+        <DataDiri />
       </div>
     </div>
   );

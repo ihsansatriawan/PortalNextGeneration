@@ -52,6 +52,10 @@ export const styProgressWrapper = css`
   justify-content: space-between;
   margin-bottom: 10px;
 
+  ${mq[1]} {
+    justify-content: flex-start;
+  }
+
   .progressBar {
     margin-right: 10px;
   }
@@ -200,4 +204,8 @@ export const styStepDesktopWrapper = css`
     background: #a68b77;
     color: white;
   }
+`;
+
+export const styCardWrapper = css`
+  background: white;
 `;
