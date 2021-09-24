@@ -209,3 +209,42 @@ export const styStepDesktopWrapper = css`
 export const styCardWrapper = css`
   background: white;
 `;
+
+/**
+  Data Diri Css
+ */
+
+export const styProfpicWrapper = css`
+  width: 150px;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  margin-right: 14px;
+
+  img {
+    height: 100%;
+  }
+`;
+
+export const styUploadPhoto = css`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const styUploadProfpicButton = css`
+  .maincaption {
+    font-weight: 700;
+  }
+
+  .caption {
+    font-size: 10px;
+    line-height: auto;
+  }
+`;
+
+export const styButtonUploadFoto = css`
+  margin-top: 20px;
+  border-color: #ff8229;
+  color: #ff8229;
+`;
