@@ -1,6 +1,4 @@
 {
-    "extends": "airbnb",
-    "rules": {
-        "semi": ["warn", "never"]
-    }
+    "parser": "babel-eslint",
+    "extends": "eslint:recommended"
   }
