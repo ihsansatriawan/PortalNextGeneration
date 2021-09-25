@@ -1,3 +1,6 @@
 {
-    "extends": "@vanillaforums/eslint-config"
-}
+    "extends": "airbnb",
+    "rules": {
+        "semi": ["warn", "never"]
+    }
+  }

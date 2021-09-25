@@ -208,6 +208,7 @@ export const styStepDesktopWrapper = css`
 
 export const styCardWrapper = css`
   background: white;
+  margin-bottom: 20px;
 `;
 
 /**
