@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   Card,
@@ -14,12 +14,8 @@ import {
   Radio,
   Select,
 } from 'antd';
-import { object, string } from 'prop-types';
-import { logout } from '@helper/googleSession';
-import { fetch } from '@helper/fetch';
-import Router from 'next/router';
+import { object, string, func, bool } from 'prop-types';
 import LoadingSpin from '../LoadingSpin';
-import moment from 'moment';
 
 import {
   styCardWrapper,
@@ -48,72 +44,7 @@ const beforeUpload = (file) => {
 const BasicInfo = (props) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
   const { getFieldDecorator, setFieldsValue } = props.form;
-  const [isLoading, setIsLoading] = useState(false);
-  const [dataUser, setDataUser] = useState({});
-
-  const redirectAfterSuccessLogout = () => {
-    message.success('Berhasil Logout');
-    Router.push('/');
-  };
-
-  const fetchDataProfile = async () => {
-    const { cookieLogin } = props;
-
-    setIsLoading(true);
-
-    try {
-      const response = await fetch({
-        url: '/auth/profile',
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${cookieLogin}`,
-        },
-      });
-
-      const status = response.data.status || false;
-
-      if (!status) {
-        setDataUser({});
-      } else {
-        const responseData = response.data.data;
-        const { Identity } = responseData;
-
-        if (Identity) {
-          setDataUser(Identity);
-          setFieldsValue({
-            firstName: Identity.firstName,
-            lastName: Identity.lastName,
-            bornPlace: Identity.bornPlace,
-            bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
-            gender: Identity.gender,
-            cityAddress: Identity.cityAddress,
-            provinceAddress: Identity.provinceAddress,
-            address: Identity.address,
-            bloodGroup: Identity.bloodGroup,
-            religion: Identity.religion,
-            hobby: Identity.hobby,
-            phone: Identity.phone,
-            emergencyPhone: Identity.emergencyPhone,
-            photoUrl: Identity.photoUrl,
-          });
-        }
-      }
-
-      setIsLoading(false);
-    } catch (error) {
-      // Jika error auto logout
-      logout({
-        onLogoutSuccess: () => {
-          redirectAfterSuccessLogout();
-        },
-      });
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchDataProfile();
-  }, []);
+  const { dataUser, setDataUser, isLoading } = props;
 
   const handleChangeProfpic = (info) => {
     const status = info.file.status;
@@ -198,6 +129,15 @@ const BasicInfo = (props) => {
             </div>
           </Col>
         </div>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Form.Item label='Tempat Lahir'>
+            {getFieldDecorator('bornPlace', {
+              rules: [{ required: true, message: 'Isi tempat lahir kamu ya!' }],
+            })(<Input />)}
+          </Form.Item>
+        </Col>
       </Row>
       <Row gutter={16}>
         <Col span={12}>
@@ -408,6 +348,9 @@ const BasicInfo = (props) => {
 BasicInfo.propTypes = {
   form: object.isRequired,
   cookieLogin: string,
+  setDataUser: func,
+  isLoading: bool,
+  dataUser: object,
 };
 
 export default BasicInfo;

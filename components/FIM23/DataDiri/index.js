@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { object, string } from 'prop-types';
-import { Form, Button, Icon, notification } from 'antd';
+import { Form, Button, Icon, notification, message } from 'antd';
 import { fetch } from '@helper/fetch';
 import moment from 'moment';
+import { logout } from '@helper/googleSession';
+import Router from 'next/router';
 
 import BasicInfo from './BasicInfo';
 import Profesi from './Profesi';
@@ -15,6 +17,72 @@ import { styButtonSave, stySubmitWrapperButton } from './styles';
 
 const DataDiri = (props) => {
   const { cookieLogin } = props;
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataUser, setDataUser] = useState({});
+  const { setFieldsValue } = props.form;
+
+  const redirectAfterSuccessLogout = () => {
+    message.success('Berhasil Logout');
+    Router.push('/');
+  };
+
+  const fetchDataProfile = async () => {
+    const { cookieLogin } = props;
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch({
+        url: '/auth/profile',
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
+
+      const status = response.data.status || false;
+
+      if (!status) {
+        setDataUser({});
+      } else {
+        const responseData = response.data.data;
+        const { Identity } = responseData;
+
+        if (Identity) {
+          setDataUser(Identity);
+          setFieldsValue({
+            firstName: Identity.firstName,
+            lastName: Identity.lastName,
+            bornPlace: Identity.bornPlace,
+            bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
+            gender: Identity.gender,
+            cityAddress: Identity.cityAddress,
+            provinceAddress: Identity.provinceAddress,
+            address: Identity.address,
+            bloodGroup: Identity.bloodGroup,
+            religion: Identity.religion,
+            hobby: Identity.hobby,
+            phone: Identity.phone,
+            emergencyPhone: Identity.emergencyPhone,
+            photoUrl: Identity.photoUrl,
+            ktpNumber: Identity.ktpNumber,
+            institution: Identity.institution,
+            occupation: Identity.occupation,
+          });
+        }
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      // Jika error auto logout
+      logout({
+        onLogoutSuccess: () => {
+          redirectAfterSuccessLogout();
+        },
+      });
+      setIsLoading(false);
+    }
+  };
 
   const saveBasicInfo = async (value) => {
     const response = await fetch({
@@ -67,16 +135,23 @@ const DataDiri = (props) => {
     });
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    fetchDataProfile();
+  }, []);
 
   return (
     <Form onSubmit={handleSubmitForm}>
-      <BasicInfo {...props} />
-      <Profesi {...props} />
-      <Social {...props} />
-      <Reference {...props} />
-      <Keaktifan {...props} />
-      <Organisasi {...props} />
+      <BasicInfo
+        {...props}
+        isLoading={isLoading}
+        dataUser={dataUser}
+        setDataUser={setDataUser}
+      />
+      <Profesi {...props} isLoading={isLoading} dataUser={dataUser} />
+      <Social {...props} isLoading={isLoading} />
+      <Reference {...props} isLoading={isLoading} />
+      <Keaktifan {...props} isLoading={isLoading} />
+      <Organisasi {...props} isLoading={isLoading} />
       <div css={stySubmitWrapperButton}>
         <Form.Item>
           <Button

@@ -32,12 +32,7 @@ const Profesi = (props) => {
     fileList: [],
   });
 
-  const {
-    getFieldDecorator,
-    // getFieldsError,
-    // getFieldError,
-    // isFieldTouched,
-  } = props.form;
+  const { getFieldDecorator } = props.form;
 
   const handlePreviewOnPreview = async (file) => {
     if (!file.url && !file.preview) {
