@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
   Typography,
   Card,
@@ -13,9 +13,57 @@ import {
   DatePicker,
   Radio,
   Select,
-} from "antd";
+} from 'antd';
+import { object } from 'prop-types';
+
+import {
+  styCardWrapper,
+  styProfpicWrapper,
+  styUploadPhoto,
+  styUploadProfpicButton,
+  styButtonUploadFoto,
+} from '../style';
+
+const { Title } = Typography;
+const { TextArea } = Input;
+const { Option } = Select;
+
+const beforeUpload = (file) => {
+  const isJPG = file.type === 'image/jpeg';
+  if (!isJPG) {
+    message.error('You can only upload JPG file!');
+  }
+  const isLt2M = file.size / 1024 / 1024 < 1;
+  if (!isLt2M) {
+    message.error('Image must smaller than 1MB!');
+  }
+  return isJPG && isLt2M;
+};
 
 const BasicInfo = (props) => {
+  const [isButtonLoading, setButtonLoading] = useState(false);
+  const { getFieldDecorator } = props.form;
+
+  const handleChangeProfpic = (info) => {
+    const status = info.file.status;
+
+    switch (status) {
+      case 'uploading':
+        setButtonLoading(true);
+        break;
+      case 'error':
+        // message.error("Gagal Upload Foto");
+        setButtonLoading(false);
+        break;
+      case 'done':
+        // message.success("Sukses Upload");
+        // const { secure_url } = info.file.response;
+        setButtonLoading(false);
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <Card css={styCardWrapper}>
       <Title level={3}>Data Diri</Title>
@@ -40,9 +88,9 @@ const BasicInfo = (props) => {
                 onChange={handleChangeProfpic}
                 data={(file) => {
                   return {
-                    upload_preset: "profile_photo",
+                    upload_preset: 'profile_photo',
                     file,
-                    tags: "browser_upload",
+                    tags: 'browser_upload',
                   };
                 }}
               >
@@ -57,11 +105,11 @@ const BasicInfo = (props) => {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item label='Nama Depan'>
-            {getFieldDecorator("name", {
+            {getFieldDecorator('name', {
               rules: [
                 {
                   required: true,
-                  message: "Please input your Name",
+                  message: 'Please input your Name',
                 },
               ],
             })(<Input placeholder='isi nama dulu ya' />)}
@@ -69,11 +117,11 @@ const BasicInfo = (props) => {
         </Col>
         <Col span={12}>
           <Form.Item label='Nama Belakang'>
-            {getFieldDecorator("lastName", {
+            {getFieldDecorator('lastName', {
               rules: [
                 {
                   required: true,
-                  message: "Please input your Name",
+                  message: 'Please input your Name',
                 },
               ],
             })(<Input placeholder='isi nama belakang' />)}
@@ -83,8 +131,8 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Tempat Lahir'>
-            {getFieldDecorator("bornPlace", {
-              rules: [{ required: true, message: "Isi tempat lahir kamu ya!" }],
+            {getFieldDecorator('bornPlace', {
+              rules: [{ required: true, message: 'Isi tempat lahir kamu ya!' }],
             })(<Input />)}
           </Form.Item>
         </Col>
@@ -92,11 +140,11 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Tanggal Lahir'>
-            {getFieldDecorator("bornDate", {
+            {getFieldDecorator('bornDate', {
               rules: [
-                { required: true, message: "Tolong isi tanggal lahir kamu" },
+                { required: true, message: 'Tolong isi tanggal lahir kamu' },
               ],
-            })(<DatePicker style={{ width: "100%" }} />)}
+            })(<DatePicker style={{ width: '100%' }} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -104,23 +152,23 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Jenis Kelamin'>
-            {getFieldDecorator("gender", {
-              rules: [{ required: true, message: "Pilih jenis kelamin kamu" }],
+            {getFieldDecorator('gender', {
+              rules: [{ required: true, message: 'Pilih jenis kelamin kamu' }],
             })(
               <Radio.Group
                 defaultValue='a'
                 buttonStyle='solid'
                 size='large'
                 style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
                 }}
               >
-                <Radio.Button value='Pria' style={{ width: "48%" }}>
+                <Radio.Button value='Pria' style={{ width: '48%' }}>
                   Pria
                 </Radio.Button>
-                <Radio.Button value='Wanita' style={{ width: "48%" }}>
+                <Radio.Button value='Wanita' style={{ width: '48%' }}>
                   Wanita
                 </Radio.Button>
               </Radio.Group>
@@ -131,8 +179,8 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Kota'>
-            {getFieldDecorator("cityAddress", {
-              rules: [{ required: true, message: "Isi Kota Alamat kamu!" }],
+            {getFieldDecorator('cityAddress', {
+              rules: [{ required: true, message: 'Isi Kota Alamat kamu!' }],
             })(<Input placeholder='kota domisili saat ini' />)}
           </Form.Item>
         </Col>
@@ -141,8 +189,8 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Provinsi'>
-            {getFieldDecorator("provinceAddress", {
-              rules: [{ required: true, message: "Isi Provinsi Alamat kamu!" }],
+            {getFieldDecorator('provinceAddress', {
+              rules: [{ required: true, message: 'Isi Provinsi Alamat kamu!' }],
             })(<Input placeholder='provinsi domisili saat ini' />)}
           </Form.Item>
         </Col>
@@ -151,9 +199,9 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Alamat Lengkap'>
-            {getFieldDecorator("address", {
+            {getFieldDecorator('address', {
               rules: [
-                { required: true, message: "Please input your address!" },
+                { required: true, message: 'Please input your address!' },
               ],
             })(<TextArea placeholder='alamat domisili saat ini' rows={4} />)}
           </Form.Item>
@@ -163,28 +211,28 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Golongan Darah'>
-            {getFieldDecorator("bloodGroup", {
-              rules: [{ required: true, message: "Pilih Golongan Darah" }],
+            {getFieldDecorator('bloodGroup', {
+              rules: [{ required: true, message: 'Pilih Golongan Darah' }],
             })(
               <Radio.Group
                 buttonStyle='solid'
                 size='large'
                 style={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "space-between",
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'space-between',
                 }}
               >
-                <Radio.Button value='A' style={{ width: "22%" }}>
+                <Radio.Button value='A' style={{ width: '22%' }}>
                   A
                 </Radio.Button>
-                <Radio.Button value='B' style={{ width: "22%" }}>
+                <Radio.Button value='B' style={{ width: '22%' }}>
                   B
                 </Radio.Button>
-                <Radio.Button value='AB' style={{ width: "22%" }}>
+                <Radio.Button value='AB' style={{ width: '22%' }}>
                   AB
                 </Radio.Button>
-                <Radio.Button value='O' style={{ width: "22%" }}>
+                <Radio.Button value='O' style={{ width: '22%' }}>
                   O
                 </Radio.Button>
               </Radio.Group>
@@ -196,12 +244,12 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Agama'>
-            {getFieldDecorator("religion", {
+            {getFieldDecorator('religion', {
               rules: [
-                { required: true, message: "Please select your religion" },
+                { required: true, message: 'Please select your religion' },
               ],
             })(
-              <Select style={{ width: "100%" }}>
+              <Select style={{ width: '100%' }}>
                 <Option value='Islam'>Islam</Option>
                 <Option value='Kristen Protestan'>Kristen Protestan</Option>
                 <Option value='Katolik'>Katolik</Option>
@@ -220,8 +268,8 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Hobi'>
-            {getFieldDecorator("hobby", {
-              rules: [{ required: true, message: "Tolong isi Hobi kamu!" }],
+            {getFieldDecorator('hobby', {
+              rules: [{ required: true, message: 'Tolong isi Hobi kamu!' }],
             })(<Input />)}
           </Form.Item>
         </Col>
@@ -230,17 +278,17 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Nomor HP'>
-            {getFieldDecorator("phone", {
+            {getFieldDecorator('phone', {
               rules: [
                 {
                   required: true,
-                  message: "Please input your phone number!",
+                  message: 'Please input your phone number!',
                 },
               ],
             })(
               <Input
                 placeholder='nomor telepon pribadi'
-                style={{ width: "100%" }}
+                style={{ width: '100%' }}
               />
             )}
           </Form.Item>
@@ -249,8 +297,8 @@ const BasicInfo = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Nomor HP Darurat'>
-            {getFieldDecorator("emergencyPhone", {
-              rules: [{ required: true, message: "Isi Nomor Darurat kamu!" }],
+            {getFieldDecorator('emergencyPhone', {
+              rules: [{ required: true, message: 'Isi Nomor Darurat kamu!' }],
             })(
               <Input placeholder='nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789' />
             )}
@@ -259,6 +307,10 @@ const BasicInfo = (props) => {
       </Row>
     </Card>
   );
+};
+
+BasicInfo.propTypes = {
+  form: object.isRequired,
 };
 
 export default BasicInfo;
