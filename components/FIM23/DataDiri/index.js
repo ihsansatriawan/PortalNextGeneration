@@ -19,6 +19,18 @@ const DataDiri = (props) => {
   const { cookieLogin } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [dataUser, setDataUser] = useState({});
+  const [listCertificate, setListCertificate] = useState({
+    previewVisible: false,
+    previewImage: '',
+    fileList: [
+      {
+        uid: '1',
+        url: '',
+        status: 'done',
+      },
+    ],
+  });
+
   const { setFieldsValue } = props.form;
 
   const redirectAfterSuccessLogout = () => {
@@ -46,10 +58,10 @@ const DataDiri = (props) => {
         setDataUser({});
       } else {
         const responseData = response.data.data;
-        const { Identity } = responseData;
+        const { Identity, Skill } = responseData;
 
         if (Identity) {
-          setDataUser(Identity);
+          setDataUser(responseData);
           setFieldsValue({
             firstName: Identity.firstName,
             lastName: Identity.lastName,
@@ -68,6 +80,41 @@ const DataDiri = (props) => {
             ktpNumber: Identity.ktpNumber,
             institution: Identity.institution,
             occupation: Identity.occupation,
+          });
+        }
+
+        if (Skill) {
+          setFieldsValue({
+            isAbleVideoEditing: Skill.isAbleVideoEditing,
+            videoEditingPortofolioUrl: Skill.videoEditingPortofolioUrl,
+          });
+
+          const listCertNorm = [];
+
+          Skill.firstCertificateUrl
+            ? listCertNorm.push({
+                uid: '1',
+                url: Skill.firstCertificateUrl,
+              })
+            : null;
+          Skill.secondCertificateUrl
+            ? listCertNorm.push({
+                uid: '2',
+                url: Skill.secondCertificateUrl,
+              })
+            : null;
+          Skill.thirdCertificateUrl
+            ? listCertNorm.push({
+                uid: '2',
+                url: Skill.thirdCertificateUrl,
+              })
+            : null;
+
+          setListCertificate((prevState) => {
+            return {
+              ...prevState,
+              fileList: listCertNorm,
+            };
           });
         }
       }
@@ -124,10 +171,42 @@ const DataDiri = (props) => {
     }
   };
 
+  const saveSkills = async (value) => {
+    const response = await fetch({
+      url: '/auth/profile/skill',
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${cookieLogin}`,
+      },
+      data: {
+        isAbleVideoEditing: value.isAbleVideoEditing,
+        videoEditingPortofolioUrl: value.videoEditingPortofolioUrl,
+        firstCertificateUrl: listCertificate.fileList[0]
+          ? listCertificate.fileList[0].url
+          : null,
+        secondCertificateUrl: listCertificate.fileList[1]
+          ? listCertificate.fileList[1].url
+          : null,
+        thirdCertificateUrl: listCertificate.fileList[2]
+          ? listCertificate.fileList[2].url
+          : null,
+      },
+    });
+
+    const { status, message } = response.data;
+
+    if (!status) {
+      notification.error({ message: message });
+    } else {
+      notification.success({ message: message });
+    }
+  };
+
   const handleSubmitForm = (e) => {
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       saveBasicInfo(values);
+      saveSkills(values);
       // if (!err) {
       //   console.log(values);
       //   console.log('values');
@@ -147,7 +226,13 @@ const DataDiri = (props) => {
         dataUser={dataUser}
         setDataUser={setDataUser}
       />
-      <Profesi {...props} isLoading={isLoading} dataUser={dataUser} />
+      <Profesi
+        {...props}
+        isLoading={isLoading}
+        dataUser={dataUser}
+        listCertificate={listCertificate}
+        setListCertificate={setListCertificate}
+      />
       <Social {...props} isLoading={isLoading} />
       <Reference {...props} isLoading={isLoading} />
       <Keaktifan {...props} isLoading={isLoading} />

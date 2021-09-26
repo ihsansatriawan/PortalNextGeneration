@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Card,
   Row,
@@ -11,7 +11,7 @@ import {
   Icon,
 } from 'antd';
 import { styCardWrapper } from '../style';
-import { object } from 'prop-types';
+import { object, func } from 'prop-types';
 
 const beforeUploadCertificate = (file) => {
   const isJPGorPDF = file.type === 'image/jpeg' || 'application/pdf';
@@ -26,13 +26,8 @@ const beforeUploadCertificate = (file) => {
 };
 
 const Profesi = (props) => {
-  const [listCertificate, setListCertificate] = useState({
-    previewVisible: false,
-    previewImage: '',
-    fileList: [],
-  });
-
   const { getFieldDecorator } = props.form;
+  const { listCertificate, setListCertificate } = props;
 
   const handlePreviewOnPreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -127,13 +122,13 @@ const Profesi = (props) => {
                 }}
               >
                 <Radio.Button
-                  value='BISA'
+                  value={true}
                   style={{ width: '48%', textAlign: 'center' }}
                 >
                   Ya
                 </Radio.Button>
                 <Radio.Button
-                  value='TIDAK BISA'
+                  value={false}
                   style={{ width: '48%', textAlign: 'center' }}
                 >
                   Tidak
@@ -191,6 +186,8 @@ const Profesi = (props) => {
 
 Profesi.propTypes = {
   form: object.isRequired,
+  listCertificate: object,
+  setListCertificate: func,
 };
 
 export default Profesi;

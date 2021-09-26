@@ -45,6 +45,7 @@ const BasicInfo = (props) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
   const { getFieldDecorator, setFieldsValue } = props.form;
   const { dataUser, setDataUser, isLoading } = props;
+  const { Identity } = dataUser;
 
   const handleChangeProfpic = (info) => {
     const status = info.file.status;
@@ -64,7 +65,10 @@ const BasicInfo = (props) => {
         setFieldsValue({ photoUrl: secure_url });
         setDataUser((prevState) => ({
           ...prevState,
-          photoUrl: secure_url,
+          Identity: {
+            ...prevState.Identity,
+            photoUrl: secure_url,
+          },
         }));
         setButtonLoading(false);
         break;
@@ -103,13 +107,22 @@ const BasicInfo = (props) => {
       {isLoading && <LoadingSpin />}
       <Title level={3}>Data Diri</Title>
       <Row>
+        <Col span={24}>
+          <Form.Item label='No KTP'>
+            {getFieldDecorator('ktpNumber', {
+              rules: [{ required: true, message: 'Isi nomor NIK / KTP kamu ya!' }],
+            })(<Input />)}
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
         <div css={styUploadPhoto}>
           <Col span={12}>
             <div css={styProfpicWrapper}>
               <img
                 src={
-                  dataUser.photoUrl
-                    ? dataUser.photoUrl
+                  Identity
+                    ? Identity.photoUrl
                     : 'https://qph.fs.quoracdn.net/main-qimg-cf89e8e6daa9dabc8174c303e4d53d3a'
                 }
               />
