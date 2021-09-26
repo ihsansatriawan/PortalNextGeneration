@@ -11,7 +11,8 @@ import {
   Icon,
 } from 'antd';
 import { styCardWrapper } from '../style';
-import { object, func } from 'prop-types';
+import { object, func, bool } from 'prop-types';
+import LoadingSpin from '../LoadingSpin';
 
 const beforeUploadCertificate = (file) => {
   const isJPGorPDF = file.type === 'image/jpeg' || 'application/pdf';
@@ -27,7 +28,7 @@ const beforeUploadCertificate = (file) => {
 
 const Profesi = (props) => {
   const { getFieldDecorator } = props.form;
-  const { listCertificate, setListCertificate } = props;
+  const { listCertificate, setListCertificate, isLoading } = props;
 
   const handlePreviewOnPreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -76,6 +77,7 @@ const Profesi = (props) => {
 
   return (
     <Card css={styCardWrapper}>
+      {isLoading && <LoadingSpin />}
       <Row>
         <Col span={24}>
           <Form.Item label='Institusi'>
@@ -188,6 +190,7 @@ Profesi.propTypes = {
   form: object.isRequired,
   listCertificate: object,
   setListCertificate: func,
+  isLoading: bool,
 };
 
 export default Profesi;

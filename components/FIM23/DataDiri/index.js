@@ -58,7 +58,7 @@ const DataDiri = (props) => {
         setDataUser({});
       } else {
         const responseData = response.data.data;
-        const { Identity, Skill } = responseData;
+        const { Identity, Skill, SocialMedia, AlumniReference } = responseData;
 
         if (Identity) {
           setDataUser(responseData);
@@ -115,6 +115,26 @@ const DataDiri = (props) => {
               ...prevState,
               fileList: listCertNorm,
             };
+          });
+        }
+
+        if (SocialMedia) {
+          setFieldsValue({
+            twitterUrl: SocialMedia.twitterUrl,
+            instagramUrl: SocialMedia.instagramUrl,
+            facebookUrl: SocialMedia.facebookUrl,
+            websiteUrl: SocialMedia.websiteUrl,
+            otherSiteUrl: SocialMedia.otherSiteUrl,
+          });
+        }
+
+        if (AlumniReference) {
+          setFieldsValue({
+            fullNameRef: AlumniReference.fullName,
+            batchRef: AlumniReference.batch,
+            phoneNumberRef: AlumniReference.phoneNumber,
+            relationshipRef: AlumniReference.relationship,
+            acquaintedSinceRef: AlumniReference.acquaintedSince,
           });
         }
       }
@@ -202,15 +222,63 @@ const DataDiri = (props) => {
     }
   };
 
+  const saveSocialMedia = async (value) => {
+    const response = await fetch({
+      url: '/auth/profile/social-media',
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${cookieLogin}`,
+      },
+      data: {
+        instagramUrl: value.instagramUrl,
+        twitterUrl: value.twitterUrl,
+        facebookUrl: value.facebookUrl,
+        websiteUrl: value.websiteUrl,
+        otherSiteUrl: value.otherSiteUrl,
+      },
+    });
+
+    const { status, message } = response.data;
+
+    if (!status) {
+      notification.error({ message: message });
+    } else {
+      notification.success({ message: message });
+    }
+  };
+
+  const saveReference = async (value) => {
+    const response = await fetch({
+      url: '/auth/profile/alumni-reference',
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${cookieLogin}`,
+      },
+      data: {
+        fullName: value.fullNameRef,
+        batch: value.batchRef,
+        phoneNumber: value.phoneNumberRef,
+        relationship: value.relationshipRef,
+        acquaintedSince: value.acquaintedSinceRef,
+      },
+    });
+
+    const { status, message } = response.data;
+
+    if (!status) {
+      notification.error({ message: message });
+    } else {
+      notification.success({ message: message });
+    }
+  };
+
   const handleSubmitForm = (e) => {
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
-      saveBasicInfo(values);
-      saveSkills(values);
-      // if (!err) {
-      //   console.log(values);
-      //   console.log('values');
-      // }
+      // saveBasicInfo(values);
+      // saveSkills(values);
+      // saveSocialMedia(values);
+      saveReference(values);
     });
   };
 

@@ -13,7 +13,7 @@ const Reference = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Nama Lengkap'>
-            {getFieldDecorator('fullName', {
+            {getFieldDecorator('fullNameRef', {
               rules: [
                 {
                   required: true,
@@ -27,7 +27,7 @@ const Reference = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Angkatan FIM'>
-            {getFieldDecorator('batch', {
+            {getFieldDecorator('batchRef', {
               rules: [
                 {
                   required: true,
@@ -41,7 +41,7 @@ const Reference = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='No HP'>
-            {getFieldDecorator('phoneNumber', {
+            {getFieldDecorator('phoneNumberRef', {
               rules: [
                 {
                   required: true,
@@ -55,7 +55,7 @@ const Reference = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Kenal Berapa Lama ?'>
-            {getFieldDecorator('acquaintedSince', {
+            {getFieldDecorator('acquaintedSinceRef', {
               rules: [
                 {
                   required: true,
@@ -69,7 +69,7 @@ const Reference = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Mengenal sebagai Apa ?'>
-            {getFieldDecorator('relationship', {
+            {getFieldDecorator('relationshipRef', {
               rules: [
                 {
                   required: true,

@@ -1,14 +1,16 @@
 import React from 'react';
 import { Card, Row, Form, Col, Input, Typography, Icon } from 'antd';
 import { styCardWrapper } from '../style';
-import { object } from 'prop-types';
+import { object, bool } from 'prop-types';
 const { Text } = Typography;
+import LoadingSpin from '../LoadingSpin';
 
 const Social = (props) => {
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, isLoading } = props.form;
 
   return (
     <Card css={styCardWrapper}>
+      {isLoading && <LoadingSpin />}
       <Text strong level={3}>
         Akun Media Sosial
       </Text>
@@ -118,6 +120,7 @@ const Social = (props) => {
 
 Social.propTypes = {
   form: object.isRequired,
+  isLoading: bool,
 };
 
 export default Social;
