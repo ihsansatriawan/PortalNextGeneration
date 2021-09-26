@@ -31,7 +31,7 @@ const DataDiri = (props) => {
     ],
   });
 
-  const { setFieldsValue } = props.form;
+  const { setFieldsValue, getFieldValue } = props.form;
 
   const redirectAfterSuccessLogout = () => {
     message.success('Berhasil Logout');
@@ -58,7 +58,14 @@ const DataDiri = (props) => {
         setDataUser({});
       } else {
         const responseData = response.data.data;
-        const { Identity, Skill, SocialMedia, AlumniReference } = responseData;
+        const {
+          Identity,
+          Skill,
+          SocialMedia,
+          AlumniReference,
+          FimActivity,
+          OrganizationExperiences,
+        } = responseData;
 
         if (Identity) {
           setDataUser(responseData);
@@ -130,11 +137,52 @@ const DataDiri = (props) => {
 
         if (AlumniReference) {
           setFieldsValue({
-            fullNameRef: AlumniReference.fullName,
-            batchRef: AlumniReference.batch,
-            phoneNumberRef: AlumniReference.phoneNumber,
-            relationshipRef: AlumniReference.relationship,
-            acquaintedSinceRef: AlumniReference.acquaintedSince,
+            responsibility: AlumniReference.responsibility,
+            role: AlumniReference.role,
+            duration: AlumniReference.duration,
+            eventScale: AlumniReference.eventScale,
+            result: AlumniReference.result,
+          });
+        }
+
+        if (FimActivity) {
+          setFieldsValue({
+            responsibility: FimActivity.responsibility,
+            roleActivity: FimActivity.role,
+            durationActivity: FimActivity.duration,
+            eventScaleActivity: FimActivity.eventScale,
+            resultActivity: FimActivity.result,
+          });
+        }
+
+        if (OrganizationExperiences) {
+          let initialKey = [];
+
+          let orgDuration = [];
+          let orgEventScale = [];
+          let orgReferencePerson = [];
+          let orgResult = [];
+          let orgRole = [];
+
+          for (let index = 0; index < OrganizationExperiences.length; index++) {
+            initialKey.concat(index);
+          }
+
+          OrganizationExperiences.map((org) => {
+            orgDuration.push(org.duration);
+            orgEventScale.push(org.eventScale);
+            orgReferencePerson.push(org.referencePerson);
+            orgResult.push(org.result);
+            orgRole.push(org.role);
+          });
+
+          setFieldsValue({
+            organizaitons: initialKey,
+            orgDuration,
+            orgEventScale,
+            orgReferencePerson,
+            orgResult,
+            orgRole,
           });
         }
       }
@@ -272,13 +320,74 @@ const DataDiri = (props) => {
     }
   };
 
+  const saveFimActivity = async (value) => {
+    const response = await fetch({
+      url: '/auth/profile/fim-activity',
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${cookieLogin}`,
+      },
+      data: {
+        responsibility: value.responsibility,
+        role: value.roleActivity,
+        duration: value.durationActivity,
+        eventScale: value.eventScaleActivity,
+        result: value.resultActivity,
+      },
+    });
+
+    const { status, message } = response.data;
+
+    if (!status) {
+      notification.error({ message: message });
+    } else {
+      notification.success({ message: message });
+    }
+  };
+
+  const saveOrganization = async (value) => {
+    const countOrg = getFieldValue('organizaitons');
+    const normalizer = countOrg.map((key) => {
+      return {
+        referencePerson: value.orgReferencePerson[key],
+        role: value.orgRole[key],
+        duration: value.orgDuration[key],
+        eventScale: value.eventScale[key],
+        result: value.orgResult[key],
+      };
+    });
+
+    const response = await fetch({
+      url: '/auth/profile/organization-experience',
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${cookieLogin}`,
+      },
+      data: normalizer,
+    });
+
+    const { status, message } = response.data;
+
+    if (!status) {
+      notification.error({ message: message });
+    } else {
+      notification.success({ message: message });
+    }
+  };
+
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    props.form.validateFieldsAndScroll((err, values) => {
-      // saveBasicInfo(values);
-      // saveSkills(values);
-      // saveSocialMedia(values);
-      saveReference(values);
+    props.form.validateFieldsAndScroll(async (err, values) => {
+      if (!err) {
+        Promise.all([
+          saveBasicInfo(values),
+          saveSkills(values),
+          saveSocialMedia(values),
+          saveReference(values),
+          saveFimActivity(values),
+          saveOrganization(values),
+        ]);
+      }
     });
   };
 

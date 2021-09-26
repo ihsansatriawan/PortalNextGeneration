@@ -19,3 +19,23 @@ export const stySubmitWrapperButton = css`
   justify-content: center;
   align-items: center;
 `;
+
+export const styBtnAddField = css`
+  cursor: pointer;
+  background: #ebebeb;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  right: 20px;
+  top: 30px;
+`;
+
+export const styOrganizationWrapper = css`
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid grey;
+`;

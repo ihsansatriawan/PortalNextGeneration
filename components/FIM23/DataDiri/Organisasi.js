@@ -1,25 +1,35 @@
 import React from 'react';
-import { Card, Row, Form, Col, Typography, Radio, Input } from 'antd';
+import { Card, Row, Form, Col, Typography, Radio, Input, Icon } from 'antd';
 import { styCardWrapper } from '../style';
+import { styBtnAddField, styOrganizationWrapper } from './styles';
 import { object } from 'prop-types';
 const { Title } = Typography;
 const { TextArea } = Input;
 
+let id = 0;
+
 const Organisasi = (props) => {
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, getFieldValue, setFieldsValue } = props.form;
+  getFieldDecorator('organizations', { initialValue: [] });
+  const keys = getFieldValue('organizations');
 
-  return (
-    <Card css={styCardWrapper}>
-      <Title level={3}>Keaktifan Organisasi</Title>
-      <p>
-        Isi form keaktifan FIM di bawah ini apabila dalam satu tahun terakhir
-        kamu aktif di FIM. Kosongkan jika tidak ada.
-      </p>
+  console.log(keys);
+  console.log('keys');
 
+  const onHandleAddForm = () => {
+    const keys = getFieldValue('organizations');
+    const nextKeys = keys.concat(id++);
+    setFieldsValue({
+      organizations: nextKeys,
+    });
+  };
+
+  const formItems = keys.map((key, index) => (
+    <div css={styOrganizationWrapper} key={index}>
       <Row>
         <Col span={24}>
           <Form.Item label='Peran'>
-            {getFieldDecorator('role', {
+            {getFieldDecorator(`orgRole[${key}]`, {
               rules: [
                 {
                   required: false,
@@ -34,7 +44,7 @@ const Organisasi = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Referensi atau Penanggungjawab'>
-            {getFieldDecorator('referencePerson', {
+            {getFieldDecorator(`orgReferencePerson[${key}]`, {
               rules: [
                 {
                   required: false,
@@ -49,7 +59,7 @@ const Organisasi = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Durasi Kegiatan'>
-            {getFieldDecorator('duration', {
+            {getFieldDecorator(`orgDuration[${key}]`, {
               rules: [
                 {
                   required: false,
@@ -64,7 +74,7 @@ const Organisasi = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Skala Kegiatan'>
-            {getFieldDecorator('eventScale', {
+            {getFieldDecorator(`orgEventScale[${key}]`, {
               rules: [
                 {
                   required: false,
@@ -98,7 +108,7 @@ const Organisasi = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Hasil Kegiatan'>
-            {getFieldDecorator('result', {
+            {getFieldDecorator(`orgResult[${key}]`, {
               rules: [
                 {
                   required: false,
@@ -109,6 +119,20 @@ const Organisasi = (props) => {
           </Form.Item>
         </Col>
       </Row>
+    </div>
+  ));
+
+  return (
+    <Card css={styCardWrapper}>
+      <div css={styBtnAddField} onClick={onHandleAddForm}>
+        <Icon type='plus' />
+      </div>
+      <Title level={3}>Keaktifan Organisasi</Title>
+      <p>
+        Isi form keaktifan FIM di bawah ini apabila dalam satu tahun terakhir
+        kamu aktif di FIM. Kosongkan jika tidak ada.
+      </p>
+      {formItems}
     </Card>
   );
 };

@@ -36,7 +36,7 @@ const Keaktifan = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Peran'>
-            {getFieldDecorator('role', {
+            {getFieldDecorator('roleActivity', {
               rules: [
                 {
                   required: false,
@@ -50,7 +50,7 @@ const Keaktifan = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Durasi Kegiatan'>
-            {getFieldDecorator('duration', {
+            {getFieldDecorator('durationActivity', {
               rules: [
                 {
                   required: false,
@@ -65,7 +65,7 @@ const Keaktifan = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Skala Kegiatan'>
-            {getFieldDecorator('eventScale', {
+            {getFieldDecorator('eventScaleActivity', {
               rules: [
                 {
                   required: false,
@@ -99,7 +99,7 @@ const Keaktifan = (props) => {
       <Row>
         <Col span={24}>
           <Form.Item label='Hasil Kegiatan'>
-            {getFieldDecorator('result', {
+            {getFieldDecorator('resultActivity', {
               rules: [
                 {
                   required: false,
