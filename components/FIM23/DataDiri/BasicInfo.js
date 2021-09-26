@@ -19,6 +19,7 @@ import { logout } from '@helper/googleSession';
 import { fetch } from '@helper/fetch';
 import Router from 'next/router';
 import LoadingSpin from '../LoadingSpin';
+import moment from 'moment';
 
 import {
   styCardWrapper,
@@ -83,7 +84,7 @@ const BasicInfo = (props) => {
             firstName: Identity.firstName,
             lastName: Identity.lastName,
             bornPlace: Identity.bornPlace,
-            bornDate: Identity.bornDate,
+            bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
             gender: Identity.gender,
             cityAddress: Identity.cityAddress,
             provinceAddress: Identity.provinceAddress,
@@ -106,7 +107,6 @@ const BasicInfo = (props) => {
           redirectAfterSuccessLogout();
         },
       });
-
       setIsLoading(false);
     }
   };

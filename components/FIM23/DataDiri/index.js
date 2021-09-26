@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { object, string } from 'prop-types';
 import { Form, Button, Icon, notification } from 'antd';
 import { fetch } from '@helper/fetch';
+import moment from 'moment';
 
 import BasicInfo from './BasicInfo';
 import Profesi from './Profesi';
@@ -34,7 +35,7 @@ const DataDiri = (props) => {
             : value.photoUrl.file.response.secure_url,
         religion: value.religion,
         bornPlace: value.bornPlace,
-        bornDate: value.bornDate,
+        bornDate: moment(value.bornDate || new Date(), 'YYYY-MM-DD'),
         address: value.address,
         cityAddress: value.cityAddress,
         provinceAddress: value.provinceAddress,
@@ -48,9 +49,6 @@ const DataDiri = (props) => {
 
     const { status, message } = response.data;
 
-    console.log(message);
-    console.log('message');
-
     if (!status) {
       notification.error({ message: message });
     } else {
@@ -61,8 +59,6 @@ const DataDiri = (props) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
-      console.log(values);
-      console.log('values');
       saveBasicInfo(values);
       // if (!err) {
       //   console.log(values);
