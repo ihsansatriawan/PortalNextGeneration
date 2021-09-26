@@ -14,7 +14,7 @@ const openNotificationWithIcon = type => {
 const redirectForbidden = () => {
   openNotificationWithIcon('error')
   removeCookie(CONSTANT.TOKEN_NAME)
-  Router.push('/login')
+  Router.push('/')
 }
 
 export const withUser = async ctx => {

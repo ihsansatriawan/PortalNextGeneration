@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Typography,
   Card,
@@ -14,7 +14,11 @@ import {
   Radio,
   Select,
 } from 'antd';
-import { object } from 'prop-types';
+import { object, string } from 'prop-types';
+import { logout } from '@helper/googleSession';
+import { fetch } from '@helper/fetch';
+import Router from 'next/router';
+import LoadingSpin from '../LoadingSpin';
 
 import {
   styCardWrapper,
@@ -42,7 +46,74 @@ const beforeUpload = (file) => {
 
 const BasicInfo = (props) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, setFieldsValue } = props.form;
+  const [isLoading, setIsLoading] = useState(false);
+  const [dataUser, setDataUser] = useState({});
+
+  const redirectAfterSuccessLogout = () => {
+    message.success('Berhasil Logout');
+    Router.push('/');
+  };
+
+  const fetchDataProfile = async () => {
+    const { cookieLogin } = props;
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch({
+        url: '/auth/profile',
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
+
+      const status = response.data.status || false;
+
+      if (!status) {
+        setDataUser({});
+      } else {
+        const responseData = response.data.data;
+        const { Identity } = responseData;
+
+        if (Identity) {
+          setDataUser(Identity);
+          setFieldsValue({
+            firstName: Identity.firstName,
+            lastName: Identity.lastName,
+            bornPlace: Identity.bornPlace,
+            bornDate: Identity.bornDate,
+            gender: Identity.gender,
+            cityAddress: Identity.cityAddress,
+            provinceAddress: Identity.provinceAddress,
+            address: Identity.address,
+            bloodGroup: Identity.bloodGroup,
+            religion: Identity.religion,
+            hobby: Identity.hobby,
+            phone: Identity.phone,
+            emergencyPhone: Identity.emergencyPhone,
+            photoUrl: Identity.photoUrl,
+          });
+        }
+      }
+
+      setIsLoading(false);
+    } catch (error) {
+      // Jika error auto logout
+      logout({
+        onLogoutSuccess: () => {
+          redirectAfterSuccessLogout();
+        },
+      });
+
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDataProfile();
+  }, []);
 
   const handleChangeProfpic = (info) => {
     const status = info.file.status;
@@ -55,49 +126,75 @@ const BasicInfo = (props) => {
         // message.error("Gagal Upload Foto");
         setButtonLoading(false);
         break;
-      case 'done':
+      case 'done': {
         // message.success("Sukses Upload");
-        // const { secure_url } = info.file.response;
+        const { secure_url } = info.file.response;
+
+        setFieldsValue({ photoUrl: secure_url });
+        setDataUser((prevState) => ({
+          ...prevState,
+          photoUrl: secure_url,
+        }));
         setButtonLoading(false);
         break;
+      }
       default:
         break;
     }
   };
+
+  const renderUpload = () => {
+    return (
+      <Upload
+        className='avatar-uploader'
+        showUploadList={false}
+        action='https://api.cloudinary.com/v1_1/fim-indonesia/image/upload'
+        beforeUpload={beforeUpload}
+        onChange={handleChangeProfpic}
+        data={(file) => {
+          return {
+            upload_preset: 'profile_photo',
+            file,
+            tags: 'browser_upload',
+          };
+        }}
+      >
+        {' '}
+        <Button css={styButtonUploadFoto} loading={isButtonLoading}>
+          <Icon type='upload' /> Upload Foto Diri
+        </Button>
+      </Upload>
+    );
+  };
+
   return (
     <Card css={styCardWrapper}>
+      {isLoading && <LoadingSpin />}
       <Title level={3}>Data Diri</Title>
       <Row>
         <div css={styUploadPhoto}>
           <Col span={12}>
             <div css={styProfpicWrapper}>
-              <img src='https://qph.fs.quoracdn.net/main-qimg-cf89e8e6daa9dabc8174c303e4d53d3a' />
+              <img
+                src={
+                  dataUser.photoUrl
+                    ? dataUser.photoUrl
+                    : 'https://qph.fs.quoracdn.net/main-qimg-cf89e8e6daa9dabc8174c303e4d53d3a'
+                }
+              />
             </div>
           </Col>
           <Col span={12}>
             <div css={styUploadProfpicButton}>
               <p className='maincaption'>Upload foto diri kamu di sini</p>
               <p className='caption'>
-                File berupa JPG, JPEG2000, dan PNG. Max File 3 Mb.
+                File berupa JPG, JPEG2000, dan PNG. Max File 1 Mb.
               </p>
-              <Upload
-                className='avatar-uploader'
-                showUploadList={false}
-                action='https://api.cloudinary.com/v1_1/fim-indonesia/image/upload'
-                beforeUpload={beforeUpload}
-                onChange={handleChangeProfpic}
-                data={(file) => {
-                  return {
-                    upload_preset: 'profile_photo',
-                    file,
-                    tags: 'browser_upload',
-                  };
-                }}
-              >
-                <Button css={styButtonUploadFoto} loading={isButtonLoading}>
-                  <Icon type='upload' /> Upload Foto Diri
-                </Button>
-              </Upload>
+              <Form.Item>
+                {getFieldDecorator('photoUrl', {
+                  rules: [{ required: true, message: 'Please set your photo' }],
+                })(renderUpload())}
+              </Form.Item>
             </div>
           </Col>
         </div>
@@ -105,7 +202,7 @@ const BasicInfo = (props) => {
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item label='Nama Depan'>
-            {getFieldDecorator('name', {
+            {getFieldDecorator('firstName', {
               rules: [
                 {
                   required: true,
@@ -144,7 +241,7 @@ const BasicInfo = (props) => {
               rules: [
                 { required: true, message: 'Tolong isi tanggal lahir kamu' },
               ],
-            })(<DatePicker style={{ width: '100%' }} />)}
+            })(<DatePicker style={{ width: '100%' }} format={'DD-MM-YYYY'} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -158,7 +255,6 @@ const BasicInfo = (props) => {
               <Radio.Group
                 defaultValue='a'
                 buttonStyle='solid'
-                size='large'
                 style={{
                   width: '100%',
                   display: 'flex',
@@ -311,6 +407,7 @@ const BasicInfo = (props) => {
 
 BasicInfo.propTypes = {
   form: object.isRequired,
+  cookieLogin: string,
 };
 
 export default BasicInfo;

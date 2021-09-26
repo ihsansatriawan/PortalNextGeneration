@@ -1,5 +1,22 @@
-import { css } from "@emotion/react";
-import { mq } from "@helper/viewport";
+import { css } from '@emotion/react';
+import { mq } from '@helper/viewport';
+
+export const stySpinWrapper = css`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  background: rgb(255 255 255 / 80%);
+  z-index: 100;
+
+  .spin-gif {
+    margin-top: 100px;
+  }
+`;
 
 export const styFormWrapper = css`
   display: flex;
@@ -209,6 +226,7 @@ export const styStepDesktopWrapper = css`
 export const styCardWrapper = css`
   background: white;
   margin-bottom: 20px;
+  position: relative;
 `;
 
 /**
@@ -222,7 +240,7 @@ export const styProfpicWrapper = css`
   display: flex;
   justify-content: center;
   margin-right: 14px;
-
+  margin-bottom: 20px;
   img {
     height: 100%;
   }

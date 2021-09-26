@@ -1,8 +1,8 @@
-module.exports = function(api) {
-  api.cache(true)
+module.exports = function (api) {
+  api.cache(true);
 
-  const plugins = ["@emotion"]
-  const presets = ["next/babel", "@emotion/babel-preset-css-prop"]
+  const plugins = ['@babel/plugin-proposal-optional-chaining', '@emotion'];
+  const presets = ['next/babel', '@emotion/babel-preset-css-prop'];
 
-  return { plugins, presets }
-}
+  return { plugins, presets };
+};

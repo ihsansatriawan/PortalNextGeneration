@@ -18,7 +18,7 @@ const redirectForbidden = () => {
   logout({
     onLogoutSuccess: () => {}
   })
-  Router.push('/login')
+  Router.push('/')
 }
 
 export const newAuth = async token_FIM => {

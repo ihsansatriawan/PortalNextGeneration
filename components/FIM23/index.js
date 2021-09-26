@@ -41,7 +41,7 @@ const step = [
   },
 ];
 
-const ContinerFIM23 = () => {
+const ContinerFIM23 = (props) => {
   return (
     <div css={styFormWrapper}>
       <div css={stySidebarWrapper}>
@@ -53,7 +53,7 @@ const ContinerFIM23 = () => {
         <Header />
         <Progress />
         <StepMobile liststep={step} />
-        <DataDiri />
+        <DataDiri {...props} />
       </div>
     </div>
   );

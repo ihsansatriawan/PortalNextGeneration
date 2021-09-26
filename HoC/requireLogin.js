@@ -9,16 +9,15 @@ import Router from 'next/router';
 export default function requireLogin(WrappedComponent) {
   // ...and returns another component...
   return class HoCUser extends Component {
-  
     state = {
-      step: 0
-    }
+      step: 0,
+    };
 
-    openNotificationWithIcon = type => {
+    openNotificationWithIcon = (type) => {
       notification[type]({
-        message: 'Anda harus login terlebih dahulu'
+        message: 'Anda harus login terlebih dahulu',
       });
-    }
+    };
 
     checkSession = async () => {
       const { cookieLogin } = this.props;
@@ -28,45 +27,42 @@ export default function requireLogin(WrappedComponent) {
           url: '/auth/checksession',
           method: 'post',
           data: {
-            token: cookieLogin
-          }
-        })
+            token: cookieLogin,
+          },
+        });
 
-        const status = (response.data.status || false)
+        const status = response.data.status || false;
 
         if (!status) {
           return this.redirectNonLogin();
         }
 
-        const data = response.data.data || {}
+        const data = response.data.data || {};
 
-        this.setState({ step: data.step })
-
+        this.setState({ step: data.step });
       } catch (error) {
-        console.log("error: ", error);
-        
+        console.log('error: ', error);
+
         this.redirectNonLogin();
       }
-    }
+    };
 
     redirectNonLogin = () => {
-      removeCookie(CONSTANT.TOKEN_NAME)
-      Router.push('/login');
-      this.openNotificationWithIcon('error')
-    }
+      removeCookie(CONSTANT.TOKEN_NAME);
+      Router.push('/');
+      this.openNotificationWithIcon('error');
+    };
 
     componentDidMount() {
       const { cookieLogin } = this.props;
-      
+
       this.checkSession();
     }
-  
+
     render() {
       const { step } = this.state;
 
       return <WrappedComponent {...this.props} step={step} />;
     }
-  
-  }
-
+  };
 }
