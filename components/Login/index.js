@@ -74,6 +74,7 @@ class Login extends React.Component {
 
   responseGoogle = async (response) => {
     this.onToggleLoader();
+    console.log(response);
     if (response.accessToken) {
       this.onSuccessLogin(response);
       sendTracker({
@@ -90,7 +91,7 @@ class Login extends React.Component {
         dimension1: JSON.stringify(response),
       });
       this.onToggleLoader();
-      console.log("GAGAL GOOGLE");
+      console.log(response);
     }
   };
 

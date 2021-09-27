@@ -15,7 +15,6 @@ import {
   Select,
 } from 'antd';
 import { object, string, func, bool } from 'prop-types';
-import { useIdentity } from '@context/profileContext';
 import LoadingSpin from '../LoadingSpin';
 
 import {

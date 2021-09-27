@@ -21,7 +21,6 @@ const DataDiri = (props) => {
   const { cookieLogin } = props;
 
   const {
-    loadingUserData,
     dataUser,
     Identity,
     Skill,

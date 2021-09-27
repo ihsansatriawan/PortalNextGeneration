@@ -1,5 +1,7 @@
 import React from 'react';
 import LogoFim from '@components/Home/Slider/assets/logo-fim.svg';
+import jwtDecode from 'jwt-decode';
+import { string } from 'prop-types';
 
 import {
   styFormWrapper,
@@ -7,6 +9,7 @@ import {
   styMainFormWrapper,
   styLogo,
 } from './style';
+
 import Header from './Header';
 import Progress from './Progress';
 import StepMobile from './StepMobile';
@@ -44,6 +47,17 @@ const step = [
 ];
 
 const ContinerFIM23 = (props) => {
+  const { cookieLogin } = props;
+  let decode = {};
+
+  try {
+    decode = jwtDecode(cookieLogin);
+    console.log(decode);
+    console.log('decode');
+  } catch (error) {
+    console.log(error);
+  }
+
   return (
     <div css={styFormWrapper}>
       <div css={stySidebarWrapper}>
@@ -62,6 +76,10 @@ const ContinerFIM23 = (props) => {
       </div>
     </div>
   );
+};
+
+ContinerFIM23.propTypes = {
+  cookieLogin: string,
 };
 
 export default ContinerFIM23;
