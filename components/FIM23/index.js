@@ -55,9 +55,10 @@ const ContinerFIM23 = (props) => {
         <Header />
         <Progress />
         <StepMobile liststep={step} />
-        {/* <DataDiri {...props} /> */}
-        {/* <Essay {...props} step='volunteering_plan' /> */}
-        <UploadBerkas {...props} />
+        <DataDiri {...props} />
+        {/* <Essay {...props} step='essay' />
+        <Essay {...props} step='volunteering_plan' />
+        <UploadBerkas {...props} /> */}
       </div>
     </div>
   );

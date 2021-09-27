@@ -1,26 +1,19 @@
-import React, { useEffect, useState } from "react";
-import Container from "@components/FIM23";
-import { Skeleton } from "antd";
-import { newAuth } from "@HoC/withNewAuth";
+import React, { useEffect, useState } from 'react';
+import Container from '@components/FIM23';
+import { Skeleton } from 'antd';
+import { newAuth } from '@HoC/withNewAuth';
+import ProfileContextProvider from '@context/profileContext';
 
 const Pendaftaran = (props) => {
-  const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("");
-  const [step, setStep] = useState(-1);
+  const [loading] = useState(false);
 
-//   useEffect(() => {
-//     const fetchToken = async () => {
-//       const { token_FIM, step } = await newAuth(props.cookieLogin);
-
-//       setToken(token_FIM);
-//       setStep(step);
-//     };
-
-//     fetchToken();
-//     setLoading(false);
-//   }, []);
-
-  return loading ? <Skeleton /> : <Container {...props} />;
+  return loading ? (
+    <Skeleton />
+  ) : (
+    <ProfileContextProvider {...props}>
+      <Container {...props} />
+    </ProfileContextProvider>
+  );
 };
 
 export default Pendaftaran;

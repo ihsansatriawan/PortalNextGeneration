@@ -15,6 +15,7 @@ import {
   Select,
 } from 'antd';
 import { object, string, func, bool } from 'prop-types';
+import { useIdentity } from '@context/profileContext';
 import LoadingSpin from '../LoadingSpin';
 
 import {
@@ -46,6 +47,8 @@ const BasicInfo = (props) => {
   const { getFieldDecorator, setFieldsValue } = props.form;
   const { dataUser, setDataUser, isLoading } = props;
   const { Identity } = dataUser;
+
+  // const halo = useIdentity();
 
   const handleChangeProfpic = (info) => {
     const status = info.file.status;
@@ -110,7 +113,9 @@ const BasicInfo = (props) => {
         <Col span={24}>
           <Form.Item label='No KTP'>
             {getFieldDecorator('ktpNumber', {
-              rules: [{ required: true, message: 'Isi nomor NIK / KTP kamu ya!' }],
+              rules: [
+                { required: true, message: 'Isi nomor NIK / KTP kamu ya!' },
+              ],
             })(<Input />)}
           </Form.Item>
         </Col>

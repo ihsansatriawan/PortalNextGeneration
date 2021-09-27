@@ -6,6 +6,8 @@ import moment from 'moment';
 import { logout } from '@helper/googleSession';
 import Router from 'next/router';
 
+import { useIdentity } from '@context/profileContext';
+
 import BasicInfo from './BasicInfo';
 import Profesi from './Profesi';
 import Social from './Social';
@@ -17,8 +19,20 @@ import { styButtonSave, stySubmitWrapperButton } from './styles';
 
 const DataDiri = (props) => {
   const { cookieLogin } = props;
+
+  const {
+    loadingUserData,
+    dataUser,
+    Identity,
+    Skill,
+    SocialMedia,
+    AlumniReference,
+    FimActivity,
+    OrganizationExperiences,
+    setDataUser,
+  } = useIdentity();
+
   const [isLoading, setIsLoading] = useState(false);
-  const [dataUser, setDataUser] = useState({});
   const [listCertificate, setListCertificate] = useState({
     previewVisible: false,
     previewImage: '',
@@ -39,152 +53,126 @@ const DataDiri = (props) => {
   };
 
   const fetchDataProfile = async () => {
-    const { cookieLogin } = props;
-
     setIsLoading(true);
 
     try {
-      const response = await fetch({
-        url: '/auth/profile',
-        method: 'get',
-        headers: {
-          Authorization: `Bearer ${cookieLogin}`,
-        },
-      });
+      console.log(Identity);
+      console.log('Identity');
+      if (Identity) {
+        setFieldsValue({
+          firstName: Identity.firstName,
+          lastName: Identity.lastName,
+          bornPlace: Identity.bornPlace,
+          bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
+          gender: Identity.gender,
+          cityAddress: Identity.cityAddress,
+          provinceAddress: Identity.provinceAddress,
+          address: Identity.address,
+          bloodGroup: Identity.bloodGroup,
+          religion: Identity.religion,
+          hobby: Identity.hobby,
+          phone: Identity.phone,
+          emergencyPhone: Identity.emergencyPhone,
+          photoUrl: Identity.photoUrl,
+          ktpNumber: Identity.ktpNumber,
+          institution: Identity.institution,
+          occupation: Identity.occupation,
+        });
+      }
 
-      const status = response.data.status || false;
+      if (Skill) {
+        setFieldsValue({
+          isAbleVideoEditing: Skill.isAbleVideoEditing,
+          videoEditingPortofolioUrl: Skill.videoEditingPortofolioUrl,
+        });
 
-      if (!status) {
-        setDataUser({});
-      } else {
-        const responseData = response.data.data;
-        const {
-          Identity,
-          Skill,
-          SocialMedia,
-          AlumniReference,
-          FimActivity,
-          OrganizationExperiences,
-        } = responseData;
+        const listCertNorm = [];
 
-        if (Identity) {
-          setDataUser(responseData);
-          setFieldsValue({
-            firstName: Identity.firstName,
-            lastName: Identity.lastName,
-            bornPlace: Identity.bornPlace,
-            bornDate: moment(Identity.bornDate || new Date(), 'YYYY-MM-DD'),
-            gender: Identity.gender,
-            cityAddress: Identity.cityAddress,
-            provinceAddress: Identity.provinceAddress,
-            address: Identity.address,
-            bloodGroup: Identity.bloodGroup,
-            religion: Identity.religion,
-            hobby: Identity.hobby,
-            phone: Identity.phone,
-            emergencyPhone: Identity.emergencyPhone,
-            photoUrl: Identity.photoUrl,
-            ktpNumber: Identity.ktpNumber,
-            institution: Identity.institution,
-            occupation: Identity.occupation,
-          });
+        Skill.firstCertificateUrl
+          ? listCertNorm.push({
+              uid: '1',
+              url: Skill.firstCertificateUrl,
+            })
+          : null;
+        Skill.secondCertificateUrl
+          ? listCertNorm.push({
+              uid: '2',
+              url: Skill.secondCertificateUrl,
+            })
+          : null;
+        Skill.thirdCertificateUrl
+          ? listCertNorm.push({
+              uid: '2',
+              url: Skill.thirdCertificateUrl,
+            })
+          : null;
+
+        setListCertificate((prevState) => {
+          return {
+            ...prevState,
+            fileList: listCertNorm,
+          };
+        });
+      }
+
+      if (SocialMedia) {
+        setFieldsValue({
+          twitterUrl: SocialMedia.twitterUrl,
+          instagramUrl: SocialMedia.instagramUrl,
+          facebookUrl: SocialMedia.facebookUrl,
+          websiteUrl: SocialMedia.websiteUrl,
+          otherSiteUrl: SocialMedia.otherSiteUrl,
+        });
+      }
+
+      if (AlumniReference) {
+        setFieldsValue({
+          responsibility: AlumniReference.responsibility,
+          role: AlumniReference.role,
+          duration: AlumniReference.duration,
+          eventScale: AlumniReference.eventScale,
+          result: AlumniReference.result,
+        });
+      }
+
+      if (FimActivity) {
+        setFieldsValue({
+          responsibility: FimActivity.responsibility,
+          roleActivity: FimActivity.role,
+          durationActivity: FimActivity.duration,
+          eventScaleActivity: FimActivity.eventScale,
+          resultActivity: FimActivity.result,
+        });
+      }
+
+      if (OrganizationExperiences) {
+        let initialKey = [];
+        let orgDuration = [];
+        let orgEventScale = [];
+        let orgReferencePerson = [];
+        let orgResult = [];
+        let orgRole = [];
+
+        for (let index = 0; index < OrganizationExperiences.length; index++) {
+          initialKey.concat(index);
         }
 
-        if (Skill) {
-          setFieldsValue({
-            isAbleVideoEditing: Skill.isAbleVideoEditing,
-            videoEditingPortofolioUrl: Skill.videoEditingPortofolioUrl,
-          });
+        OrganizationExperiences.map((org) => {
+          orgDuration.push(org.duration);
+          orgEventScale.push(org.eventScale);
+          orgReferencePerson.push(org.referencePerson);
+          orgResult.push(org.result);
+          orgRole.push(org.role);
+        });
 
-          const listCertNorm = [];
-
-          Skill.firstCertificateUrl
-            ? listCertNorm.push({
-                uid: '1',
-                url: Skill.firstCertificateUrl,
-              })
-            : null;
-          Skill.secondCertificateUrl
-            ? listCertNorm.push({
-                uid: '2',
-                url: Skill.secondCertificateUrl,
-              })
-            : null;
-          Skill.thirdCertificateUrl
-            ? listCertNorm.push({
-                uid: '2',
-                url: Skill.thirdCertificateUrl,
-              })
-            : null;
-
-          setListCertificate((prevState) => {
-            return {
-              ...prevState,
-              fileList: listCertNorm,
-            };
-          });
-        }
-
-        if (SocialMedia) {
-          setFieldsValue({
-            twitterUrl: SocialMedia.twitterUrl,
-            instagramUrl: SocialMedia.instagramUrl,
-            facebookUrl: SocialMedia.facebookUrl,
-            websiteUrl: SocialMedia.websiteUrl,
-            otherSiteUrl: SocialMedia.otherSiteUrl,
-          });
-        }
-
-        if (AlumniReference) {
-          setFieldsValue({
-            responsibility: AlumniReference.responsibility,
-            role: AlumniReference.role,
-            duration: AlumniReference.duration,
-            eventScale: AlumniReference.eventScale,
-            result: AlumniReference.result,
-          });
-        }
-
-        if (FimActivity) {
-          setFieldsValue({
-            responsibility: FimActivity.responsibility,
-            roleActivity: FimActivity.role,
-            durationActivity: FimActivity.duration,
-            eventScaleActivity: FimActivity.eventScale,
-            resultActivity: FimActivity.result,
-          });
-        }
-
-        if (OrganizationExperiences) {
-          let initialKey = [];
-
-          let orgDuration = [];
-          let orgEventScale = [];
-          let orgReferencePerson = [];
-          let orgResult = [];
-          let orgRole = [];
-
-          for (let index = 0; index < OrganizationExperiences.length; index++) {
-            initialKey.concat(index);
-          }
-
-          OrganizationExperiences.map((org) => {
-            orgDuration.push(org.duration);
-            orgEventScale.push(org.eventScale);
-            orgReferencePerson.push(org.referencePerson);
-            orgResult.push(org.result);
-            orgRole.push(org.role);
-          });
-
-          setFieldsValue({
-            organizaitons: initialKey,
-            orgDuration,
-            orgEventScale,
-            orgReferencePerson,
-            orgResult,
-            orgRole,
-          });
-        }
+        setFieldsValue({
+          organizaitons: initialKey,
+          orgDuration,
+          orgEventScale,
+          orgReferencePerson,
+          orgResult,
+          orgRole,
+        });
       }
 
       setIsLoading(false);
@@ -393,7 +381,7 @@ const DataDiri = (props) => {
 
   useEffect(() => {
     fetchDataProfile();
-  }, []);
+  }, [Identity]);
 
   return (
     <Form onSubmit={handleSubmitForm}>

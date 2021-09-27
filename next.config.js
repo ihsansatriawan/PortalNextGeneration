@@ -1,17 +1,17 @@
 /* eslint-disable */
-require("dotenv").config();
-const webpack = require("webpack");
-const withCss = require("@zeit/next-css");
-const withSass = require("@zeit/next-sass");
-const withSourceMaps = require("@zeit/next-source-maps");
+require('dotenv').config();
+const webpack = require('webpack');
+const withCss = require('@zeit/next-css');
+const withSass = require('@zeit/next-sass');
+const withSourceMaps = require('@zeit/next-source-maps');
 
-const path = require("path");
-const Dotenv = require("dotenv-webpack");
-const FilterWarningsPlugin = require("webpack-filter-warnings-plugin");
+const path = require('path');
+const Dotenv = require('dotenv-webpack');
+const FilterWarningsPlugin = require('webpack-filter-warnings-plugin');
 
 module.exports = withSourceMaps(
   withCss({
-    target: "serverless",
+    target: 'serverless',
     // cssModules: true,
     webpack: (config, { isServer }) => {
       if (isServer) {
@@ -20,18 +20,18 @@ module.exports = withSourceMaps(
         config.externals = [
           (context, request, callback) => {
             if (request.match(antStyles)) return callback();
-            if (typeof origExternals[0] === "function") {
+            if (typeof origExternals[0] === 'function') {
               origExternals[0](context, request, callback);
             } else {
               callback();
             }
           },
-          ...(typeof origExternals[0] === "function" ? [] : origExternals),
+          ...(typeof origExternals[0] === 'function' ? [] : origExternals),
         ];
 
         config.module.rules.unshift({
           test: antStyles,
-          use: "null-loader",
+          use: 'null-loader',
         });
       }
 
@@ -41,25 +41,26 @@ module.exports = withSourceMaps(
         ...config.plugins,
 
         new Dotenv({
-          path: path.join(__dirname, ".env"),
+          path: path.join(__dirname, '.env'),
           systemvars: true,
         }),
       ];
 
-      config.resolve.alias["@components"] = path.join(__dirname, "components");
-      config.resolve.alias["@HoC"] = path.join(__dirname, "HoC");
-      config.resolve.alias["@helper"] = path.join(__dirname, "helper");
-      config.resolve.alias["@LocalStorage"] = path.join(
+      config.resolve.alias['@components'] = path.join(__dirname, 'components');
+      config.resolve.alias['@context'] = path.join(__dirname, 'context');
+      config.resolve.alias['@HoC'] = path.join(__dirname, 'HoC');
+      config.resolve.alias['@helper'] = path.join(__dirname, 'helper');
+      config.resolve.alias['@LocalStorage'] = path.join(
         __dirname,
-        "helper/LocalStorage"
+        'helper/LocalStorage'
       );
-      config.resolve.alias["@Cookie"] = path.join(__dirname, "helper/Cookie");
-      config.resolve.alias["@canUseDOM"] = path.join(
+      config.resolve.alias['@Cookie'] = path.join(__dirname, 'helper/Cookie');
+      config.resolve.alias['@canUseDOM'] = path.join(
         __dirname,
-        "helper/canUseDOM"
+        'helper/canUseDOM'
       );
-      config.resolve.alias["@tracker"] = path.join(__dirname, "helper/tracker");
-      config.resolve.alias["@constant"] = path.join(__dirname, "constant");
+      config.resolve.alias['@tracker'] = path.join(__dirname, 'helper/tracker');
+      config.resolve.alias['@constant'] = path.join(__dirname, 'constant');
 
       config.plugins.push(
         new FilterWarningsPlugin({
@@ -76,7 +77,7 @@ module.exports = withSourceMaps(
           // { and: [/\.(js|ts)x?$/] }
         },
 
-        use: ["@svgr/webpack"],
+        use: ['@svgr/webpack'],
       });
 
       return config;
