@@ -13,9 +13,6 @@ const Organisasi = (props) => {
   getFieldDecorator('organizations', { initialValue: [] });
   const keys = getFieldValue('organizations');
 
-  console.log(keys);
-  console.log('keys');
-
   const onHandleAddForm = () => {
     const keys = getFieldValue('organizations');
     const nextKeys = keys.concat(id++);

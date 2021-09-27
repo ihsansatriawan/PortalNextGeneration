@@ -13,6 +13,7 @@ import StepMobile from './StepMobile';
 import StepDesktop from './StepDesktop';
 import DataDiri from './DataDiri';
 import Essay from './Essay';
+import UploadBerkas from './UploadBerkas';
 
 const step = [
   {
@@ -55,7 +56,8 @@ const ContinerFIM23 = (props) => {
         <Progress />
         <StepMobile liststep={step} />
         {/* <DataDiri {...props} /> */}
-        <Essay {...props} />
+        {/* <Essay {...props} step='volunteering_plan' /> */}
+        <UploadBerkas {...props} />
       </div>
     </div>
   );

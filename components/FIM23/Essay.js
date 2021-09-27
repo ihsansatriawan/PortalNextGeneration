@@ -25,9 +25,11 @@ const Essay = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
+  console.log(questions);
+  console.log('questions');
 
   const fetchEssayList = async (cb) => {
-    const { cookieLogin } = props;
+    const { cookieLogin, step } = props;
     setIsLoading(true);
 
     try {
@@ -45,14 +47,17 @@ const Essay = (props) => {
         notification.error({ message: response.message });
       } else {
         const responseData = response.data || [];
-        setQuestions(responseData.data);
+
+        setQuestions(
+          responseData.data.filter((value) => value.category === step)
+        );
         cb();
       }
 
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
-      console.log('error');
+      console.error(error);
+
       // Jika error auto logout
       //   logout({
       //     onLogoutSuccess: () => {
@@ -445,6 +450,7 @@ const Essay = (props) => {
 Essay.propTypes = {
   form: object,
   cookieLogin: string,
+  step: string.isRequired,
 };
 
 const WrappedEssayForm = Form.create({ name: 'essay' })(Essay);

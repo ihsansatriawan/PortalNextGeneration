@@ -267,3 +267,55 @@ export const styButtonUploadFoto = css`
   border-color: #ff8229;
   color: #ff8229;
 `;
+
+export const styFileUploader = css`
+  width: 100%;
+  margin-top: 10px;
+
+  .ant-upload {
+    width: 100%;
+  }
+`;
+
+export const styTextUploadWrapper = css`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 60px 20px;
+
+  .ant-upload-text {
+    line-height: 1.5;
+    margin-bottom: 10px;
+  }
+
+  small {
+    font-size: 7pt;
+  }
+`;
+
+export const styBtnAddFieldBerkas = css`
+  cursor: pointer;
+  background: #f2eae4;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #a68b77;
+  margin-bottom: 10px;
+`;
+
+export const styIconFileWrapper = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+`;

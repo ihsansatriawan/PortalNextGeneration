@@ -17,11 +17,11 @@ import LoadingSpin from '../LoadingSpin';
 const beforeUploadCertificate = (file) => {
   const isJPGorPDF = file.type === 'image/jpeg' || 'application/pdf';
   if (!isJPGorPDF) {
-    message.error('You can only upload JPG or PDF file!');
+    message.error('Kamu hanya bisa upload file JPG atau PDF !');
   }
   const isLt2M = file.size / 1024 / 1024 < 1;
   if (!isLt2M) {
-    message.error('Image must smaller than 1MB!');
+    message.error('File harus lebih kecil dari 1MB!');
   }
   return isJPGorPDF && isLt2M;
 };
