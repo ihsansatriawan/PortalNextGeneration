@@ -1,16 +1,16 @@
-import { GoogleLogin } from "react-google-login";
-import axios from "axios";
-import { fetch } from "@helper/fetch";
-import { Spin, Button, message } from "antd";
-import { set } from "@LocalStorage";
-import { setCookie } from "@Cookie";
-import CONSTANT from "@constant";
-import Router from "next/router";
-import { notification } from "antd";
-import { logout } from "@helper/googleSession";
-import { sendTracker } from "@tracker";
-import "./login.css";
-import { styGoogleLogin } from "./style";
+import { GoogleLogin } from 'react-google-login';
+import axios from 'axios';
+import { fetch } from '@helper/fetch';
+import { Spin, Button, message } from 'antd';
+import { set } from '@LocalStorage';
+import { setCookie } from '@Cookie';
+import CONSTANT from '@constant';
+import Router from 'next/router';
+import { notification } from 'antd';
+import { logout } from '@helper/googleSession';
+import { sendTracker } from '@tracker';
+import './login.css';
+import { styGoogleLogin } from './style';
 
 class Login extends React.Component {
   state = {
@@ -19,17 +19,17 @@ class Login extends React.Component {
 
   openNotificationWithIcon = (type) => {
     notification[type]({
-      message: "Berhasil Login",
+      message: 'Berhasil Login',
     });
   };
 
   redirectAfterSuccess = () => {
-    Router.push("/pendaftaran");
+    Router.push('/pendaftaran');
   };
 
   redirectAfterSuccessLogout = () => {
-    message.success("Berhasil Logout");
-    Router.push("/fim23");
+    message.success('Berhasil Logout');
+    Router.push('/fim23');
   };
 
   onSuccessLogin = async (res) => {
@@ -37,12 +37,12 @@ class Login extends React.Component {
 
     try {
       const response = await fetch({
-        url: "/auth/login",
-        method: "post",
+        url: '/auth/login',
+        method: 'post',
         data: {
           email: profileObj.email,
           socialId: googleId,
-          loginSource: "Google",
+          loginSource: 'Google',
           profilPicture: profileObj.imageUrl,
           firstName: profileObj.givenName,
           lastName: profileObj.familyName,
@@ -50,23 +50,23 @@ class Login extends React.Component {
       });
 
       setCookie(CONSTANT.TOKEN_NAME, response.data.token);
-      this.openNotificationWithIcon("success");
+      this.openNotificationWithIcon('success');
       this.redirectAfterSuccess();
       this.onToggleLoader();
 
       sendTracker({
-        eventCategory: "Login",
-        eventAction: "ResponseAPI",
-        eventLabel: "success",
+        eventCategory: 'Login',
+        eventAction: 'ResponseAPI',
+        eventLabel: 'success',
         dimension1: JSON.stringify(response),
       });
     } catch (error) {
       this.onToggleLoader();
-      console.log("error: ", error);
+      console.log('error: ', error);
       sendTracker({
-        eventCategory: "Login",
-        eventAction: "ResponseAPI",
-        eventLabel: "failed",
+        eventCategory: 'Login',
+        eventAction: 'ResponseAPI',
+        eventLabel: 'failed',
         dimension1: JSON.stringify(error),
       });
     }
@@ -78,16 +78,16 @@ class Login extends React.Component {
     if (response.accessToken) {
       this.onSuccessLogin(response);
       sendTracker({
-        eventCategory: "Login",
-        eventAction: "ResponseGoogle",
-        eventLabel: "success",
+        eventCategory: 'Login',
+        eventAction: 'ResponseGoogle',
+        eventLabel: 'success',
         dimension1: JSON.stringify(response),
       });
     } else {
       sendTracker({
-        eventCategory: "Login",
-        eventAction: "ResponseGoogle",
-        eventLabel: "failed",
+        eventCategory: 'Login',
+        eventAction: 'ResponseGoogle',
+        eventLabel: 'failed',
         dimension1: JSON.stringify(response),
       });
       this.onToggleLoader();
@@ -102,12 +102,13 @@ class Login extends React.Component {
   render() {
     const { isLoading } = this.state;
     const { cookieLogin } = this.props;
-
+    console.log(process.env.GOOGLE_CLIENT_ID);
+    console.log('process.env.GOOGLE_CLIENT_ID');
     return (
       <React.Fragment>
         <div>
-          <div className="button-wrapper">
-            <Spin spinning={isLoading} tip="Loading...">
+          <div className='button-wrapper'>
+            <Spin spinning={isLoading} tip='Loading...'>
               {cookieLogin ? (
                 <Button
                   onClick={() => {
@@ -117,8 +118,8 @@ class Login extends React.Component {
                       },
                     });
                   }}
-                  type="primary"
-                  key="console"
+                  type='primary'
+                  key='console'
                 >
                   Logout
                 </Button>
@@ -126,11 +127,11 @@ class Login extends React.Component {
                 <GoogleLogin
                   css={styGoogleLogin}
                   clientId={process.env.GOOGLE_CLIENT_ID}
-                  buttonText="Masuk atau Daftar dengan Google Email"
+                  buttonText='Masuk atau Daftar dengan Google Email'
                   onSuccess={this.responseGoogle}
                   onFailure={this.responseGoogle}
-                  cookiePolicy={"single_host_origin"}
-                  uxMode="popup"
+                  cookiePolicy={'single_host_origin'}
+                  uxMode='popup'
                 />
               )}
             </Spin>
