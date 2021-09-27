@@ -5,7 +5,7 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import { useIdentity } from '@context/profileContext';
 
 const StepMobile = (props) => {
-  const { formCompleteness } = useIdentity();
+  const { formCompleteness, setStep } = useIdentity();
 
   return (
     <div css={styStepMobileWrapper}>
@@ -13,7 +13,11 @@ const StepMobile = (props) => {
         const isDone = formCompleteness[value.type];
 
         return (
-          <div className='chipStep active' key={key}>
+          <div
+            className='chipStep active'
+            key={key}
+            onClick={() => setStep(value.id)}
+          >
             <div className='checkbox'>
               {isDone ? (
                 <CheckCircleFilled className='done ' />

@@ -4,6 +4,7 @@ import React, {
   useState,
   // message,
   useEffect,
+  notification,
 } from 'react';
 import { node, string } from 'prop-types';
 import { fetch } from '@helper/fetch';
@@ -21,6 +22,8 @@ const IdentityProvider = ({ children, cookieLogin }) => {
   const [alumniReference, setAlumniReference] = useState(null);
   const [fimActivity, setFimActivity] = useState(null);
   const [organizationExperiences, setOrganizationExperiences] = useState([]);
+
+  const [step, setStep] = useState(1);
 
   const [formCompleteness, setFormCompleteness] = useState({
     isFirstStepCompleted: false,
@@ -107,11 +110,51 @@ const IdentityProvider = ({ children, cookieLogin }) => {
       });
 
       if (response.data.status) {
+        const {
+          isFirstStepCompleted,
+          isSecondStepCompleted,
+          isThirdStepCompleted,
+          isFourthStepCompleted,
+          submittedAt,
+        } = response.data.data;
+
+        if (isFirstStepCompleted) {
+          setStep(2);
+        }
+
+        if (isSecondStepCompleted) {
+          setStep(3);
+        }
+
+        if (isThirdStepCompleted) {
+          setStep(4);
+        }
+
+        if (isFourthStepCompleted) {
+          setStep(5);
+        }
+
+        if (submittedAt) {
+          setStep(5);
+        }
+
         setFormCompleteness(response.data.data);
       }
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const submitAllOk = async () => {
+    const response = await fetch({
+      url: '/form-completeness/submit',
+      method: 'post',
+      headers: {
+        Authorization: `Bearer ${cookieLogin}`,
+      },
+    });
+
+    const { status, message } = response.data;
   };
 
   useEffect(() => {
@@ -130,6 +173,9 @@ const IdentityProvider = ({ children, cookieLogin }) => {
     FimActivity: fimActivity,
     OrganizationExperiences: organizationExperiences,
     setDataUser: setDataUser,
+    step,
+    setStep,
+    submitAllOk,
   };
 
   return (

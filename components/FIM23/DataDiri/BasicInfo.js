@@ -147,15 +147,7 @@ const BasicInfo = (props) => {
           </Col>
         </div>
       </Row>
-      <Row>
-        <Col span={24}>
-          <Form.Item label='Tempat Lahir'>
-            {getFieldDecorator('bornPlace', {
-              rules: [{ required: true, message: 'Isi tempat lahir kamu ya!' }],
-            })(<Input />)}
-          </Form.Item>
-        </Col>
-      </Row>
+
       <Row gutter={16}>
         <Col span={12}>
           <Form.Item label='Nama Depan'>

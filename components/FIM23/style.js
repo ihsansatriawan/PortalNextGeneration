@@ -64,7 +64,7 @@ export const styProgressWrapper = css`
   background: #f2eae4;
   padding: 12px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
@@ -318,4 +318,32 @@ export const styIconFileWrapper = css`
     margin-bottom: 20px;
     margin-top: 20px;
   }
+`;
+
+export const stySubmitWrapperButton = css`
+  width: 100%;
+  position: fixed;
+  bottom: 10px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const styButtonSave = css`
+  background: #ff8229;
+  width: 200px;
+  border: none;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  height: 48px;
+`;
+
+export const styMeterWrapper = css`
+  display: flex;
+  flex-direction: row !important;
+`;
+export const styButtonSubmitAll = css`
+  background: yellow;
+  width: 100%;
 `;

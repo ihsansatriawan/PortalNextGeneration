@@ -1,5 +1,6 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import { object, string } from 'prop-types';
+import { object, string, bool } from 'prop-types';
+import { useIdentity } from '@context/profileContext';
 import {
   Form,
   DatePicker,
@@ -9,27 +10,30 @@ import {
   notification,
   InputNumber,
   Select,
+  Button,
+  Icon,
 } from 'antd';
 import LoadingSpin from './LoadingSpin';
-import { styCardWrapper } from './style';
+import { styCardWrapper, styButtonSave, stySubmitWrapperButton } from './style';
 const { Title } = Typography;
 import { fetch } from '@helper/fetch';
 import moment from 'moment';
 import UploadInput from '../UploadInput/UploadInput';
-import { debounce } from 'debounce';
 
 const { Option } = Select;
 const tunnelId = 12;
 
 const Essay = (props) => {
+  const { cookieLogin, category, isInPreview } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const [questionsAll, setQuestionsAll] = useState([]);
+
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
-  console.log(questions);
-  console.log('questions');
+
+  const { step, Identity } = useIdentity();
 
   const fetchEssayList = async (cb) => {
-    const { cookieLogin, step } = props;
     setIsLoading(true);
 
     try {
@@ -47,9 +51,9 @@ const Essay = (props) => {
         notification.error({ message: response.message });
       } else {
         const responseData = response.data || [];
-
+        setQuestionsAll(responseData.data);
         setQuestions(
-          responseData.data.filter((value) => value.category === step)
+          responseData.data.filter((value) => value.category === category)
         );
         cb();
       }
@@ -67,6 +71,10 @@ const Essay = (props) => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    setQuestions(questionsAll.filter((value) => value.category === category));
+  }, [step]);
 
   const handleChange = (event, id, header, conditionalitem) => {
     let yangdiketik;
@@ -146,14 +154,14 @@ const Essay = (props) => {
 
     try {
       const response = await fetch({
-        url: '/answer/lists',
-        method: 'post',
+        url: `/answer?tunnelId=${tunnelId}`,
+        method: 'get',
         headers: {
           Authorization: `Bearer ${cookieLogin}`,
         },
         data: {
           TunnelId: tunnelId,
-          //   ktpNumber: dataUser.Identity.ktpNumber,
+          ktpNumber: Identity.ktpNumber,
         },
       });
 
@@ -181,15 +189,14 @@ const Essay = (props) => {
 
     try {
       const response = await fetch({
-        url: '/answer/save',
+        url: '/answer',
         method: 'post',
         headers: {
           Authorization: `Bearer ${cookieLogin}`,
         },
         data: {
-          answers: answers,
-          TunnelId: tunnelId,
-          //   ktpNumber: dataUser.Identity.ktpNumber,
+          answers: JSON.stringify(answers),
+          tunnelId: tunnelId,
         },
       });
 
@@ -209,12 +216,6 @@ const Essay = (props) => {
       notification.error({ message: 'Gagal menyimpan Data' });
     }
   };
-
-  useEffect(() => {
-    if (answers.length > 0) {
-      debounce(_saveAnswer(), 900);
-    }
-  }, [answers]);
 
   const renderQuestin = (question) => {
     if (question.id !== null) {
@@ -444,13 +445,31 @@ const Essay = (props) => {
     return <LoadingSpin />;
   }
 
-  return <div>{renderContent()}</div>;
+  return (
+    <div>
+      {renderContent()}
+      {!isInPreview && (
+        <div css={stySubmitWrapperButton}>
+          <Button
+            size='large'
+            css={styButtonSave}
+            type='primary'
+            htmlType='submit'
+            onClick={_saveAnswer}
+          >
+            <Icon type='save' theme='filled' /> Simpan Perubahan
+          </Button>
+        </div>
+      )}
+    </div>
+  );
 };
 
 Essay.propTypes = {
   form: object,
   cookieLogin: string,
-  step: string.isRequired,
+  category: string.isRequired,
+  isInPreview: bool,
 };
 
 const WrappedEssayForm = Form.create({ name: 'essay' })(Essay);

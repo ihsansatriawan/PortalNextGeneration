@@ -2,6 +2,7 @@ import React from 'react';
 import LogoFim from '@components/Home/Slider/assets/logo-fim.svg';
 import jwtDecode from 'jwt-decode';
 import { string } from 'prop-types';
+import { useIdentity } from '@context/profileContext';
 
 import {
   styFormWrapper,
@@ -18,7 +19,7 @@ import DataDiri from './DataDiri';
 import Essay from './Essay';
 import UploadBerkas from './UploadBerkas';
 
-const step = [
+const stepList = [
   {
     id: 1,
     name: 'Data Diri',
@@ -52,6 +53,7 @@ const step = [
 ];
 
 const ContinerFIM23 = (props) => {
+  const { step, setStep } = useIdentity();
   const { cookieLogin } = props;
   let decode = {};
 
@@ -61,21 +63,46 @@ const ContinerFIM23 = (props) => {
     console.log(error);
   }
 
+  const renderStepForm = () => {
+    switch (step) {
+      case 1:
+        return <DataDiri {...props} />;
+
+      case 2:
+        return <Essay {...props} category='essay' />;
+
+      case 3:
+        return <Essay {...props} category='volunteering_plan' />;
+
+      case 4:
+        return <UploadBerkas {...props} />;
+      case 5:
+        return (
+          <>
+            <DataDiri {...props} isInPreview={true} />
+            <Essay {...props} category='essay' isInPreview={true} />
+            <Essay {...props} category='volunteering_plan' isInPreview={true} />
+            <UploadBerkas {...props} />
+          </>
+        );
+      default:
+        break;
+    }
+  };
+
   return (
     <div css={styFormWrapper}>
       <div css={stySidebarWrapper}>
         <LogoFim className={styLogo} />
-        <StepDesktop liststep={step} />
+        <StepDesktop liststep={stepList} step={step} />
       </div>
 
       <div css={styMainFormWrapper}>
         <Header />
         <Progress />
-        <StepMobile liststep={step} />
-        <DataDiri {...props} />
-        {/* <Essay {...props} step='essay' />
-        <Essay {...props} step='volunteering_plan' />
-        <UploadBerkas {...props} /> */}
+        <StepMobile liststep={stepList} step={step} />
+
+        {renderStepForm()}
       </div>
     </div>
   );

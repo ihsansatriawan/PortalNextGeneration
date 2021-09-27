@@ -70,7 +70,9 @@ const UploadBerkas = (props) => {
     if (!status) {
       notification.error({ message: response.data.message });
     } else {
-      setAttachment(data);
+      if (data) {
+        setAttachment(data);
+      }
     }
 
     setLoading({

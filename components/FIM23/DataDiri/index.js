@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { object, string } from 'prop-types';
+import { object, string, bool } from 'prop-types';
 import { Form, Button, Icon, notification, message } from 'antd';
 import { fetch } from '@helper/fetch';
 import moment from 'moment';
@@ -18,7 +18,7 @@ import Organisasi from './Organisasi';
 import { styButtonSave, stySubmitWrapperButton } from './styles';
 
 const DataDiri = (props) => {
-  const { cookieLogin } = props;
+  const { cookieLogin, isInPreview } = props;
   const {
     dataUser,
     Identity,
@@ -29,6 +29,7 @@ const DataDiri = (props) => {
     OrganizationExperiences,
     setDataUser,
     loadingUserData,
+    setStep,
   } = useIdentity();
 
   const [isLoading, setIsLoading] = useState(loadingUserData);
@@ -381,7 +382,9 @@ const DataDiri = (props) => {
           saveReference(values),
           saveFimActivity(values),
           saveOrganization(values),
-        ]);
+        ]).then(() => {
+          setStep(2);
+        });
       }
     });
   };
@@ -427,18 +430,21 @@ const DataDiri = (props) => {
         isLoading={isLoading}
         orgNormalized={orgNormalized}
       />
-      <div css={stySubmitWrapperButton}>
-        <Form.Item>
-          <Button
-            size='large'
-            css={styButtonSave}
-            type='primary'
-            htmlType='submit'
-          >
-            <Icon type='save' theme='filled' /> Simpan Perubahan
-          </Button>
-        </Form.Item>
-      </div>
+
+      {!isInPreview && (
+        <div css={stySubmitWrapperButton}>
+          <Form.Item>
+            <Button
+              size='large'
+              css={styButtonSave}
+              type='primary'
+              htmlType='submit'
+            >
+              <Icon type='save' theme='filled' /> Simpan Perubahan
+            </Button>
+          </Form.Item>
+        </div>
+      )}
     </Form>
   );
 };
@@ -448,6 +454,7 @@ const WrappedRegistrationForm = Form.create({ name: 'register' })(DataDiri);
 DataDiri.propTypes = {
   form: object.isRequired,
   cookieLogin: string,
+  isInPreview: bool,
 };
 
 export default WrappedRegistrationForm;
