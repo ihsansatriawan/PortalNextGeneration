@@ -22,6 +22,14 @@ const IdentityProvider = ({ children, cookieLogin }) => {
   const [fimActivity, setFimActivity] = useState(null);
   const [organizationExperiences, setOrganizationExperiences] = useState([]);
 
+  const [formCompleteness, setFormCompleteness] = useState({
+    isFirstStepCompleted: false,
+    isFourthStepCompleted: false,
+    isSecondStepCompleted: false,
+    isThirdStepCompleted: false,
+    progress: 0,
+  });
+
   const redirectAfterSuccessLogout = () => {
     message.success('Berhasil Logout');
     Router.push('/');
@@ -88,12 +96,32 @@ const IdentityProvider = ({ children, cookieLogin }) => {
     }
   };
 
+  const fetchDataFormCompleteness = async () => {
+    try {
+      const response = await fetch({
+        url: '/form-completeness',
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
+
+      if (response.data.status) {
+        setFormCompleteness(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchDataProfile();
+    fetchDataFormCompleteness();
   }, []);
 
   const state = {
     dataUser,
+    formCompleteness,
     loadingUserData: isLoading,
     Identity: identity,
     Skill: skill,

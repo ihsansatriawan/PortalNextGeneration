@@ -1,23 +1,36 @@
-import React from "react";
-import { styStepMobileWrapper } from "./style.js";
-import { CheckCircleFilled } from "@ant-design/icons";
+import React from 'react';
+import { array } from 'prop-types';
+import { styStepMobileWrapper } from './style.js';
+import { CheckCircleFilled } from '@ant-design/icons';
+import { useIdentity } from '@context/profileContext';
 
 const StepMobile = (props) => {
+  const { formCompleteness } = useIdentity();
+
   return (
     <div css={styStepMobileWrapper}>
-      {props.liststep.map((value) => {
+      {props.liststep.map((value, key) => {
+        const isDone = formCompleteness[value.type];
+
         return (
-          <div className="chipStep active">
-            <div className="checkbox">
-              {/* <CheckCircleFilled className="done " /> */}
-              <div className="empty"></div>
+          <div className='chipStep active' key={key}>
+            <div className='checkbox'>
+              {isDone ? (
+                <CheckCircleFilled className='done ' />
+              ) : (
+                <div className='empty'></div>
+              )}
             </div>
-            <div className="nameStep">{value.name}</div>
+            <div className='nameStep'>{value.name}</div>
           </div>
         );
       })}
     </div>
   );
+};
+
+StepMobile.propTypes = {
+  liststep: array,
 };
 
 export default StepMobile;

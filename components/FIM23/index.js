@@ -23,26 +23,31 @@ const step = [
     id: 1,
     name: 'Data Diri',
     description: 'Lengkapi semua informasi data diri kamu.',
+    type: 'isFirstStepCompleted',
   },
   {
     id: 2,
     name: 'Essay',
     description: 'Tulis pendapat kamu dari pertanyaan yang tersedia',
+    type: 'isSecondStepCompleted',
   },
   {
     id: 3,
     name: 'Rencana Pengabdian',
     description: 'Buat rencana pengabdian kamu pasca FIM 23',
+    type: 'isThirdStepCompleted',
   },
   {
     id: 4,
     name: 'Upload Berkas',
     description: 'Upload foto, surat komitmen, surat rekomendasi, & KTP',
+    type: 'isFourthStepCompleted',
   },
   {
     id: 5,
     name: 'Final Preview',
     description: 'Final Preview',
+    type: 'submittedAt',
   },
 ];
 
@@ -51,9 +56,7 @@ const ContinerFIM23 = (props) => {
   let decode = {};
 
   try {
-    decode = jwtDecode(cookieLogin);
-    console.log(decode);
-    console.log('decode');
+    jwtDecode(cookieLogin);
   } catch (error) {
     console.log(error);
   }

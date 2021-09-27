@@ -55,8 +55,6 @@ const DataDiri = (props) => {
     setIsLoading(true);
 
     try {
-      console.log(Identity);
-      console.log('Identity');
       if (Identity) {
         setFieldsValue({
           firstName: Identity.firstName,
