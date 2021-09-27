@@ -19,7 +19,6 @@ import { styButtonSave, stySubmitWrapperButton } from './styles';
 
 const DataDiri = (props) => {
   const { cookieLogin } = props;
-
   const {
     dataUser,
     Identity,
@@ -43,6 +42,7 @@ const DataDiri = (props) => {
       },
     ],
   });
+  const [orgNormalized, setOrgNormalized] = useState({});
 
   const { setFieldsValue, getFieldValue } = props.form;
 
@@ -151,7 +151,7 @@ const DataDiri = (props) => {
         let orgRole = [];
 
         for (let index = 0; index < OrganizationExperiences.length; index++) {
-          initialKey.concat(index);
+          initialKey.push(index);
         }
 
         OrganizationExperiences.map((org) => {
@@ -163,7 +163,16 @@ const DataDiri = (props) => {
         });
 
         setFieldsValue({
-          organizaitons: initialKey,
+          organizations: initialKey,
+          // orgDuration:orgDuration,
+          // orgEventScale,
+          // orgReferencePerson,
+          // orgResult,
+          // orgRole,
+        });
+
+        setOrgNormalized({
+          organizations: initialKey,
           orgDuration,
           orgEventScale,
           orgReferencePerson,
@@ -331,13 +340,13 @@ const DataDiri = (props) => {
   };
 
   const saveOrganization = async (value) => {
-    const countOrg = getFieldValue('organizaitons');
+    const countOrg = getFieldValue('organizations');
     const normalizer = countOrg.map((key) => {
       return {
         referencePerson: value.orgReferencePerson[key],
         role: value.orgRole[key],
         duration: value.orgDuration[key],
-        eventScale: value.eventScale[key],
+        eventScale: value.orgEventScale[key],
         result: value.orgResult[key],
       };
     });
@@ -377,11 +386,25 @@ const DataDiri = (props) => {
   };
 
   useEffect(() => {
+    // if (firstRender.current) {
     fetchDataProfile();
-  }, [Identity]);
+    //   firstRender.current = false;
+    // }
+  }, [
+    dataUser,
+    Identity,
+    Skill,
+    SocialMedia,
+    AlumniReference,
+    FimActivity,
+    OrganizationExperiences,
+  ]);
 
   return (
-    <Form onSubmit={handleSubmitForm}>
+    <Form
+      onSubmit={handleSubmitForm}
+      initialValue={{ orgReferencePerson: ['ss'] }}
+    >
       <BasicInfo
         {...props}
         isLoading={isLoading}
@@ -398,7 +421,11 @@ const DataDiri = (props) => {
       <Social {...props} isLoading={isLoading} />
       <Reference {...props} isLoading={isLoading} />
       <Keaktifan {...props} isLoading={isLoading} />
-      <Organisasi {...props} isLoading={isLoading} />
+      <Organisasi
+        {...props}
+        isLoading={isLoading}
+        orgNormalized={orgNormalized}
+      />
       <div css={stySubmitWrapperButton}>
         <Form.Item>
           <Button

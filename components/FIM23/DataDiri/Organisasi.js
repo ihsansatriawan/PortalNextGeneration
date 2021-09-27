@@ -10,6 +10,8 @@ let id = 0;
 
 const Organisasi = (props) => {
   const { getFieldDecorator, getFieldValue, setFieldsValue } = props.form;
+  const { orgNormalized } = props;
+
   getFieldDecorator('organizations', { initialValue: [] });
   const keys = getFieldValue('organizations');
 
@@ -27,6 +29,7 @@ const Organisasi = (props) => {
         <Col span={24}>
           <Form.Item label='Peran'>
             {getFieldDecorator(`orgRole[${key}]`, {
+              initialValue: orgNormalized.orgRole[key],
               rules: [
                 {
                   required: false,
@@ -42,6 +45,7 @@ const Organisasi = (props) => {
         <Col span={24}>
           <Form.Item label='Referensi atau Penanggungjawab'>
             {getFieldDecorator(`orgReferencePerson[${key}]`, {
+              initialValue: orgNormalized.orgReferencePerson[key],
               rules: [
                 {
                   required: false,
@@ -57,13 +61,14 @@ const Organisasi = (props) => {
         <Col span={24}>
           <Form.Item label='Durasi Kegiatan'>
             {getFieldDecorator(`orgDuration[${key}]`, {
+              initialValue: orgNormalized.orgDuration[key],
               rules: [
                 {
                   required: false,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input placeholder='isi nama leader kamu ya ' />)}
+            })(<Input placeholder='isi durasi kegiatan ' />)}
           </Form.Item>
         </Col>
       </Row>
@@ -72,6 +77,7 @@ const Organisasi = (props) => {
         <Col span={24}>
           <Form.Item label='Skala Kegiatan'>
             {getFieldDecorator(`orgEventScale[${key}]`, {
+              initialValue: orgNormalized.orgEventScale[key],
               rules: [
                 {
                   required: false,
@@ -106,6 +112,7 @@ const Organisasi = (props) => {
         <Col span={24}>
           <Form.Item label='Hasil Kegiatan'>
             {getFieldDecorator(`orgResult[${key}]`, {
+              initialValue: orgNormalized.orgResult[key],
               rules: [
                 {
                   required: false,
@@ -136,6 +143,7 @@ const Organisasi = (props) => {
 
 Organisasi.propTypes = {
   form: object.isRequired,
+  orgNormalized: object,
 };
 
 export default Organisasi;

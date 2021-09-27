@@ -2,13 +2,13 @@ import React, {
   useContext,
   createContext,
   useState,
-  message,
+  // message,
   useEffect,
 } from 'react';
 import { node, string } from 'prop-types';
 import { fetch } from '@helper/fetch';
-import { logout } from '@helper/googleSession';
-import Router from 'next/router';
+// import { logout } from '@helper/googleSession';
+// import Router from 'next/router';
 
 export const IdentityContext = createContext();
 
@@ -30,10 +30,10 @@ const IdentityProvider = ({ children, cookieLogin }) => {
     progress: 0,
   });
 
-  const redirectAfterSuccessLogout = () => {
-    message.success('Berhasil Logout');
-    Router.push('/');
-  };
+  // const redirectAfterSuccessLogout = () => {
+  //   message.success('Berhasil Logout');
+  //   Router.push('/');
+  // };
 
   const fetchDataProfile = async () => {
     setIsLoading(true);
