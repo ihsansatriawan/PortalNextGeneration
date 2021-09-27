@@ -28,9 +28,10 @@ const DataDiri = (props) => {
     FimActivity,
     OrganizationExperiences,
     setDataUser,
+    loadingUserData,
   } = useIdentity();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(loadingUserData);
   const [listCertificate, setListCertificate] = useState({
     previewVisible: false,
     previewImage: '',
@@ -124,11 +125,11 @@ const DataDiri = (props) => {
 
       if (AlumniReference) {
         setFieldsValue({
-          responsibility: AlumniReference.responsibility,
-          role: AlumniReference.role,
-          duration: AlumniReference.duration,
-          eventScale: AlumniReference.eventScale,
-          result: AlumniReference.result,
+          fullNameRef: AlumniReference.fullName,
+          batchRef: AlumniReference.batch,
+          phoneNumberRef: AlumniReference.phoneNumber,
+          acquaintedSinceRef: AlumniReference.acquaintedSince,
+          relationshipRef: AlumniReference.relationship,
         });
       }
 
