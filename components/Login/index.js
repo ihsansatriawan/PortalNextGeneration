@@ -102,8 +102,7 @@ class Login extends React.Component {
   render() {
     const { isLoading } = this.state;
     const { cookieLogin } = this.props;
-    console.log(process.env.GOOGLE_CLIENT_ID);
-    console.log('process.env.GOOGLE_CLIENT_ID');
+
     return (
       <React.Fragment>
         <div>
@@ -126,7 +125,7 @@ class Login extends React.Component {
               ) : (
                 <GoogleLogin
                   css={styGoogleLogin}
-                  clientId={process.env.GOOGLE_CLIENT_ID}
+                  clientId='269084078455-iftet2nq7bomcsakr5rci00mk4g09ibq.apps.googleusercontent.com'
                   buttonText='Masuk atau Daftar dengan Google Email'
                   onSuccess={this.responseGoogle}
                   onFailure={this.responseGoogle}
