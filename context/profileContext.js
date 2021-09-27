@@ -87,11 +87,11 @@ const IdentityProvider = ({ children, cookieLogin }) => {
         setOrganizationExperiences(OrganizationExperiences);
       }
     } catch (error) {
-      logout({
-        onLogoutSuccess: () => {
-          redirectAfterSuccessLogout();
-        },
-      });
+      // logout({
+      //   onLogoutSuccess: () => {
+      //     redirectAfterSuccessLogout();
+      //   },
+      // });
       setIsLoading(false);
     }
   };
