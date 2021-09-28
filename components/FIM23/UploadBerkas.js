@@ -39,6 +39,7 @@ const beforeUpload = (file) => {
 const UploadBerkas = (props) => {
   const { cookieLogin } = props;
   const isFirstInitialize = useRef(true);
+  const isAfterAllCompleted = useRef(false);
 
   const { setStep, fetchDataFormCompleteness } = useIdentity();
 
@@ -108,7 +109,9 @@ const UploadBerkas = (props) => {
         attachment.recommendationLetterUrl &&
         attachment.commitmentLetterUrl
       ) {
-        setStep(5);
+        if (isAfterAllCompleted.current) {
+          setStep(5);
+        }
         fetchDataFormCompleteness('refetch');
       }
     }

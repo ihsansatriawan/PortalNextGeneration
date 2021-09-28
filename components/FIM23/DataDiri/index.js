@@ -102,7 +102,7 @@ const DataDiri = (props) => {
           : null;
         Skill.thirdCertificateUrl
           ? listCertNorm.push({
-              uid: '2',
+              uid: '3',
               url: Skill.thirdCertificateUrl,
             })
           : null;
