@@ -31,7 +31,7 @@ const Essay = (props) => {
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
 
-  const { step, Identity } = useIdentity();
+  const { step, Identity, setStep, fetchDataFormCompleteness } = useIdentity();
 
   const fetchEssayList = async (cb) => {
     setIsLoading(true);
@@ -209,7 +209,19 @@ const Essay = (props) => {
           notification.error({ message: 'Gagal menyimpan data' });
         }
       } else {
+        switch (category) {
+          case 'essay':
+            setStep(3);
+            break;
+          case 'volunteering_plan':
+            setStep(4);
+            break;
+          default:
+            break;
+        }
+
         notification.success({ message: response.data.message });
+        fetchDataFormCompleteness('refetch');
       }
     } catch (error) {
       console.log('err: ', error);

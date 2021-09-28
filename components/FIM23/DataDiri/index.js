@@ -30,6 +30,7 @@ const DataDiri = (props) => {
     setDataUser,
     loadingUserData,
     setStep,
+    fetchDataFormCompleteness,
   } = useIdentity();
 
   const [isLoading, setIsLoading] = useState(loadingUserData);
@@ -189,6 +190,7 @@ const DataDiri = (props) => {
       logout({
         onLogoutSuccess: () => {
           redirectAfterSuccessLogout();
+          notification.error({ message: `Berhasil Logout` });
         },
       });
       setIsLoading(false);
@@ -229,9 +231,7 @@ const DataDiri = (props) => {
     const { status, message } = response.data;
 
     if (!status) {
-      notification.error({ message: message });
-    } else {
-      notification.success({ message: message });
+      notification.error({ message: `Gagal menyimpan data diri: ${message}` });
     }
   };
 
@@ -260,9 +260,9 @@ const DataDiri = (props) => {
     const { status, message } = response.data;
 
     if (!status) {
-      notification.error({ message: message });
-    } else {
-      notification.success({ message: message });
+      notification.error({
+        message: `Gagal menyimpan data Profesi: ${message}`,
+      });
     }
   };
 
@@ -285,9 +285,9 @@ const DataDiri = (props) => {
     const { status, message } = response.data;
 
     if (!status) {
-      notification.error({ message: message });
-    } else {
-      notification.success({ message: message });
+      notification.error({
+        message: `Gagal menyimpan data Social Media:  ${message}`,
+      });
     }
   };
 
@@ -310,9 +310,9 @@ const DataDiri = (props) => {
     const { status, message } = response.data;
 
     if (!status) {
-      notification.error({ message: message });
-    } else {
-      notification.success({ message: message });
+      notification.error({
+        message: `Gagal menyimpan data Referensi FIM ${message}`,
+      });
     }
   };
 
@@ -335,9 +335,9 @@ const DataDiri = (props) => {
     const { status, message } = response.data;
 
     if (!status) {
-      notification.error({ message: message });
-    } else {
-      notification.success({ message: message });
+      notification.error({
+        message: `Gagal menyimpan data aktivitas FIM ${message}`,
+      });
     }
   };
 
@@ -382,18 +382,21 @@ const DataDiri = (props) => {
           saveReference(values),
           saveFimActivity(values),
           saveOrganization(values),
-        ]).then(() => {
-          setStep(2);
-        });
+        ])
+          .then(() => {
+            setStep(2);
+            fetchDataFormCompleteness('refetch');
+          })
+          .catch((error) => {
+            console.error(error);
+            notification.error({ message: 'Gagal Menyimpan Data' });
+          });
       }
     });
   };
 
   useEffect(() => {
-    // if (firstRender.current) {
     fetchDataProfile();
-    //   firstRender.current = false;
-    // }
   }, [
     dataUser,
     Identity,

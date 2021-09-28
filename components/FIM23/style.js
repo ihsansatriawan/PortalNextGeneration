@@ -96,6 +96,7 @@ export const styProgressWrapper = css`
       letter-spacing: 0em;
       text-align: left;
       color: rgba(140, 105, 79, 1);
+      margin: 0;
     }
   }
 `;
@@ -353,6 +354,7 @@ export const styButtonSubmitAll = css`
   color: white;
   font-weight: 600;
   cursor: pointer;
+  margin-top: 20px;
 `;
 
 export const styModalWrapper = css`
@@ -386,5 +388,16 @@ export const styButtonWrapper = css`
     color: white;
     height: 50px;
     font-weight: 700;
+  }
+`;
+
+export const styModalSend = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .img {
+    margin-bottom: 20px;
   }
 `;

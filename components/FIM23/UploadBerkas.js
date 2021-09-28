@@ -11,6 +11,7 @@ import {
   notification,
 } from 'antd';
 import { fetch } from '@helper/fetch';
+import { useIdentity } from '@context/profileContext';
 
 const { Title, Text } = Typography;
 import {
@@ -38,6 +39,9 @@ const beforeUpload = (file) => {
 const UploadBerkas = (props) => {
   const { cookieLogin } = props;
   const isFirstInitialize = useRef(true);
+
+  const { setStep, fetchDataFormCompleteness } = useIdentity();
+
   const [attachment, setAttachment] = useState({
     identityFileUrl: '',
     recommendationLetterUrl: '',
@@ -96,6 +100,17 @@ const UploadBerkas = (props) => {
 
     if (!status) {
       notification.error({ message: response.data.message });
+    }
+
+    if (status) {
+      if (
+        attachment.identityFileUrl &&
+        attachment.recommendationLetterUrl &&
+        attachment.commitmentLetterUrl
+      ) {
+        setStep(5);
+        fetchDataFormCompleteness('refetch');
+      }
     }
   };
 

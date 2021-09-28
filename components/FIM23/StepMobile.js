@@ -5,7 +5,7 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import { useIdentity } from '@context/profileContext';
 
 const StepMobile = (props) => {
-  const { formCompleteness, setStep } = useIdentity();
+  const { formCompleteness, setStep, step } = useIdentity();
 
   return (
     <div css={styStepMobileWrapper}>
@@ -14,7 +14,7 @@ const StepMobile = (props) => {
 
         return (
           <div
-            className='chipStep active'
+            className={value.id === step ? 'chipStep active' : 'chipStep'}
             key={key}
             onClick={() => setStep(value.id)}
           >

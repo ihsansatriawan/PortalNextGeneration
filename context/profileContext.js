@@ -5,6 +5,7 @@ import React, {
   // message,
   useEffect,
   notification,
+  useCallback,
 } from 'react';
 import { node, string } from 'prop-types';
 import { fetch } from '@helper/fetch';
@@ -22,6 +23,10 @@ const IdentityProvider = ({ children, cookieLogin }) => {
   const [alumniReference, setAlumniReference] = useState(null);
   const [fimActivity, setFimActivity] = useState(null);
   const [organizationExperiences, setOrganizationExperiences] = useState([]);
+  const [submitAllState, setSubmitAllState] = useState({
+    loading: false,
+    status: false,
+  });
 
   const [step, setStep] = useState(1);
 
@@ -90,16 +95,13 @@ const IdentityProvider = ({ children, cookieLogin }) => {
         setOrganizationExperiences(OrganizationExperiences);
       }
     } catch (error) {
-      // logout({
-      //   onLogoutSuccess: () => {
-      //     redirectAfterSuccessLogout();
-      //   },
-      // });
+      console.error(error);
+      notification.error({ message: 'Gagal memuat data diri' });
       setIsLoading(false);
     }
   };
 
-  const fetchDataFormCompleteness = async () => {
+  const fetchDataFormCompleteness = useCallback(async (refetch) => {
     try {
       const response = await fetch({
         url: '/form-completeness',
@@ -118,24 +120,26 @@ const IdentityProvider = ({ children, cookieLogin }) => {
           submittedAt,
         } = response.data.data;
 
-        if (isFirstStepCompleted) {
-          setStep(2);
-        }
+        if (!refetch) {
+          if (isFirstStepCompleted) {
+            setStep(2);
+          }
 
-        if (isSecondStepCompleted) {
-          setStep(3);
-        }
+          if (isSecondStepCompleted) {
+            setStep(3);
+          }
 
-        if (isThirdStepCompleted) {
-          setStep(4);
-        }
+          if (isThirdStepCompleted) {
+            setStep(4);
+          }
 
-        if (isFourthStepCompleted) {
-          setStep(5);
-        }
+          if (isFourthStepCompleted) {
+            setStep(5);
+          }
 
-        if (submittedAt) {
-          setStep(5);
+          if (submittedAt) {
+            setStep(5);
+          }
         }
 
         setFormCompleteness(response.data.data);
@@ -143,9 +147,13 @@ const IdentityProvider = ({ children, cookieLogin }) => {
     } catch (error) {
       console.error(error);
     }
-  };
+  }, []);
 
-  const submitAllOk = async () => {
+  const onHandleAllSubmit = async () => {
+    setSubmitAllState((prevState) => ({
+      ...prevState,
+      loading: true,
+    }));
     const response = await fetch({
       url: '/form-completeness/submit',
       method: 'post',
@@ -154,7 +162,22 @@ const IdentityProvider = ({ children, cookieLogin }) => {
       },
     });
 
+    setSubmitAllState((prevState) => ({
+      ...prevState,
+      loading: false,
+    }));
+
     const { status, message } = response.data;
+    if (status) {
+      setSubmitAllState((prevState) => ({
+        ...prevState,
+        status: true,
+      }));
+
+      fetchDataFormCompleteness('refetch');
+    } else {
+      notification.error({ message });
+    }
   };
 
   useEffect(() => {
@@ -173,9 +196,11 @@ const IdentityProvider = ({ children, cookieLogin }) => {
     FimActivity: fimActivity,
     OrganizationExperiences: organizationExperiences,
     setDataUser: setDataUser,
+    fetchDataFormCompleteness,
     step,
     setStep,
-    submitAllOk,
+    onHandleAllSubmit,
+    submitAllState,
   };
 
   return (
