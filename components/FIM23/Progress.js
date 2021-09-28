@@ -3,9 +3,12 @@ import {
   styProgressWrapper,
   styButtonSubmitAll,
   styMeterWrapper,
+  styModalWrapper,
+  styButtonWrapper,
 } from './style';
-import { Progress, Modal } from 'antd';
+import { Progress, Modal, Typography, Button } from 'antd';
 import { useIdentity } from '@context/profileContext';
+const { Title } = Typography;
 
 const Header = () => {
   const { formCompleteness, submitAllOk } = useIdentity();
@@ -26,14 +29,28 @@ const Header = () => {
   const ModalConfirm = () => {
     return (
       <Modal
-        title='Basic Modal'
         visible={openModal}
         onOk={onConfirmOK}
         onCancel={onCancel}
+        footer={null}
       >
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        <div css={styModalWrapper}>
+          <Title level={4}>
+            Yakin Mau Submit Formulir Pendaftaran FIM 23 Sekarang?
+          </Title>
+          <p>
+            Pastikan semua data yang kamu masukkan benar ya. Setelah submit
+            form, kamu tidak dapat mengubah atau mengedit data lagi.{' '}
+          </p>
+          <div css={styButtonWrapper}>
+            <Button className='batal' size='large' onClick={onCancel}>
+              Batal
+            </Button>
+            <Button className='submit' size='large' onClick={onConfirmOK}>
+              Submit Sekarang
+            </Button>
+          </div>
+        </div>
       </Modal>
     );
   };
@@ -59,7 +76,7 @@ const Header = () => {
         </div>
       </div>
 
-      <div className={styButtonSubmitAll} onClick={onSubmitAll}>
+      <div css={styButtonSubmitAll} onClick={onSubmitAll}>
         Submit Form Sekarang
       </div>
 

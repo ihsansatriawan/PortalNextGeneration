@@ -344,6 +344,47 @@ export const styMeterWrapper = css`
   flex-direction: row !important;
 `;
 export const styButtonSubmitAll = css`
-  background: yellow;
+  background: #ff8229;
   width: 100%;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+export const styModalWrapper = css`
+  display: flex;
+  flex-direction: column;
+
+  p {
+    line-height: 1.8;
+    margin-bottom: 20px;
+  }
+`;
+
+export const styButtonWrapper = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .batal {
+    width: 48%;
+    font-size: 12px;
+    height: 50px;
+    font-weight: 700;
+    color: #ff8229;
+    border: 1px solid #ff8229;
+  }
+
+  .submit {
+    width: 48%;
+    font-size: 12px;
+    background: #ff8229;
+    color: white;
+    height: 50px;
+    font-weight: 700;
+  }
 `;
