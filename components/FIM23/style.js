@@ -95,8 +95,8 @@ export const styProgressWrapper = css`
       margin-bottom: 5px;
 
       ${mq[1]} {
-      margin-right: 20px;
-    }
+        margin-right: 20px;
+      }
     }
 
     .subTitle {
@@ -223,7 +223,6 @@ export const styStepDesktopWrapper = css`
       .description {
         font-weight: normal;
         font-size: 14px;
-        color: #868686;
       }
     }
   }

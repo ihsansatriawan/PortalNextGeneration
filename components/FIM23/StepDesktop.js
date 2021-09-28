@@ -5,14 +5,18 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import { useIdentity } from '@context/profileContext';
 
 const StepDesktop = (props) => {
-  const { formCompleteness, setStep } = useIdentity();
+  const { formCompleteness, setStep, step } = useIdentity();
 
   return (
     <div css={styStepDesktopWrapper}>
       {props.liststep.map((value, key) => {
         const isDone = formCompleteness[value.type];
         return (
-          <div className='chipStep' key={key} onClick={() => setStep(value.id)}>
+          <div
+            className={value.id === step ? 'chipStep active' : 'chipStep'}
+            key={key}
+            onClick={() => setStep(value.id)}
+          >
             <div className='checkbox'>
               {isDone ? (
                 <CheckCircleFilled className='done ' />
