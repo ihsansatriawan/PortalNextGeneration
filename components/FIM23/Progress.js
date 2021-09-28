@@ -122,10 +122,15 @@ const Header = () => {
           />
         </div>
         <div className='caption'>
-          <div className='title'>Progress Kelengkapan Formulir</div>
+          <div className='title'>
+            {formCompleteness.progress === 100
+              ? 'Wohooo... Formulir Kamu Sudah Lengkap!'
+              : 'Progress Kelengkapan Formulir'}
+          </div>
           <p className='subTitle'>
-            Yuk segera lengkapi formulir kamu mulai dari data diri, essay,
-            rencana pengabdian, & upload berkas.
+            {formCompleteness.progress === 100
+              ? 'Kamu bisa cek Final Preview dulu. Kalau semua sudah oke, kamu bisa submit formulir kamu sekarang.'
+              : 'Yuk segera lengkapi formulir kamu mulai dari data diri, essay, rencana pengabdian, & upload berkas.'}
           </p>
         </div>
       </div>

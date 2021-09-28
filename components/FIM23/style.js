@@ -71,10 +71,16 @@ export const styProgressWrapper = css`
 
   ${mq[1]} {
     justify-content: flex-start;
+    flex-direction: row;
+    padding: 20px;
   }
 
   .progressBar {
     margin-right: 10px;
+
+    ${mq[1]} {
+      margin-right: 20px;
+    }
   }
 
   .caption {
@@ -87,6 +93,10 @@ export const styProgressWrapper = css`
       text-align: left;
       color: rgba(140, 105, 79, 1);
       margin-bottom: 5px;
+
+      ${mq[1]} {
+      margin-right: 20px;
+    }
     }
 
     .subTitle {
@@ -355,6 +365,11 @@ export const styButtonSubmitAll = css`
   font-weight: 600;
   cursor: pointer;
   margin-top: 20px;
+
+  ${mq[1]} {
+    width: 30%;
+    margin-top: 0;
+  }
 `;
 
 export const styModalWrapper = css`

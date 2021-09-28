@@ -110,7 +110,7 @@ const BasicInfo = (props) => {
       <Title level={3}>Data Diri</Title>
       <Row>
         <Col span={24}>
-          <Form.Item label='No KTP'>
+          <Form.Item label='No KTP' readonly>
             {getFieldDecorator('ktpNumber', {
               rules: [
                 { required: true, message: 'Isi nomor NIK / KTP kamu ya!' },
