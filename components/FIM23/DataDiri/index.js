@@ -311,7 +311,7 @@ const DataDiri = (props) => {
 
     if (!status) {
       notification.error({
-        message: `Gagal menyimpan data Referensi FIM ${message}`,
+        message: `Gagal menyimpan data Referensi FIM: ${message}`,
       });
     }
   };
@@ -336,7 +336,7 @@ const DataDiri = (props) => {
 
     if (!status) {
       notification.error({
-        message: `Gagal menyimpan data aktivitas FIM ${message}`,
+        message: `Gagal menyimpan data aktivitas FIM: ${message}`,
       });
     }
   };
@@ -353,21 +353,23 @@ const DataDiri = (props) => {
       };
     });
 
-    const response = await fetch({
-      url: '/auth/profile/organization-experience',
-      method: 'post',
-      headers: {
-        Authorization: `Bearer ${cookieLogin}`,
-      },
-      data: normalizer,
-    });
+    if (normalizer.length > 0) {
+      const response = await fetch({
+        url: '/auth/profile/organization-experience',
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+        data: normalizer,
+      });
 
-    const { status, message } = response.data;
+      const { status, message } = response.data;
 
-    if (!status) {
-      notification.error({ message: message });
-    } else {
-      notification.success({ message: message });
+      if (!status) {
+        notification.error({
+          message: `Gagal menyimpan data organisasi: ${message}`,
+        });
+      }
     }
   };
 
@@ -408,10 +410,7 @@ const DataDiri = (props) => {
   ]);
 
   return (
-    <Form
-      onSubmit={handleSubmitForm}
-      initialValue={{ orgReferencePerson: ['ss'] }}
-    >
+    <Form onSubmit={handleSubmitForm}>
       <BasicInfo
         {...props}
         isLoading={isLoading}

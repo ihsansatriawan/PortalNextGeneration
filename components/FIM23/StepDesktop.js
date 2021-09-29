@@ -1,4 +1,5 @@
 import React from 'react';
+import { notification } from 'antd';
 import { array } from 'prop-types';
 import { styStepDesktopWrapper } from './style.js';
 import { CheckCircleFilled } from '@ant-design/icons';
@@ -15,7 +16,15 @@ const StepDesktop = (props) => {
           <div
             className={value.id === step ? 'chipStep active' : 'chipStep'}
             key={key}
-            onClick={() => setStep(value.id)}
+            onClick={() => {
+              if (!formCompleteness.submittedAt) {
+                setStep(value.id);
+              } else {
+                notification.error({
+                  message: `Kamu sudah mengirim data pendaftaran`,
+                });
+              }
+            }}
           >
             <div className='checkbox'>
               {isDone ? (

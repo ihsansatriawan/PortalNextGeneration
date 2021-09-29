@@ -74,7 +74,7 @@ class Login extends React.Component {
 
   responseGoogle = async (response) => {
     this.onToggleLoader();
-    console.log(response);
+
     if (response.accessToken) {
       this.onSuccessLogin(response);
       sendTracker({

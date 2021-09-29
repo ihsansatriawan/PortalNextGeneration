@@ -36,6 +36,7 @@ const IdentityProvider = ({ children, cookieLogin }) => {
     isSecondStepCompleted: false,
     isThirdStepCompleted: false,
     progress: 0,
+    submittedAt: null,
   });
 
   // const redirectAfterSuccessLogout = () => {
@@ -96,7 +97,6 @@ const IdentityProvider = ({ children, cookieLogin }) => {
       }
     } catch (error) {
       console.error(error);
-      notification.error({ message: 'Gagal memuat data diri' });
       setIsLoading(false);
     }
   };

@@ -28,7 +28,8 @@ const beforeUploadCertificate = (file) => {
 
 const Profesi = (props) => {
   const { getFieldDecorator } = props.form;
-  const { listCertificate, setListCertificate, isLoading } = props;
+  const { listCertificate, setListCertificate, isLoading, isInPreview } = props;
+  const isDisabled = isInPreview;
 
   const handlePreviewOnPreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -88,7 +89,7 @@ const Profesi = (props) => {
                   message: 'Tolong isi Institusi asal kamu!',
                 },
               ],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -103,7 +104,12 @@ const Profesi = (props) => {
                     'Tolong isi Profesi jabatan/aktivitas kamu saat ini ',
                 },
               ],
-            })(<Input placeholder='Isi Profesi / Jabatan' />)}
+            })(
+              <Input
+                disabled={isDisabled}
+                placeholder='Isi Profesi / Jabatan'
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -115,6 +121,7 @@ const Profesi = (props) => {
             })(
               <Radio.Group
                 defaultValue='a'
+                disabled={isDisabled}
                 buttonStyle='solid'
                 size='large'
                 style={{
@@ -151,7 +158,10 @@ const Profesi = (props) => {
                 },
               ],
             })(
-              <Input placeholder='tambahkan link portfolio video editing (jika ada)' />
+              <Input
+                disabled={isDisabled}
+                placeholder='tambahkan link portfolio video editing (jika ada)'
+              />
             )}
           </Form.Item>
         </Col>
@@ -162,6 +172,7 @@ const Profesi = (props) => {
             Sertifikasi Keahlian
           </label>
           <Upload
+            disabled={isDisabled}
             action='https://api.cloudinary.com/v1_1/fim-indonesia/image/upload'
             listType='picture-card'
             beforeUpload={beforeUploadCertificate}
@@ -191,6 +202,7 @@ Profesi.propTypes = {
   listCertificate: object,
   setListCertificate: func,
   isLoading: bool,
+  isInPreview: bool,
 };
 
 export default Profesi;

@@ -7,7 +7,8 @@ import { styCardWrapper } from '../style';
 const { TextArea } = Input;
 
 const Keaktifan = (props) => {
-  const { getFieldDecorator } = props.form;
+  const { getFieldDecorator, isInPreview } = props.form;
+  const isDisabled = isInPreview;
 
   return (
     <Card css={styCardWrapper}>
@@ -28,7 +29,10 @@ const Keaktifan = (props) => {
                 },
               ],
             })(
-              <TextArea placeholder='isi tugas/tanggung jawab kamu di sini ' />
+              <TextArea
+                disabled={isDisabled}
+                placeholder='isi tugas/tanggung jawab kamu di sini '
+              />
             )}
           </Form.Item>
         </Col>
@@ -43,7 +47,12 @@ const Keaktifan = (props) => {
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<TextArea placeholder='isi peran kamu di sini ' />)}
+            })(
+              <TextArea
+                disabled={isDisabled}
+                placeholder='isi peran kamu di sini '
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -57,7 +66,12 @@ const Keaktifan = (props) => {
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<TextArea placeholder='isi durasi kegiatan' />)}
+            })(
+              <TextArea
+                disabled={isDisabled}
+                placeholder='isi durasi kegiatan'
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -74,6 +88,7 @@ const Keaktifan = (props) => {
               ],
             })(
               <Radio.Group
+                disabled={isDisabled}
                 buttonStyle='solid'
                 size='large'
                 style={{
@@ -106,7 +121,12 @@ const Keaktifan = (props) => {
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<TextArea placeholder='isi hasil kegiatan' />)}
+            })(
+              <TextArea
+                disabled={isDisabled}
+                placeholder='isi hasil kegiatan'
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>

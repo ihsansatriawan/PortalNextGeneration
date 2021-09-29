@@ -1,11 +1,13 @@
 import React from 'react';
 import { Card, Row, Form, Col, Input, Typography } from 'antd';
 import { styCardWrapper } from '../style';
-import { object } from 'prop-types';
+import { object, bool } from 'prop-types';
 const { Title } = Typography;
 
 const Reference = (props) => {
   const { getFieldDecorator } = props.form;
+  const { isInPreview } = props;
+  const isDisabled = isInPreview;
 
   return (
     <Card css={styCardWrapper}>
@@ -16,11 +18,11 @@ const Reference = (props) => {
             {getFieldDecorator('fullNameRef', {
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -30,11 +32,11 @@ const Reference = (props) => {
             {getFieldDecorator('batchRef', {
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -44,11 +46,11 @@ const Reference = (props) => {
             {getFieldDecorator('phoneNumberRef', {
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -58,11 +60,11 @@ const Reference = (props) => {
             {getFieldDecorator('acquaintedSinceRef', {
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input placeholder='>5 Tahun' />)}
+            })(<Input disabled={isDisabled} placeholder='>5 Tahun' />)}
           </Form.Item>
         </Col>
       </Row>
@@ -72,11 +74,11 @@ const Reference = (props) => {
             {getFieldDecorator('relationshipRef', {
               rules: [
                 {
-                  required: true,
+                  required: false,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input placeholder='>Mentor' />)}
+            })(<Input disabled={isDisabled} placeholder='>Mentor' />)}
           </Form.Item>
         </Col>
       </Row>
@@ -86,6 +88,7 @@ const Reference = (props) => {
 
 Reference.propTypes = {
   form: object.isRequired,
+  isInPreview: bool,
 };
 
 export default Reference;

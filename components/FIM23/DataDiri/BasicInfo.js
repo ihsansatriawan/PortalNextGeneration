@@ -44,8 +44,10 @@ const beforeUpload = (file) => {
 const BasicInfo = (props) => {
   const [isButtonLoading, setButtonLoading] = useState(false);
   const { getFieldDecorator, setFieldsValue } = props.form;
-  const { dataUser, setDataUser, isLoading } = props;
+  const { dataUser, setDataUser, isLoading, isInPreview } = props;
   const { Identity } = dataUser;
+
+  const isDisabled = isInPreview;
 
   // const halo = useIdentity();
 
@@ -88,6 +90,7 @@ const BasicInfo = (props) => {
         action='https://api.cloudinary.com/v1_1/fim-indonesia/image/upload'
         beforeUpload={beforeUpload}
         onChange={handleChangeProfpic}
+        disabled={isDisabled}
         data={(file) => {
           return {
             upload_preset: 'profile_photo',
@@ -97,7 +100,11 @@ const BasicInfo = (props) => {
         }}
       >
         {' '}
-        <Button css={styButtonUploadFoto} loading={isButtonLoading}>
+        <Button
+          disabled={isDisabled}
+          css={styButtonUploadFoto}
+          loading={isButtonLoading}
+        >
           <Icon type='upload' /> Upload Foto Diri
         </Button>
       </Upload>
@@ -115,7 +122,7 @@ const BasicInfo = (props) => {
               rules: [
                 { required: true, message: 'Isi nomor NIK / KTP kamu ya!' },
               ],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -155,10 +162,10 @@ const BasicInfo = (props) => {
               rules: [
                 {
                   required: true,
-                  message: 'Please input your Name',
+                  message: 'Isi nama kamu dulu ya!',
                 },
               ],
-            })(<Input placeholder='isi nama dulu ya' />)}
+            })(<Input disabled={isDisabled} placeholder='isi nama dulu ya' />)}
           </Form.Item>
         </Col>
         <Col span={12}>
@@ -167,10 +174,10 @@ const BasicInfo = (props) => {
               rules: [
                 {
                   required: true,
-                  message: 'Please input your Name',
+                  message: 'Isi nama kamu dulu ya!',
                 },
               ],
-            })(<Input placeholder='isi nama belakang' />)}
+            })(<Input disabled={isDisabled} placeholder='isi nama belakang' />)}
           </Form.Item>
         </Col>
       </Row>
@@ -179,7 +186,7 @@ const BasicInfo = (props) => {
           <Form.Item label='Tempat Lahir'>
             {getFieldDecorator('bornPlace', {
               rules: [{ required: true, message: 'Isi tempat lahir kamu ya!' }],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -190,7 +197,13 @@ const BasicInfo = (props) => {
               rules: [
                 { required: true, message: 'Tolong isi tanggal lahir kamu' },
               ],
-            })(<DatePicker style={{ width: '100%' }} format={'DD-MM-YYYY'} />)}
+            })(
+              <DatePicker
+                disabled={isDisabled}
+                style={{ width: '100%' }}
+                format={'DD-MM-YYYY'}
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -202,6 +215,7 @@ const BasicInfo = (props) => {
               rules: [{ required: true, message: 'Pilih jenis kelamin kamu' }],
             })(
               <Radio.Group
+                disabled={isDisabled}
                 defaultValue='a'
                 buttonStyle='solid'
                 style={{
@@ -226,7 +240,12 @@ const BasicInfo = (props) => {
           <Form.Item label='Kota'>
             {getFieldDecorator('cityAddress', {
               rules: [{ required: true, message: 'Isi Kota Alamat kamu!' }],
-            })(<Input placeholder='kota domisili saat ini' />)}
+            })(
+              <Input
+                disabled={isDisabled}
+                placeholder='kota domisili saat ini'
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -236,7 +255,12 @@ const BasicInfo = (props) => {
           <Form.Item label='Provinsi'>
             {getFieldDecorator('provinceAddress', {
               rules: [{ required: true, message: 'Isi Provinsi Alamat kamu!' }],
-            })(<Input placeholder='provinsi domisili saat ini' />)}
+            })(
+              <Input
+                disabled={isDisabled}
+                placeholder='provinsi domisili saat ini'
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -248,7 +272,13 @@ const BasicInfo = (props) => {
               rules: [
                 { required: true, message: 'Please input your address!' },
               ],
-            })(<TextArea placeholder='alamat domisili saat ini' rows={4} />)}
+            })(
+              <TextArea
+                disabled={isDisabled}
+                placeholder='alamat domisili saat ini'
+                rows={4}
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -261,6 +291,7 @@ const BasicInfo = (props) => {
             })(
               <Radio.Group
                 buttonStyle='solid'
+                disabled={isDisabled}
                 size='large'
                 style={{
                   width: '100%',
@@ -294,7 +325,7 @@ const BasicInfo = (props) => {
                 { required: true, message: 'Please select your religion' },
               ],
             })(
-              <Select style={{ width: '100%' }}>
+              <Select style={{ width: '100%' }} disabled={isDisabled}>
                 <Option value='Islam'>Islam</Option>
                 <Option value='Kristen Protestan'>Kristen Protestan</Option>
                 <Option value='Katolik'>Katolik</Option>
@@ -315,7 +346,7 @@ const BasicInfo = (props) => {
           <Form.Item label='Hobi'>
             {getFieldDecorator('hobby', {
               rules: [{ required: true, message: 'Tolong isi Hobi kamu!' }],
-            })(<Input />)}
+            })(<Input disabled={isDisabled} />)}
           </Form.Item>
         </Col>
       </Row>
@@ -332,6 +363,7 @@ const BasicInfo = (props) => {
               ],
             })(
               <Input
+                disabled={isDisabled}
                 placeholder='nomor telepon pribadi'
                 style={{ width: '100%' }}
               />
@@ -345,7 +377,10 @@ const BasicInfo = (props) => {
             {getFieldDecorator('emergencyPhone', {
               rules: [{ required: true, message: 'Isi Nomor Darurat kamu!' }],
             })(
-              <Input placeholder='nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789' />
+              <Input
+                disabled={isDisabled}
+                placeholder='nomor telepon untuk dihubungi saat kejadian darurat, tuliskan pemilik nomor dan hubungannya dengan kamu. Misal: Budi (Ayah) 08123456789'
+              />
             )}
           </Form.Item>
         </Col>
@@ -356,6 +391,7 @@ const BasicInfo = (props) => {
 
 BasicInfo.propTypes = {
   form: object.isRequired,
+  isInPreview: bool,
   cookieLogin: string,
   setDataUser: func,
   isLoading: bool,

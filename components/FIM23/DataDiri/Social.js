@@ -7,6 +7,8 @@ import LoadingSpin from '../LoadingSpin';
 
 const Social = (props) => {
   const { getFieldDecorator, isLoading } = props.form;
+  const { isInPreview } = props;
+  const isDisabled = isInPreview;
 
   return (
     <Card css={styCardWrapper}>
@@ -31,6 +33,7 @@ const Social = (props) => {
               ],
             })(
               <Input
+                disabled={isDisabled}
                 addonBefore={<Icon type='twitter' />}
                 placeholder='https://twitter.com/<username>'
               />
@@ -50,6 +53,7 @@ const Social = (props) => {
               ],
             })(
               <Input
+                disabled={isDisabled}
                 addonBefore={<Icon type='instagram' />}
                 placeholder='https://instagram.com/<username>'
               />
@@ -69,6 +73,7 @@ const Social = (props) => {
               ],
             })(
               <Input
+                disabled={isDisabled}
                 addonBefore={<Icon type='facebook' />}
                 placeholder='https://facebook.com/<username>'
               />
@@ -88,6 +93,7 @@ const Social = (props) => {
               ],
             })(
               <Input
+                disabled={isDisabled}
                 addonBefore={<Icon type='global' />}
                 placeholder='https://www.<nama-website>.com'
               />
@@ -107,6 +113,7 @@ const Social = (props) => {
               ],
             })(
               <Input
+                disabled={isDisabled}
                 addonBefore={<Icon type='link' />}
                 placeholder='https://'
               />
@@ -121,6 +128,7 @@ const Social = (props) => {
 Social.propTypes = {
   form: object.isRequired,
   isLoading: bool,
+  isInPreview: bool,
 };
 
 export default Social;

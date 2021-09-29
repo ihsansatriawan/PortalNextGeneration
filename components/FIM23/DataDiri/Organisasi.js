@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Row, Form, Col, Typography, Radio, Input, Icon } from 'antd';
 import { styCardWrapper } from '../style';
 import { styBtnAddField, styOrganizationWrapper } from './styles';
-import { object } from 'prop-types';
+import { object, bool } from 'prop-types';
 const { Title } = Typography;
 const { TextArea } = Input;
 
@@ -10,17 +10,21 @@ let id = 0;
 
 const Organisasi = (props) => {
   const { getFieldDecorator, getFieldValue, setFieldsValue } = props.form;
-  const { orgNormalized } = props;
+  const { orgNormalized, isInPreview } = props;
+  const isDisabled = isInPreview;
 
   getFieldDecorator('organizations', { initialValue: [] });
   const keys = getFieldValue('organizations');
 
   const onHandleAddForm = () => {
     const keys = getFieldValue('organizations');
-    const nextKeys = keys.concat(id++);
-    setFieldsValue({
-      organizations: nextKeys,
-    });
+
+    if (keys.length < 3) {
+      const nextKeys = keys.concat(id++);
+      setFieldsValue({
+        organizations: nextKeys,
+      });
+    }
   };
 
   const formItems = keys.map((key, index) => (
@@ -32,11 +36,16 @@ const Organisasi = (props) => {
               initialValue: orgNormalized.orgRole[key],
               rules: [
                 {
-                  required: false,
+                  required: true,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input placeholder='isi peran kamu di sini ' />)}
+            })(
+              <Input
+                disabled={isDisabled}
+                placeholder='isi peran kamu di sini '
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -48,11 +57,16 @@ const Organisasi = (props) => {
               initialValue: orgNormalized.orgReferencePerson[key],
               rules: [
                 {
-                  required: false,
+                  required: true,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input placeholder='isi nama leader kamu ya ' />)}
+            })(
+              <Input
+                disabled={isDisabled}
+                placeholder='isi nama leader kamu ya '
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -64,11 +78,13 @@ const Organisasi = (props) => {
               initialValue: orgNormalized.orgDuration[key],
               rules: [
                 {
-                  required: false,
+                  required: true,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input placeholder='isi durasi kegiatan ' />)}
+            })(
+              <Input disabled={isDisabled} placeholder='isi durasi kegiatan ' />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -80,7 +96,7 @@ const Organisasi = (props) => {
               initialValue: orgNormalized.orgEventScale[key],
               rules: [
                 {
-                  required: false,
+                  required: true,
                   message: 'Form ini harus diisi',
                 },
               ],
@@ -88,6 +104,7 @@ const Organisasi = (props) => {
               <Radio.Group
                 buttonStyle='solid'
                 size='large'
+                disabled={isDisabled}
                 style={{
                   width: '100%',
                   display: 'flex',
@@ -115,11 +132,16 @@ const Organisasi = (props) => {
               initialValue: orgNormalized.orgResult[key],
               rules: [
                 {
-                  required: false,
+                  required: true,
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<TextArea placeholder='isi hasil kegiatan' />)}
+            })(
+              <TextArea
+                disabled={isDisabled}
+                placeholder='isi hasil kegiatan'
+              />
+            )}
           </Form.Item>
         </Col>
       </Row>
@@ -128,9 +150,11 @@ const Organisasi = (props) => {
 
   return (
     <Card css={styCardWrapper}>
-      <div css={styBtnAddField} onClick={onHandleAddForm}>
-        <Icon type='plus' />
-      </div>
+      {keys.length < 3 && (
+        <div css={styBtnAddField} onClick={onHandleAddForm}>
+          <Icon type='plus' />
+        </div>
+      )}
       <Title level={3}>Keaktifan Organisasi</Title>
       <p>
         Isi form keaktifan FIM di bawah ini apabila dalam satu tahun terakhir
@@ -144,6 +168,7 @@ const Organisasi = (props) => {
 Organisasi.propTypes = {
   form: object.isRequired,
   orgNormalized: object,
+  isInPreview: bool,
 };
 
 export default Organisasi;

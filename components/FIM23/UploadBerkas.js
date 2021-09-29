@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 import {
   Card,
   Row,
@@ -40,6 +40,8 @@ const UploadBerkas = (props) => {
   const { cookieLogin } = props;
   const isFirstInitialize = useRef(true);
   const isAfterAllCompleted = useRef(false);
+  const { isInPreview } = props;
+  const isDisabled = isInPreview;
 
   const { setStep, fetchDataFormCompleteness } = useIdentity();
 
@@ -200,6 +202,7 @@ const UploadBerkas = (props) => {
         <Col span={24}>
           <Text strong>{name}</Text>
           <Upload
+            disabled={isDisabled}
             name='avatar'
             listType='picture-card'
             css={styFileUploader}
@@ -268,6 +271,6 @@ const UploadBerkas = (props) => {
   );
 };
 
-UploadBerkas.propTypes = { cookieLogin: string };
+UploadBerkas.propTypes = { cookieLogin: string, isInPreview: bool };
 
 export default UploadBerkas;

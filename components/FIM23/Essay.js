@@ -28,10 +28,12 @@ const Essay = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [questionsAll, setQuestionsAll] = useState([]);
 
+  const isDisabled = isInPreview;
+
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
 
-  const { step, Identity, setStep, fetchDataFormCompleteness } = useIdentity();
+  const { step, setStep, fetchDataFormCompleteness } = useIdentity();
 
   const fetchEssayList = async (cb) => {
     setIsLoading(true);
@@ -57,8 +59,6 @@ const Essay = (props) => {
         );
         cb();
       }
-
-      setIsLoading(false);
     } catch (error) {
       console.error(error);
 
@@ -161,7 +161,6 @@ const Essay = (props) => {
         },
         data: {
           TunnelId: tunnelId,
-          ktpNumber: Identity.ktpNumber,
         },
       });
 
@@ -177,6 +176,7 @@ const Essay = (props) => {
         });
 
         setAnswers(newData);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -277,6 +277,7 @@ const Essay = (props) => {
                 case 'text':
                   inputvar = (
                     <Input
+                      disabled={isDisabled}
                       size='large'
                       placeholder={placeholder !== 'text' && placeholder}
                       value={findAnswer ? findAnswer.answer[q[0]] : null}
@@ -289,6 +290,7 @@ const Essay = (props) => {
                 case 'date':
                   inputvar = (
                     <DatePicker
+                      disabled={isDisabled}
                       size='large'
                       value={
                         findAnswer ? moment(findAnswer.answer[q[0]]) : null
@@ -304,6 +306,7 @@ const Essay = (props) => {
                 case 'daterange':
                   inputvar = (
                     <RangePicker
+                      disabled={isDisabled}
                       size='large'
                       value={
                         findAnswer && [
@@ -322,6 +325,7 @@ const Essay = (props) => {
                 case 'number':
                   inputvar = (
                     <InputNumber
+                      disabled={isDisabled}
                       size='large'
                       value={findAnswer && findAnswer.answer[q[0]]}
                       onChange={(e) => {
@@ -333,6 +337,7 @@ const Essay = (props) => {
                 case 'textarea':
                   inputvar = (
                     <TextArea
+                      disabled={isDisabled}
                       size='large'
                       placeholder={placeholder !== 'textarea' && placeholder}
                       rows={4}
@@ -347,6 +352,7 @@ const Essay = (props) => {
                   inputvar = (
                     <>
                       <Select
+                        disabled={isDisabled}
                         size='large'
                         style={{ width: '100%' }}
                         placeholder={q[1].placeholder}
@@ -407,6 +413,7 @@ const Essay = (props) => {
                 case 'upload':
                   inputvar = (
                     <UploadInput
+                      disabled={isDisabled}
                       filetype='pdf'
                       valueUrl={findAnswer ? findAnswer.answer[q[0]] : null}
                       onChange={(e) => {
@@ -463,6 +470,7 @@ const Essay = (props) => {
       {!isInPreview && (
         <div css={stySubmitWrapperButton}>
           <Button
+            disabled={isDisabled}
             size='large'
             css={styButtonSave}
             type='primary'
