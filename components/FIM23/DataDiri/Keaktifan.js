@@ -1,13 +1,14 @@
 import React from 'react';
 import { Card, Row, Form, Col, Typography, Radio, Input } from 'antd';
-import { object } from 'prop-types';
+import { object, bool } from 'prop-types';
 const { Title } = Typography;
 import { styCardWrapper } from '../style';
 
 const { TextArea } = Input;
 
 const Keaktifan = (props) => {
-  const { getFieldDecorator, isInPreview } = props.form;
+  const { getFieldDecorator } = props.form;
+  const { isInPreview } = props;
   const isDisabled = isInPreview;
 
   return (
@@ -136,6 +137,7 @@ const Keaktifan = (props) => {
 
 Keaktifan.propTypes = {
   form: object.isRequired,
+  isInPreview: bool,
 };
 
 export default Keaktifan;
