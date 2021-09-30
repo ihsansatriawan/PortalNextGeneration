@@ -177,6 +177,8 @@ const Essay = (props) => {
 
         setAnswers(newData);
         setIsLoading(false);
+      } else {
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
