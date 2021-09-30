@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LogoFim from '@components/Home/Slider/assets/logo-fim.svg';
 import jwtDecode from 'jwt-decode';
 import { string } from 'prop-types';
 import { useIdentity } from '@context/profileContext';
+import Router from 'next/router';
+import { message, Icon } from 'antd';
+import { logout } from '@helper/googleSession';
 
 import {
   styFormWrapper,
   stySidebarWrapper,
   styMainFormWrapper,
   styLogo,
+  styMenuMobileLogic,
+  styMenuDekstopLogic,
 } from './style';
 
 import Header from './Header';
@@ -18,6 +23,8 @@ import StepDesktop from './StepDesktop';
 import DataDiri from './DataDiri';
 import Essay from './Essay';
 import UploadBerkas from './UploadBerkas';
+import MenuFIM from './MenuFIM';
+import MenuFIMDesktop from './MenuFIMDesktop';
 
 const stepList = [
   {
@@ -53,9 +60,9 @@ const stepList = [
 ];
 
 const ContinerFIM23 = (props) => {
-  const { step, setStep } = useIdentity();
+  const { step } = useIdentity();
   const { cookieLogin } = props;
-  let decode = {};
+  const [showMenuMobile, setShowMenuMobile] = useState(false);
 
   try {
     jwtDecode(cookieLogin);
@@ -90,11 +97,58 @@ const ContinerFIM23 = (props) => {
     }
   };
 
+  const onLogout = () => {
+    logout({
+      onLogoutSuccess: () => {
+        this.redirectAfterSuccessLogout();
+      },
+    });
+
+    message.success('Berhasil Logout');
+    Router.push('/');
+  };
+
+  const onRedirectPengumuman = () => {
+    Router.push('/pengumuman');
+  };
+
+  const onClose = () => {
+    setShowMenuMobile(false);
+  };
+
   return (
     <div css={styFormWrapper}>
       <div css={stySidebarWrapper}>
-        <LogoFim className={styLogo} />
+        <LogoFim style={{ zIndex: '1001' }} className={styLogo} />
+        <div css={styMenuMobileLogic}>
+          <Icon
+            className='menuburger'
+            type='menu'
+            onClick={() => {
+              setShowMenuMobile(true);
+            }}
+          />
+        </div>
+
+        {showMenuMobile && (
+          <div css={styMenuMobileLogic}>
+            <MenuFIM
+              onLogout={onLogout}
+              onRedirectPengumuman={onRedirectPengumuman}
+              onClose={onClose}
+            />
+          </div>
+        )}
+
         <StepDesktop liststep={stepList} step={step} />
+
+        <div css={styMenuDekstopLogic}>
+          <MenuFIMDesktop
+            onLogout={onLogout}
+            onRedirectPengumuman={onRedirectPengumuman}
+            onClose={onClose}
+          />
+        </div>
       </div>
 
       <div css={styMainFormWrapper}>

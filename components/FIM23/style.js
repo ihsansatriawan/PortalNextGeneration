@@ -415,3 +415,115 @@ export const styModalSend = css`
     margin-bottom: 20px;
   }
 `;
+
+export const styMenuWrapper = css`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: white;
+  z-index: 100;
+`;
+
+export const styMenuHeader = css`
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: row;
+  padding: 20px;
+  font-size: 25px;
+  border-bottom: 1px solid #d9c5b6;
+`;
+
+export const styMenuList = css`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
+  .menu-item {
+    font-size: 18px;
+    padding: 18px 25px;
+    border-bottom: 1px solid #d9c5b6;
+    font-weight: 700;
+    position: relative;
+    cursor: pointer;
+
+    i {
+      margin-right: 15px;
+    }
+
+    .count {
+      position: absolute;
+      top: 15px;
+      right: 11px;
+      font-weight: 400;
+      background: #dedede;
+      width: 30px;
+      border-radius: 50%;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 14px;
+    }
+  }
+`;
+
+export const styMenuMobileLogic = css`
+  .menuburger {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 25px;
+  }
+
+  ${mq[1]} {
+    display: none;
+  }
+`;
+
+export const styMenuDekstopLogic = css`
+  display: none;
+  ${mq[1]} {
+    display: flex;
+  }
+`;
+
+export const styMenuDesktopWrapper = css`
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid #a68b77;
+  border-radius: 6px;
+
+  .menu-item {
+    padding: 15px;
+    font-size: 18px;
+    width: 100%;
+    font-weight: 700;
+    cursor: pointer;
+
+    i {
+      margin-right: 10px;
+    }
+
+    .count {
+      position: absolute;
+      top: 15px;
+      right: 11px;
+      font-weight: 400;
+      background: #dedede;
+      width: 25px;
+      border-radius: 50%;
+      height: 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
+  }
+`;
+
+export const styMenuListDesktop = css``;
