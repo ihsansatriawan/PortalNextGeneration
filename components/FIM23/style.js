@@ -527,3 +527,17 @@ export const styMenuDesktopWrapper = css`
 `;
 
 export const styMenuListDesktop = css``;
+
+export const styPengumumanWrapper = css``;
+
+export const styEmptyStateRender = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+
+  .caption {
+    margin-top: 20px;
+  }
+`;

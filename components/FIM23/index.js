@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LogoFim from '@components/Home/Slider/assets/logo-fim.svg';
 import jwtDecode from 'jwt-decode';
-import { string } from 'prop-types';
+import { string, bool } from 'prop-types';
 import { useIdentity } from '@context/profileContext';
 import Router from 'next/router';
 import { message, Icon } from 'antd';
@@ -25,6 +25,7 @@ import Essay from './Essay';
 import UploadBerkas from './UploadBerkas';
 import MenuFIM from './MenuFIM';
 import MenuFIMDesktop from './MenuFIMDesktop';
+import Pengumuman from './Pengumuman';
 
 const stepList = [
   {
@@ -61,7 +62,7 @@ const stepList = [
 
 const ContinerFIM23 = (props) => {
   const { step } = useIdentity();
-  const { cookieLogin } = props;
+  const { cookieLogin, pengumuman } = props;
   const [showMenuMobile, setShowMenuMobile] = useState(false);
 
   try {
@@ -100,7 +101,7 @@ const ContinerFIM23 = (props) => {
   const onLogout = () => {
     logout({
       onLogoutSuccess: () => {
-        this.redirectAfterSuccessLogout();
+        Router.push('/');
       },
     });
 
@@ -115,6 +116,12 @@ const ContinerFIM23 = (props) => {
   const onClose = () => {
     setShowMenuMobile(false);
   };
+
+  let currentStep = step;
+
+  if (pengumuman) {
+    currentStep = 0;
+  }
 
   return (
     <div css={styFormWrapper}>
@@ -140,7 +147,7 @@ const ContinerFIM23 = (props) => {
           </div>
         )}
 
-        <StepDesktop liststep={stepList} step={step} />
+        <StepDesktop liststep={stepList} step={currentStep} />
 
         <div css={styMenuDekstopLogic}>
           <MenuFIMDesktop
@@ -153,10 +160,16 @@ const ContinerFIM23 = (props) => {
 
       <div css={styMainFormWrapper}>
         <Header />
-        <Progress />
-        <StepMobile liststep={stepList} step={step} />
+        {!pengumuman ? (
+          <>
+            <Progress />
+            <StepMobile liststep={stepList} step={step} />
 
-        {renderStepForm()}
+            {renderStepForm()}
+          </>
+        ) : (
+          <Pengumuman />
+        )}
       </div>
     </div>
   );
@@ -164,6 +177,7 @@ const ContinerFIM23 = (props) => {
 
 ContinerFIM23.propTypes = {
   cookieLogin: string,
+  pengumuman: bool,
 };
 
 export default ContinerFIM23;

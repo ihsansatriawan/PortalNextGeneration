@@ -1,12 +1,16 @@
 import React from 'react';
 import { notification } from 'antd';
-import { array } from 'prop-types';
+import { array, number } from 'prop-types';
 import { styStepDesktopWrapper } from './style.js';
 import { CheckCircleFilled } from '@ant-design/icons';
 import { useIdentity } from '@context/profileContext';
+import Router, { useRouter } from 'next/router';
 
 const StepDesktop = (props) => {
-  const { formCompleteness, setStep, step } = useIdentity();
+  const { formCompleteness, setStep } = useIdentity();
+  const { pathname } = useRouter();
+
+  const { step } = props;
 
   return (
     <div css={styStepDesktopWrapper}>
@@ -19,6 +23,9 @@ const StepDesktop = (props) => {
             onClick={() => {
               if (!formCompleteness.submittedAt) {
                 setStep(value.id);
+                if (pathname === '/pengumuman') {
+                  Router.push('/pendaftaran');
+                }
               } else {
                 notification.error({
                   message: `Kamu sudah mengirim data pendaftaran`,
@@ -46,6 +53,7 @@ const StepDesktop = (props) => {
 
 StepDesktop.propTypes = {
   liststep: array,
+  step: number,
 };
 
 export default StepDesktop;
