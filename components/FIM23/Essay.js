@@ -128,6 +128,7 @@ const Essay = (props) => {
           // update answer in specific index
           const newJawaban = {
             QuestionId: id,
+            category: category,
             answer: {
               ...conditionalvalue,
             },
