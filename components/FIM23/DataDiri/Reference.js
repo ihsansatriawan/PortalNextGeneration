@@ -64,7 +64,7 @@ const Reference = (props) => {
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input disabled={isDisabled} placeholder='>5 Tahun' />)}
+            })(<Input disabled={isDisabled} placeholder='Contoh: >5 Tahun' />)}
           </Form.Item>
         </Col>
       </Row>
@@ -78,7 +78,7 @@ const Reference = (props) => {
                   message: 'Form ini harus diisi',
                 },
               ],
-            })(<Input disabled={isDisabled} placeholder='>Mentor' />)}
+            })(<Input disabled={isDisabled} placeholder='Contoh: Mentor' />)}
           </Form.Item>
         </Col>
       </Row>

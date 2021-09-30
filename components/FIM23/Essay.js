@@ -181,6 +181,8 @@ const Essay = (props) => {
     } catch (error) {
       console.log(error);
       console.log('error');
+      notification.error({ message: error });
+      setIsLoading(false);
     }
   };
 
