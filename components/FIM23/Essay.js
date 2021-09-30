@@ -140,6 +140,7 @@ const Essay = (props) => {
       // jika yang dijawab sudah ada di state answers, update
       newArray.push({
         QuestionId: id,
+        category: category,
         answer: {
           [header[0]]: yangdiketik,
         },
@@ -191,6 +192,17 @@ const Essay = (props) => {
   const _saveAnswer = async () => {
     const { cookieLogin } = props;
 
+    const answersNormalizer = answers
+      .filter((value) => {
+        return value.category === category;
+      })
+      .map((ans) => {
+        return {
+          QuestionId: ans.QuestionId,
+          answer: ans.answer,
+        };
+      });
+
     try {
       const response = await fetch({
         url: '/answer',
@@ -199,7 +211,7 @@ const Essay = (props) => {
           Authorization: `Bearer ${cookieLogin}`,
         },
         data: {
-          answers: JSON.stringify(answers),
+          answers: JSON.stringify(answersNormalizer),
           tunnelId: tunnelId,
         },
       });
