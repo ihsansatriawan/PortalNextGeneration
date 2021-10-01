@@ -150,7 +150,7 @@ const BasicInfo = (props) => {
             <div css={styUploadProfpicButton}>
               <p className='maincaption'>Upload foto diri kamu di sini</p>
               <p className='caption'>
-                File berupa JPG, JPEG2000, dan PNG. Max File 1 Mb.
+                File berupa JPG Max File 1 Mb.
               </p>
               <Form.Item>
                 {getFieldDecorator('photoUrl', {
@@ -206,6 +206,7 @@ const BasicInfo = (props) => {
               ],
             })(
               <DatePicker
+                placeholder="format dd-mm-yyy"
                 disabled={isDisabled}
                 style={{ width: '100%' }}
                 format={'DD-MM-YYYY'}
