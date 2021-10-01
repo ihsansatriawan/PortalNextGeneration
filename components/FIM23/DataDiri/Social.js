@@ -1,14 +1,25 @@
-import React from 'react';
-import { Card, Row, Form, Col, Input, Typography, Icon } from 'antd';
+import React, { useState } from 'react';
+import { Card, Row, Form, Col, Input, Typography, Icon, Checkbox } from 'antd';
+import { useIdentity } from '@context/profileContext';
+
 import { styCardWrapper } from '../style';
 import { object, bool } from 'prop-types';
 const { Text } = Typography;
 import LoadingSpin from '../LoadingSpin';
+const { TextArea } = Input;
 
 const Social = (props) => {
+  const { SocialMedia } = useIdentity();
+  let hasReason = false;
+
+  if (SocialMedia !== null) {
+    hasReason = SocialMedia.reason !== null;
+  }
+
   const { getFieldDecorator, isLoading } = props.form;
   const { isInPreview } = props;
   const isDisabled = isInPreview;
+  const [dontHaveSocmed, setDontHaveSocmed] = useState(hasReason);
 
   return (
     <Card css={styCardWrapper}>
@@ -121,6 +132,42 @@ const Social = (props) => {
           </Form.Item>
         </Col>
       </Row>
+      <Row>
+        <Col span={24}>
+          <Checkbox
+            onChange={() => {
+              setDontHaveSocmed((prevState) => !prevState);
+            }}
+            checked={dontHaveSocmed}
+            style={{ marginBottom: '20px;' }}
+          >
+            Saya tidak memiliki social media
+          </Checkbox>
+        </Col>
+      </Row>
+      {dontHaveSocmed && (
+        <Row>
+          <Col span={24}>
+            <Form.Item>
+              {getFieldDecorator('reason', {
+                rules: [
+                  {
+                    required: false,
+                    message: null,
+                  },
+                ],
+              })(
+                <TextArea
+                  style={{ marginTop: '20px;' }}
+                  disabled={isDisabled}
+                  placeholder='Alasan tidak memiliki sosial media'
+                  rows={2}
+                />
+              )}
+            </Form.Item>
+          </Col>
+        </Row>
+      )}
     </Card>
   );
 };

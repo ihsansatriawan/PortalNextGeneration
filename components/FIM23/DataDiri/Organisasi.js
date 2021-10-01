@@ -157,8 +157,9 @@ const Organisasi = (props) => {
       )}
       <Title level={3}>Keaktifan Organisasi</Title>
       <p>
-        Isi form keaktifan FIM di bawah ini apabila dalam satu tahun terakhir
-        kamu aktif di FIM. Kosongkan jika tidak ada.
+        Isi form keaktifan di Organisasi di bawah ini apabila dalam{' '}
+        <b>tiga tahun terakhir</b> kamu aktif di Organisasi. Kosongkan jika
+        tidak ada.
       </p>
       {formItems}
     </Card>

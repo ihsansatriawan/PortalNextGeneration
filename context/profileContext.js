@@ -62,7 +62,11 @@ const IdentityProvider = ({ children, cookieLogin }) => {
       }
 
       const responseData = response.data.data;
-      setDataUser(responseData);
+
+      if (responseData) {
+        setDataUser(responseData);
+      }
+
       const {
         Identity,
         Skill,
