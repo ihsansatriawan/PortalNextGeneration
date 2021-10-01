@@ -68,7 +68,7 @@ function Layout(props) {
           {children}
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>FIM Engineering ©2020</Footer>
+        <Footer style={{ textAlign: 'center' }}>FIM Engineering ©2021</Footer>
       </LayoutAntd>
     </LayoutAntd>
   )

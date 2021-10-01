@@ -1,35 +1,30 @@
 export const stepList = [
   {
     id: 1,
-    name: 'Pembuatan Akun',
+    name: 'Masa Pendaftaran',
     description:
-      'Mulai buat akun kamu dengan login menggunakan gmail dan mengisi identitas diri',
-    date: '17 Agustus – 31 Agustus 2020',
+      'Isi data diri dan lengkapi essay, upload dokumen serta submit berkas kamu',
+    date: '02 Oktober - 20 Oktober 2021',
   },
   {
     id: 2,
-    name: 'Form & Essay',
+    name: 'Pengumuman Tahap 1 ',
     description:
-      'Pilih jalur masuk, mengisi essay, surat rekomendasi, dan upload berkas kamu.',
-    date: '17 Agustus – 10 September 2020',
+      'Hasil seleksi administrasi akan diumumkan melalui portal / email yang terdaftar oleh masing-masing peserta.',
+    date: '30 Oktober 2021',
   },
   {
     id: 3,
-    name: 'Pengumuman Tahap 1',
+    name: 'Interview',
     description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tristique at et placerat felis.',
-    date: '21 September 2020',
+      'Pengenalan lebih dalam terhadap calon peserta secara 2 arah, siap siap yaa..',
+    date: '1 - 10 November 2021',
   },
   {
     id: 4,
-    name: 'Interview',
-    description: 'Upload foto, surat komitmen, surat rekomendasi, & KTP',
-    type: '22 – 30 September 2020',
-  },
-  {
-    id: 5,
-    name: 'Final Preview',
-    description: 'Final Preview',
-    type: 'submittedAt',
+    name: 'Pengumuman Tahap 2 ',
+    description:
+      'Hasil akhir rekrutmen Calon Peserta FIM 23 yang akan diumumkan melalui portal / email yang terdaftar oleh masing-masing peserta',
+    date: '17 November 2021',
   },
 ];

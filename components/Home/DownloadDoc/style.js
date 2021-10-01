@@ -41,3 +41,16 @@ export const styDownloadWrapper = css`
 `;
 
 export const styButton = css``;
+
+export const styDescriptionTimeline = css`
+  margin-top: 5px;
+  width: 150%;
+  
+  .dateChoose {
+    margin-bottom: 10px;
+  }
+
+  .marginTop {
+    margin-top: 10px;
+  }
+`;
