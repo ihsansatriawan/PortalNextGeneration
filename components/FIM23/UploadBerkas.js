@@ -9,6 +9,7 @@ import {
   Spin,
   Icon,
   notification,
+  Button,
 } from 'antd';
 import { fetch } from '@helper/fetch';
 import { useIdentity } from '@context/profileContext';
@@ -20,6 +21,8 @@ import {
   styTextUploadWrapper,
   styBtnAddFieldBerkas,
   styIconFileWrapper,
+  styButtonSave,
+  stySubmitWrapperButton,
 } from './style';
 
 const beforeUpload = (file) => {
@@ -196,6 +199,11 @@ const UploadBerkas = (props) => {
     );
   };
 
+  const _saveBerkas = () => {
+    notification.success({ message: "Berkas berhasil disimpan" });
+    setStep(5);
+  };
+
   const renderUploadForm = (type, name) => {
     return (
       <Row>
@@ -212,7 +220,8 @@ const UploadBerkas = (props) => {
             onChange={(file) => handleChange(file, type)}
             data={(file) => {
               return {
-                upload_preset: type === "identityFileUrl" ? 'ID_card' : 'document',
+                upload_preset:
+                  type === 'identityFileUrl' ? 'ID_card' : 'document',
                 file,
                 tags: 'browser_upload',
               };
@@ -267,6 +276,20 @@ const UploadBerkas = (props) => {
       {renderUploadForm('identityFileUrl', 'Scan KTP')}
       {renderUploadForm('recommendationLetterUrl', 'Surat Rekomendasi')}
       {renderUploadForm('commitmentLetterUrl', 'Surat Komitmen')}
+      {!isInPreview && (
+        <div css={stySubmitWrapperButton}>
+          <Button
+            disabled={isDisabled}
+            size='large'
+            css={styButtonSave}
+            type='primary'
+            htmlType='submit'
+            onClick={_saveBerkas}
+          >
+            <Icon type='save' theme='filled' /> Simpan Perubahan
+          </Button>
+        </div>
+      )}
     </Card>
   );
 };

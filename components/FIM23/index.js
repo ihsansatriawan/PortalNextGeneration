@@ -91,6 +91,7 @@ const ContinerFIM23 = (props) => {
             <Essay {...props} category='essay' isInPreview={true} />
             <Essay {...props} category='volunteering_plan' isInPreview={true} />
             <UploadBerkas {...props} />
+            <Progress />
           </>
         );
       default:

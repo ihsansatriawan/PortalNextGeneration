@@ -38,13 +38,7 @@ const DataDiri = (props) => {
   const [listCertificate, setListCertificate] = useState({
     previewVisible: false,
     previewImage: '',
-    fileList: [
-      {
-        uid: '1',
-        url: '',
-        status: 'done',
-      },
-    ],
+    fileList: [],
   });
   const [orgNormalized, setOrgNormalized] = useState({});
 
