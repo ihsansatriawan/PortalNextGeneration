@@ -39,3 +39,5 @@ export const styDownloadWrapper = css`
     }
   }
 `;
+
+export const styButton = css``;
