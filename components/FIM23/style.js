@@ -541,3 +541,18 @@ export const styEmptyStateRender = css`
     margin-top: 20px;
   }
 `;
+
+export const styItemPengumuman = css`
+  display: flex;
+  flex-direction: row;
+  line-height: 2;
+
+  .image-wrapper {
+    margin-right: 15px;
+  }
+
+  .titlePengumuman {
+    font-weight: 500;
+    font-size: 18px;
+  }
+`;

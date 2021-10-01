@@ -109,19 +109,31 @@ class Login extends React.Component {
           <div className='button-wrapper'>
             <Spin spinning={isLoading} tip='Loading...'>
               {cookieLogin ? (
-                <Button
-                  onClick={() => {
-                    logout({
-                      onLogoutSuccess: () => {
-                        this.redirectAfterSuccessLogout();
-                      },
-                    });
-                  }}
-                  type='primary'
-                  key='console'
-                >
-                  Logout
-                </Button>
+                <>
+                  <Button
+                    onClick={() => {
+                      logout({
+                        onLogoutSuccess: () => {
+                          this.redirectAfterSuccessLogout();
+                        },
+                      });
+                    }}
+                    type='primary'
+                    key='console'
+                  >
+                    Logout
+                  </Button>
+                  <Button
+                    style={{ marginLeft: '20px' }}
+                    onClick={() => {
+                      Router.push('/pendaftaran');
+                    }}
+                    type='primary'
+                    key='console'
+                  >
+                    Isi Data Diri
+                  </Button>
+                </>
               ) : (
                 <GoogleLogin
                   css={styGoogleLogin}

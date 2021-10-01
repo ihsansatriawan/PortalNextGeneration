@@ -1,19 +1,14 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import '../static/css/empty.css';
-import { Avatar, Breadcrumb, Icon, Layout as LayoutAntd, Menu } from 'antd';
-import Router from 'next/router';
-import MenuItem from 'antd/lib/menu/MenuItem';
-import ListMenu from './ListMenu';
-import { LoginComponent } from '@components/Login';
+import { Layout as LayoutAntd } from 'antd';
 import './layout.css';
 
-const { Header, Footer, Sider, Content } = LayoutAntd;
-const { SubMenu } = Menu;
+const { Footer } = LayoutAntd;
 
 function Layout(props) {
-  const [current, setCurrent] = useState('');
-  const { children, pathName, cookieLogin } = props;
+  const [, setCurrent] = useState('');
+  const { children, pathName } = props;
 
   useEffect(() => {
     setCurrent(pathName);

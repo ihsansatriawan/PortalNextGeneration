@@ -31,7 +31,7 @@ export const styBtnAddField = css`
   border-radius: 50%;
   position: absolute;
   right: 20px;
-  top: 30px;
+  bottom: 30px;
 `;
 
 export const styOrganizationWrapper = css`

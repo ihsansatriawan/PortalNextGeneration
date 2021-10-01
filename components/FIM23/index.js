@@ -111,6 +111,7 @@ const ContinerFIM23 = (props) => {
   };
 
   const onRedirectPengumuman = () => {
+    setShowMenuMobile(false);
     Router.push('/pengumuman');
   };
 
@@ -127,7 +128,11 @@ const ContinerFIM23 = (props) => {
   return (
     <div css={styFormWrapper}>
       <div css={stySidebarWrapper}>
-        <LogoFim style={{ zIndex: '1001' }} className={styLogo} />
+        <LogoFim
+          style={{ zIndex: '2' }}
+          onClick={() => Router.push('/')}
+          className={styLogo}
+        />
         <div css={styMenuMobileLogic}>
           <Icon
             className='menuburger'

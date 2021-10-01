@@ -1,17 +1,26 @@
-import React from "react";
-import LoginComponent from "@components/Login";
+import React from 'react';
+import LoginComponent from '@components/Login';
 
 import {
   stySliderWrapper,
   styPrimaryHomeHeader,
   styLogoWrapper,
   styImageWrapper,
-} from "./style";
-import PrimaryPicture from "./assets/primary-picture.svg";
-import LogoFim from "./assets/logo-fim.svg";
+} from './style';
+import PrimaryPicture from './assets/primary-picture.svg';
+import LogoFim from './assets/logo-fim.svg';
 
 const Slider = (props) => {
   const { cookieLogin } = props;
+
+  let showButton = false;
+
+  const currentTime = Math.round(new Date().getTime() / 1000);
+
+  if (currentTime > 1635526800) {
+    // 30 Oktober
+    showButton = true;
+  }
 
   return (
     <div css={stySliderWrapper}>
@@ -19,7 +28,7 @@ const Slider = (props) => {
         <div css={styLogoWrapper}>
           <LogoFim />
         </div>
-        <PrimaryPicture className="primary-illustration" />
+        <PrimaryPicture className='primary-illustration' />
       </div>
       <div css={styPrimaryHomeHeader}>
         <h1>
