@@ -29,6 +29,7 @@ const DataDiri = (props) => {
     OrganizationExperiences,
     setDataUser,
     loadingUserData,
+    step,
     setStep,
     fetchDataFormCompleteness,
   } = useIdentity();
@@ -409,6 +410,7 @@ const DataDiri = (props) => {
     AlumniReference,
     FimActivity,
     OrganizationExperiences,
+    step,
   ]);
 
   return (
