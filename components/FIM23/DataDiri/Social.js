@@ -18,8 +18,8 @@ const Social = (props) => {
 
   const { getFieldDecorator, isLoading } = props.form;
   const { isInPreview } = props;
-  const isDisabled = isInPreview;
   const [dontHaveSocmed, setDontHaveSocmed] = useState(hasReason);
+  const isDisabled = isInPreview || dontHaveSocmed;
 
   return (
     <Card css={styCardWrapper}>
