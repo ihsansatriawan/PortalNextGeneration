@@ -16,6 +16,7 @@ import {
 } from 'antd';
 import { object, string, func, bool } from 'prop-types';
 import LoadingSpin from '../LoadingSpin';
+import provinsiData from '@helper/dataIndonesia/provinsi.json';
 
 import {
   styCardWrapper,
@@ -46,8 +47,14 @@ const BasicInfo = (props) => {
   const { getFieldDecorator, setFieldsValue } = props.form;
   const { dataUser, setDataUser, isLoading, isInPreview } = props;
   const { Identity } = dataUser;
+  const [idProvinsi, setIdProvinsi] = useState('');
 
   const isDisabled = isInPreview;
+  let dataKota = [];
+  if (idProvinsi) {
+    // eslint-disable-next-line no-undef
+    dataKota = require(`@helper/dataIndonesia/kabupaten/${idProvinsi}.json`);
+  }
 
   // const halo = useIdentity();
 
@@ -235,20 +242,6 @@ const BasicInfo = (props) => {
           </Form.Item>
         </Col>
       </Row>
-      <Row>
-        <Col span={24}>
-          <Form.Item label='Kota'>
-            {getFieldDecorator('cityAddress', {
-              rules: [{ required: true, message: 'Isi Kota Alamat kamu!' }],
-            })(
-              <Input
-                disabled={isDisabled}
-                placeholder='kota domisili saat ini'
-              />
-            )}
-          </Form.Item>
-        </Col>
-      </Row>
 
       <Row>
         <Col span={24}>
@@ -256,10 +249,47 @@ const BasicInfo = (props) => {
             {getFieldDecorator('provinceAddress', {
               rules: [{ required: true, message: 'Isi Provinsi Alamat kamu!' }],
             })(
-              <Input
+              <Select
+                showSearch
+                placeholder='Provinsi domisili saat ini'
+                style={{ width: '100%' }}
                 disabled={isDisabled}
-                placeholder='provinsi domisili saat ini'
-              />
+                onChange={(e) => {
+                  const jsonId = provinsiData.find((value) => value.nama === e);
+                  if (jsonId) {
+                    setIdProvinsi(jsonId.id);
+                  }
+                }}
+              >
+                {provinsiData.map((value, index) => (
+                  <Option key={index} value={value.nama}>
+                    {value.nama}
+                  </Option>
+                ))}
+              </Select>
+            )}
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <Form.Item label='Kota'>
+            {getFieldDecorator('cityAddress', {
+              rules: [{ required: true, message: 'Isi Kota Alamat kamu!' }],
+            })(
+              <Select
+                showSearch
+                placeholder='Kota domisili saat ini'
+                style={{ width: '100%' }}
+                disabled={isDisabled}
+              >
+                {dataKota.map((value, index) => (
+                  <Option key={index} value={value.nama}>
+                    {value.nama}
+                  </Option>
+                ))}
+              </Select>
             )}
           </Form.Item>
         </Col>

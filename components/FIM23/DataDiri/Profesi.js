@@ -183,7 +183,7 @@ const Profesi = (props) => {
             style={{ marginTop: '10px' }}
             data={(file) => {
               return {
-                upload_preset: 'profile_photo',
+                upload_preset: 'document',
                 file,
                 tags: 'browser_upload',
               };

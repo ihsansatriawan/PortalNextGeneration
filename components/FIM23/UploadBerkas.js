@@ -212,7 +212,7 @@ const UploadBerkas = (props) => {
             onChange={(file) => handleChange(file, type)}
             data={(file) => {
               return {
-                upload_preset: 'profile_photo',
+                upload_preset: type === "identityFileUrl" ? 'ID_card' : 'document',
                 file,
                 tags: 'browser_upload',
               };
