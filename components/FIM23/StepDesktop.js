@@ -21,7 +21,7 @@ const StepDesktop = (props) => {
             className={value.id === step ? 'chipStep active' : 'chipStep'}
             key={key}
             onClick={() => {
-              if (!formCompleteness.submittedAt) {
+              if (!formCompleteness.submittedAt || value.id === 5) {
                 setStep(value.id);
                 if (pathname === '/pengumuman') {
                   Router.push('/pendaftaran');

@@ -109,6 +109,9 @@ const Header = () => {
     );
   };
 
+  const isButtonShow =
+    formCompleteness.progress === 100 && !formCompleteness.submittedAt;
+
   return (
     <div css={styProgressWrapper}>
       <div css={styMeterWrapper}>
@@ -135,7 +138,7 @@ const Header = () => {
         </div>
       </div>
 
-      {formCompleteness.progress === 100 && (
+      {isButtonShow && (
         <div css={styButtonSubmitAll} onClick={onSubmitAll}>
           Submit Form Sekarang
         </div>
