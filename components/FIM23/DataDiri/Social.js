@@ -138,6 +138,7 @@ const Social = (props) => {
             onChange={() => {
               setDontHaveSocmed((prevState) => !prevState);
             }}
+            disabled={isDisabled}
             checked={dontHaveSocmed}
             style={{ marginBottom: '20px;' }}
           >

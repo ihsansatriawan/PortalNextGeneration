@@ -123,6 +123,7 @@ const DataDiri = (props) => {
           facebookUrl: SocialMedia.facebookUrl,
           websiteUrl: SocialMedia.websiteUrl,
           otherSiteUrl: SocialMedia.otherSiteUrl,
+          reason: SocialMedia.reason,
         });
       }
 
