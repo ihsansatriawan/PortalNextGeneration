@@ -154,11 +154,7 @@ const faq23 = () => {
             </ul>
           </Panel>
 
-          <Panel
-            header='Jalur apa saja di FIM 23 dan apa deskripsinya?Bagaimana alur pendaftarannya?'
-            key='12'
-          >
-            Bagaimana alur pendaftarannya?
+          <Panel header='Bagaimana alur pendaftarannya?' key='12'>
             <ol>
               <li>
                 Login dengan google account (gmail) di
@@ -180,7 +176,7 @@ const faq23 = () => {
                 Pastikan kamu mengisi seluruh data pada formulir pendaftaran
                 dengan benar;
               </li>
-              <li>Klik submit setelah semua data lengkap; dan</li>\
+              <li>Klik submit setelah semua data lengkap; dan</li>
               <li>
                 Ingat setelah submit, semua data akan tersimpan oleh sistem dan
                 tidak bisa diubah lagi.
@@ -211,7 +207,7 @@ const faq23 = () => {
           </Panel>
           <Panel header='Seperti apa model pelatihan nasional?' key='3'>
             Pada Pelatihan FIM 23 ini, pelatihan nasional berupa online training
-            (pelatihan intensif) selama 4 hari di akhir pecan dan akan diikuti
+            (pelatihan intensif) selama 4 hari di akhir pekan dan akan diikuti
             oleh peserta dari seluruh wilayah di Indonesia.
           </Panel>
           <Panel header='Apa itu FIM regional?' key='4'>
