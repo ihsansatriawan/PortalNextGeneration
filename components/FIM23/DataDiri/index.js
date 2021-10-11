@@ -275,6 +275,7 @@ const DataDiri = (props) => {
         facebookUrl: value.facebookUrl,
         websiteUrl: value.websiteUrl,
         otherSiteUrl: value.otherSiteUrl,
+        reason: value.reason,
       },
     });
 
