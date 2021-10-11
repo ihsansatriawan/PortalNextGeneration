@@ -55,12 +55,12 @@ const faq23 = () => {
             header='Bagaimana bila jadwal acara bersamaan dengan jadwal kuliah dan ujian, tetapi calon peserta ingin sekali mengikuti acara ini?'
             key='4'
           >
-            Pengalaman dari para peserta sebelumnya, peserta dapat mengajukan
-            proposal ke pihak terkait yang dapat menjadi donatur. Panitia akan
-            membantu dengan mengirimkan surat keterangan mengikuti acara dan
-            proposal kegiatan. Permohonan surat keterangan tersebut bisa
-            diajukan kepada panitia paling lambat 1 (satu) pekan setelah
-            pengumuman daftar nama peserta fix dari panitia.
+            Panitia akan membantu dengan mengirimkan surat keterangan lolos
+            seleksi yang ditujukan kepada dekan atau dosen yang bersangkutan.
+            Materi pelatihan FIM disusun sedemikian rupa dan saling berkaitan.
+            Peserta wajib mengikuti keseluruhan rangkaian acara dengan
+            mengaktifkan video. Tidak ada toleransi izin untuk keluar masuk room
+            pelatihan.
           </Panel>
 
           <Panel header='Surat rekomendasi itu seperti apa?' key='5'>
@@ -145,7 +145,6 @@ const faq23 = () => {
                 meningkatkan kapasitas dan memperluas jejaring dalam skala
                 nasional;
               </li>
-              <li>Alumni FIM 20.</li>
               <li>
                 Umum adalah calon peserta FIM yang merupakan pemuda, mahasiswa,
                 dan professional dengan berbagai latar belakang (Non Alumni

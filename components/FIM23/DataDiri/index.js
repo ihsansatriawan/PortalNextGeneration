@@ -72,7 +72,6 @@ const DataDiri = (props) => {
           ktpNumber: Identity.ktpNumber,
           institution: Identity.institution,
           occupation: Identity.occupation,
-          reason: Identity.reason,
         });
       }
 
