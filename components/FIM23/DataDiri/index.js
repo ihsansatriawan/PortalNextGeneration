@@ -384,6 +384,7 @@ const DataDiri = (props) => {
           .then(() => {
             setStep(2);
             fetchDataFormCompleteness('refetch');
+            fetchDataProfile();
           })
           .catch((error) => {
             console.error(error);

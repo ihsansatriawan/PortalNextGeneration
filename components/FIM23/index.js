@@ -90,7 +90,7 @@ const ContinerFIM23 = (props) => {
             <DataDiri {...props} isInPreview={true} />
             <Essay {...props} category='essay' isInPreview={true} />
             <Essay {...props} category='volunteering_plan' isInPreview={true} />
-            <UploadBerkas {...props} />
+            <UploadBerkas {...props} isInPreview={true} />
             <Progress />
           </>
         );
