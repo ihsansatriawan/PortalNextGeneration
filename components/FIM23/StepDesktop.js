@@ -10,11 +10,23 @@ const StepDesktop = (props) => {
   const { formCompleteness, setStep } = useIdentity();
   const { pathname } = useRouter();
 
-  const { step } = props;
+  const { step, liststep } = props;
+
+  const renderIcon = (step, isDone) => {
+    if (step.icon) {
+      return step.icon;
+    }
+
+    if (isDone) {
+      return <CheckCircleFilled className='done ' />;
+    } else {
+      return <div className='empty'></div>;
+    }
+  };
 
   return (
     <div css={styStepDesktopWrapper}>
-      {props.liststep.map((value, key) => {
+      {liststep.map((value, key) => {
         const isDone = formCompleteness[value.type];
         return (
           <div
@@ -33,15 +45,12 @@ const StepDesktop = (props) => {
               }
             }}
           >
-            <div className='checkbox'>
-              {isDone ? (
-                <CheckCircleFilled className='done ' />
-              ) : (
-                <div className='empty'></div>
-              )}
-            </div>
+            <div className='checkbox'>{renderIcon(value, isDone)}</div>
             <div className='nameStep'>
-              <span className='title'>{value.name}</span>
+              <div className='menu-item'>
+                <span className='title'>{value.name} </span>
+                {value.count && <div className='count'>0</div>}
+              </div>
               <span className='description'>{value.description}</span>
             </div>
           </div>
