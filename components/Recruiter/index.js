@@ -10,6 +10,8 @@ import People from '@components/assets/icon/daftar-capes.svg';
 import Checklist from '@components/assets/icon/sudah-dinilai.svg';
 import ArchivePeople from '@components/assets/icon/capes-diarsipkan.svg';
 
+import FilterCard from './FilterCard';
+
 import {
   styFormWrapper,
   stySidebarWrapper,
@@ -66,6 +68,7 @@ const ContainerRecruiter = (props) => {
 
       <div css={styMainFormWrapper}>
         <Header />
+        <FilterCard />
       </div>
     </div>
   );

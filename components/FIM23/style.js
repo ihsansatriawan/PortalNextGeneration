@@ -39,7 +39,7 @@ export const stySidebarWrapper = css`
   flex-direction: column;
 
   ${mq[1]} {
-    width: 20%;
+    width: 23%;
   }
 `;
 
@@ -196,7 +196,7 @@ export const styStepDesktopWrapper = css`
     align-items: flex-start;
     cursor: pointer;
     position: relative;
-    width: 250px;
+    width: 100%;
 
     .checkbox {
       margin-right: 10px;
@@ -510,7 +510,7 @@ export const styMenuDekstopLogic = css`
   display: none;
   ${mq[1]} {
     display: flex;
-    width: 250px;
+    width: 100%;
   }
 `;
 
