@@ -1,6 +1,7 @@
 import React from 'react';
 import LogoFim from '@components/Home/Slider/assets/logo-fim.svg';
 import Router from 'next/router';
+import { string } from 'prop-types';
 
 import StepDesktop from '@components/FIM23/StepDesktop';
 import MenuFIMDesktop from '@components/FIM23/MenuFIMDesktop';
@@ -10,7 +11,8 @@ import People from '@components/assets/icon/daftar-capes.svg';
 import Checklist from '@components/assets/icon/sudah-dinilai.svg';
 import ArchivePeople from '@components/assets/icon/capes-diarsipkan.svg';
 
-import FilterCard from './FilterCard';
+import ParticipantList from './ParticipantList';
+import DetailParticipant from './DetailParticipant';
 
 import {
   styFormWrapper,
@@ -21,7 +23,7 @@ import {
 } from '@components/FIM23/style';
 
 const ContainerRecruiter = (props) => {
-  //   const { cookieLogin, pengumuman } = props;
+  const { userid } = props;
 
   const stepList = [
     {
@@ -50,6 +52,14 @@ const ContainerRecruiter = (props) => {
     },
   ];
 
+  const RenderView = () => {
+    if (userid) {
+      return <DetailParticipant {...props} />;
+    }
+
+    return <ParticipantList {...props} />;
+  };
+
   return (
     <div css={styFormWrapper}>
       <div css={stySidebarWrapper}>
@@ -68,10 +78,14 @@ const ContainerRecruiter = (props) => {
 
       <div css={styMainFormWrapper}>
         <Header />
-        <FilterCard />
+        <RenderView />
       </div>
     </div>
   );
+};
+
+ContainerRecruiter.propTypes = {
+  userid: string,
 };
 
 export default ContainerRecruiter;
