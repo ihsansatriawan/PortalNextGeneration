@@ -17,6 +17,7 @@ const { TabPane } = Tabs;
 const DetailParticipant = (props) => {
   const { userid, cookieLogin } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const [dataParticipant, setDataParticipant] = useState({});
 
   const fetchDataDetailParticipant = useCallback(async () => {
     try {
@@ -29,9 +30,7 @@ const DetailParticipant = (props) => {
       });
 
       const dataParticipantDetail = response.data.data;
-
-      console.log(dataParticipantDetail);
-      console.log('dataParticipantDetail');
+      setDataParticipant(dataParticipantDetail);
 
       setIsLoading(false);
     } catch (error) {
@@ -78,7 +77,7 @@ const DetailParticipant = (props) => {
       <div css={styBody}>
         <Tabs defaultActiveKey='1' onChange={onChangeTab}>
           <TabPane tab='Informasi Utama' key='1'>
-            <DataDiri />
+            <DataDiri dataParticipant={dataParticipant} isLoading={isLoading} />
           </TabPane>
           <TabPane tab='Essay' key='2'>
             Content of Tab Pane 2

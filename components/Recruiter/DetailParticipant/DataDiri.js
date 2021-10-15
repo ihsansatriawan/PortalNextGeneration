@@ -1,4 +1,5 @@
 import React from 'react';
+import { object, bool } from 'prop-types';
 import {
   Typography,
   Card,
@@ -14,6 +15,7 @@ import {
   Radio,
   Select,
 } from 'antd';
+import LoadingSpin from '@components/FIM23/LoadingSpin.js';
 
 import {
   styDataDiriWrapper,
@@ -23,7 +25,28 @@ import {
   styInfo,
 } from './style';
 
-const DataDiri = () => {
+const DataDiri = (props) => {
+  const { isLoading } = props;
+  const { Identity } = props.dataParticipant;
+
+  if (!Identity || isLoading) {
+    return <LoadingSpin />;
+  }
+
+  const {
+    photoUrl,
+    address,
+    fullName,
+    bornPlace,
+    bornDate,
+    gender,
+    cityAddress,
+    provinceAddress,
+  } = Identity;
+
+  console.log(Identity);
+  console.log('Identity');
+
   return (
     <div css={styDataDiriWrapper}>
       <Row>
@@ -35,60 +58,56 @@ const DataDiri = () => {
         <Col span={24}>
           <div css={styPrimaryIdentity}>
             <div css={styPhotoProfileWrapper}>
-              <img
-                src='https://res.cloudinary.com/fim-indonesia/image/upload/v1633960621/profile_photo/Screen_Shot_2021-10-11_at_20.53.33_lusex1.png'
-                alt='profile-picture'
-              />
+              <img src={photoUrl} alt='profile-picture' />
             </div>
             <div css={styBasicInfo}>
-              <Row>
+              <Row style={{ marginBottom: '20px' }}>
                 <Col span={8}>
                   <div css={styInfo}>
                     <label>Nama</label>
-                    <span>Bagus Dwi Utama</span>
+                    <span>{fullName}</span>
                   </div>
                 </Col>
                 <Col span={8}>
                   <div css={styInfo}>
                     <label>Tempat Lahir</label>
-                    <span>Purbalingga</span>
+                    <span>{bornPlace}</span>
                   </div>
                 </Col>
                 <Col span={8}>
                   <div css={styInfo}>
                     <label>Tanggal Lahir</label>
-                    <span>Purbalingga</span>
+                    <span>{`${new Date(bornDate).getDate()}-${new Date(
+                      bornDate
+                    ).getMonth()}-${new Date(bornDate).getFullYear()}`}</span>
                   </div>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginBottom: '20px' }}>
                 <Col span={8}>
                   <div css={styInfo}>
                     <label>Jenis Kelamin</label>
-                    <span>Laki-laki</span>
+                    <span>{gender}</span>
                   </div>
                 </Col>
                 <Col span={8}>
                   <div css={styInfo}>
                     <label>Kota</label>
-                    <span>Purbalingga</span>
+                    <span>{cityAddress}</span>
                   </div>
                 </Col>
                 <Col span={8}>
                   <div css={styInfo}>
-                    <label>Profinsi</label>
-                    <span>Purbalingga</span>
+                    <label>Provinsi</label>
+                    <span>{provinceAddress}</span>
                   </div>
                 </Col>
               </Row>
-              <Row>
+              <Row style={{ marginBottom: '20px' }}>
                 <Col span={24}>
                   <div css={styInfo}>
                     <label>Alamat Lengkap</label>
-                    <span>
-                      Karangaren No. 16 RT 01 / RW 01, Kecamatan Kutasari,
-                      Kabupaten Purbalingga 53361
-                    </span>
+                    <span>{address}</span>
                   </div>
                 </Col>
               </Row>
@@ -98,6 +117,11 @@ const DataDiri = () => {
       </Row>
     </div>
   );
+};
+
+DataDiri.propTypes = {
+  dataParticipant: object,
+  isLoading: bool,
 };
 
 export default DataDiri;
