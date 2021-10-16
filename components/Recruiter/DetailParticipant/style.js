@@ -55,6 +55,12 @@ export const styBody = css`
 
 export const styDataDiriWrapper = css`
   padding: 20px;
+
+  hr {
+    height: 1px;
+    background-color: #ede4de;
+    border: none;
+  }
 `;
 
 export const styPrimaryIdentity = css`
@@ -93,5 +99,17 @@ export const styInfo = css`
 
   label {
     font-weight: 700;
+  }
+`;
+
+export const stySocialMediaWrapper = css`
+  font-size: 14px;
+  color: #8a6b57;
+  a {
+    color: #8a6b57;
+  }
+
+  .icon {
+    margin-right: 10px;
   }
 `;

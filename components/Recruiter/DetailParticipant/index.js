@@ -19,6 +19,8 @@ const DetailParticipant = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataParticipant, setDataParticipant] = useState({});
 
+  let fullNameParticipant;
+
   const fetchDataDetailParticipant = useCallback(async () => {
     try {
       const response = await fetch({
@@ -51,6 +53,11 @@ const DetailParticipant = (props) => {
     return <LoadingSpin />;
   }
 
+  if (dataParticipant.Identity) {
+    const { fullName } = dataParticipant.Identity;
+    fullNameParticipant = fullName;
+  }
+
   return (
     <div css={styDetailParticipantWrapper}>
       <div css={styHeader}>
@@ -61,7 +68,7 @@ const DetailParticipant = (props) => {
             onClick={() => Router.push('/recruiter')}
           />
           <span className='title-name'>
-            Detail Formulir - Galang Dayu Nugraha
+            Detail Formulir - {fullNameParticipant}
           </span>
         </div>
 
