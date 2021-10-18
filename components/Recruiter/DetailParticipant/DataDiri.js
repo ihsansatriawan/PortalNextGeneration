@@ -12,6 +12,8 @@ import {
   stySocialMediaWrapper,
 } from './style';
 
+import BerkasDisplay from './BerkasDisplay';
+
 const DataDiri = (props) => {
   const { isLoading } = props;
   const {
@@ -21,6 +23,7 @@ const DataDiri = (props) => {
     AlumniReference,
     FimActivity,
     OrganizationExperiences,
+    PersonalDocument,
   } = props.dataParticipant;
 
   if (!Identity || isLoading) {
@@ -69,6 +72,9 @@ const DataDiri = (props) => {
     phoneNumber,
     relationship,
   } = AlumniReference;
+
+  const { commitmentLetterUrl, identityFileUrl, recommendationLetterUrl } =
+    PersonalDocument;
 
   const { duration, eventScale, responsibility, result, role } = FimActivity;
 
@@ -411,7 +417,7 @@ const DataDiri = (props) => {
       </Row>
 
       {OrganizationExperiences.map((organization, index) => {
-        const { duration, eventScale, id, referencePerson, result, role } =
+        const { duration, eventScale, referencePerson, result, role } =
           organization;
 
         return (
@@ -464,6 +470,54 @@ const DataDiri = (props) => {
           </>
         );
       })}
+
+      <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <h2>SURAT KOMITMEN</h2>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <BerkasDisplay url={commitmentLetterUrl} />
+        </Col>
+      </Row>
+
+      <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <h2>SURAT REKOMENDASI</h2>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <BerkasDisplay url={recommendationLetterUrl} />
+        </Col>
+      </Row>
+
+      <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
+        <hr />
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <h2>SCAN KTP</h2>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span={24}>
+          <BerkasDisplay url={identityFileUrl} />
+        </Col>
+      </Row>
     </div>
   );
 };
