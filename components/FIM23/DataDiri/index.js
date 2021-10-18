@@ -212,7 +212,9 @@ const DataDiri = (props) => {
             : value.photoUrl.file.response.secure_url,
         religion: value.religion,
         bornPlace: value.bornPlace,
-        bornDate: moment(value.bornDate || new Date(), 'YYYY-MM-DD'),
+        bornDate: moment(value.bornDate || new Date(), 'YYYY-MM-DD').format(
+          'YYYY-MM-DD HH:mm:ss'
+        ),
         address: value.address,
         cityAddress: value.cityAddress,
         provinceAddress: value.provinceAddress,

@@ -38,6 +38,7 @@
     "file-saver": "^2.0.2",
     "isomorphic-cookie": "^1.2.4",
     "jwt-decode": "^2.2.0",
+    "moment-timezone": "^0.5.33",
     "next": "^8.1.0",
     "next-cookies": "^1.1.2",
     "next-ga": "^2.3.4",
