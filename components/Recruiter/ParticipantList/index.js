@@ -5,6 +5,8 @@ import { fetch } from '@helper/fetch';
 import ParticipantCard from './ParticipantCard';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
 import { Pagination } from 'antd';
+import Router from 'next/router';
+import { notification } from 'antd';
 
 const ParticipantList = (props) => {
   const { cookieLogin } = props;
@@ -12,6 +14,12 @@ const ParticipantList = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [totalData, setTotalData] = useState(50);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const openNotificationWithIcon = (type) => {
+    notification[type]({
+      message: 'Anda tidak dapat mengakses halaman ini',
+    });
+  };
 
   const fetchDataListParticipant = useCallback(async () => {
     try {
@@ -23,8 +31,14 @@ const ParticipantList = (props) => {
         },
       });
 
-      const dataParticipantList = response.data.data;
-      setListParticipants(dataParticipantList);
+      if (response.data.status) {
+        const dataParticipantList = response.data.data;
+        setListParticipants(dataParticipantList);
+      } else {
+        Router.push('/');
+        openNotificationWithIcon('error');
+      }
+
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -40,7 +54,7 @@ const ParticipantList = (props) => {
     fetchDataListParticipant();
   }, [currentPage]);
 
-  if (isLoading && !listParticipants.length) {
+  if (isLoading) {
     return <LoadingSpin />;
   }
 
