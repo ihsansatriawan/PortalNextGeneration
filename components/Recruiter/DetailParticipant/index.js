@@ -5,6 +5,7 @@ import { fetch } from '@helper/fetch';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
 import Router from 'next/router';
 import DataDiri from './DataDiri';
+import Essay from './Essay';
 
 import {
   styDetailParticipantWrapper,
@@ -87,7 +88,7 @@ const DetailParticipant = (props) => {
             <DataDiri dataParticipant={dataParticipant} isLoading={isLoading} />
           </TabPane>
           <TabPane tab='Essay' key='2'>
-            Content of Tab Pane 2
+            <Essay dataParticipant={dataParticipant} {...props} />
           </TabPane>
           <TabPane tab='Rencana Pengabdian' key='3'>
             Content of Tab Pane 3
