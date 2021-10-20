@@ -60,6 +60,8 @@ const UploadBerkas = (props) => {
     commitmentLetterUrl: true,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const fetchDocument = async () => {
     setLoading({
       identityFileUrl: true,
@@ -109,7 +111,6 @@ const UploadBerkas = (props) => {
     }
 
     if (status) {
-      notification.success({ message: 'Berkas berhasil disimpan' });
       if (
         attachment.identityFileUrl &&
         attachment.recommendationLetterUrl &&
@@ -204,10 +205,12 @@ const UploadBerkas = (props) => {
 
   const _saveBerkas = async () => {
     try {
+      setIsLoading(true);
       await saveDocument();
       notification.success({ message: 'Berkas berhasil disimpan' });
       setStep(5);
     } catch (error) {
+      setIsLoading(false);
       notification.error({ message: 'Gagal Upload Berkas' });
     }
   };
@@ -287,14 +290,15 @@ const UploadBerkas = (props) => {
       {!isInPreview && (
         <div css={stySubmitWrapperButton}>
           <Button
-            disabled={isDisabled}
+            disabled={isDisabled || isLoading}
             size='large'
             css={styButtonSave}
             type='primary'
             htmlType='submit'
             onClick={_saveBerkas}
           >
-            <Icon type='save' theme='filled' /> Simpan Perubahan
+            <Icon type='save' theme='filled' />
+            {isLoading ? 'Loading...' : 'Simpan Perubahan'}
           </Button>
         </div>
       )}
