@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { Descriptions, Avatar, Button } from 'antd';
+import React from 'react';
+import { func, string, number } from 'prop-types';
+import { Descriptions, Avatar, Button, Rate } from 'antd';
 import './showingAnswer.css';
 
 const ShowingAnswer = (props) => {
+  const { handleRating, answerId } = props;
   const theAswer = JSON.parse(props.answer.answer);
   const theKey = Object.keys(theAswer);
 
@@ -40,11 +42,19 @@ const ShowingAnswer = (props) => {
               />
               <span className='value-answer'> {theanswertype}</span>
             </div>
+
+           
           </div>
         );
       })}
     </Descriptions>
   );
+};
+
+ShowingAnswer.propTypes = {
+  handleRating: func,
+  photoUrl: string,
+  answerId: number,
 };
 
 export default ShowingAnswer;

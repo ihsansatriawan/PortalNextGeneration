@@ -88,10 +88,18 @@ const DetailParticipant = (props) => {
             <DataDiri dataParticipant={dataParticipant} isLoading={isLoading} />
           </TabPane>
           <TabPane tab='Essay' key='2'>
-            <Essay dataParticipant={dataParticipant} {...props} />
+            <Essay
+              dataParticipant={dataParticipant}
+              {...props}
+              category='essay'
+            />
           </TabPane>
           <TabPane tab='Rencana Pengabdian' key='3'>
-            Content of Tab Pane 3
+            <Essay
+              dataParticipant={dataParticipant}
+              {...props}
+              category='volunteering_plan'
+            />
           </TabPane>
         </Tabs>
       </div>
