@@ -113,3 +113,24 @@ export const stySocialMediaWrapper = css`
     margin-right: 10px;
   }
 `;
+
+export const styCardNilai = css`
+  margin-top: 20px;
+  background: #a68b77;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px;
+  border-radius: 6px;
+  width: fit-content;
+
+  strong {
+    margin-right: 10px;
+  }
+
+  .input-field {
+    width: 200px;
+    margin-right: 20px;
+  }
+`;

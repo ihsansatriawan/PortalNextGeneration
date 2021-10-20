@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { string, object } from 'prop-types';
 import { fetch } from '@helper/fetch';
-import { notification, Row, Col, Card, Input } from 'antd';
+import { notification, Row, Col, Card, Input, Button, Icon } from 'antd';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
 import ShowingAnswer from '@components/Recruiter/ListCardRecruiter/showingAnswer';
 
-import { styDataDiriWrapper } from './style';
+import { styDataDiriWrapper, styCardNilai } from './style';
 
 const tunnelId = 12;
 
@@ -14,6 +14,8 @@ const Essay = (props) => {
   const { Answers, Identity } = props.dataParticipant;
   const [isLoading, setIsLoading] = useState(false);
   const [dataQuestion, setDataQuestion] = useState([]);
+  const [payload, setPayload] = useState([]);
+  const [isLoadingSave, setIsLoadingSave] = useState(false);
 
   const fetchEssayList = async () => {
     setIsLoading(true);
@@ -44,6 +46,34 @@ const Essay = (props) => {
     }
   };
 
+  const handleSaveScore = async () => {
+    setIsLoadingSave(true);
+
+    try {
+      const response = await fetch({
+        url: `/participant/assessment`,
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+        data: payload,
+      });
+
+      const status = response.status || false;
+
+      if (!status) {
+        notification.error({ message: response.data.message });
+      } else {
+        notification.success({ message: response.data.message });
+        setIsLoadingSave(false);
+      }
+    } catch (error) {
+      console.error(error);
+
+      setIsLoadingSave(false);
+    }
+  };
+
   useEffect(() => {
     fetchEssayList();
   }, []);
@@ -52,9 +82,25 @@ const Essay = (props) => {
     return <LoadingSpin />;
   }
 
-  const handleRating = (value) => {
-    console.log(value);
-    console.log('value');
+  const handleRating = (e, answerId) => {
+    const value = e.target.value;
+    const isPayloadExist = payload.find((val) => val.answerId === answerId);
+    const currentPaylod = [...payload];
+
+    if (isPayloadExist) {
+      const indexPosition = currentPaylod.indexOf(isPayloadExist);
+      currentPaylod.splice(indexPosition, 1, {
+        answerId: answerId,
+        score: value,
+      });
+      setPayload(currentPaylod);
+    } else {
+      currentPaylod.push({
+        answerId: answerId,
+        score: value,
+      });
+      setPayload(currentPaylod);
+    }
   };
 
   return (
@@ -88,7 +134,7 @@ const Essay = (props) => {
                   style={{ marginTop: '20px' }}
                 >
                   {findAnswer !== undefined && (
-                    <>
+                    <div>
                       <ShowingAnswer
                         answerId={findAnswer.id}
                         handleRating={handleRating}
@@ -96,18 +142,31 @@ const Essay = (props) => {
                         answer={findAnswer ? findAnswer : null}
                         photoUrl={Identity.photoUrl ? Identity.photoUrl : null}
                       />
-                      <div style={{ marginTop: '20px' }}>
-                        <strong style={{ marginRight: '10px' }}>
-                          {' '}
-                          Berikan Nilai
-                        </strong>
+                      <div css={styCardNilai}>
+                        <strong>Berikan Nilai</strong>
                         <Input
-                          onChange={(rating) =>
-                            handleRating(rating, findAnswer.id)
-                          }
+                          className='input-field'
+                          defaultValue={findAnswer.score}
+                          onChange={(e) => handleRating(e, findAnswer.id)}
                         />
+                        <Button
+                          className='save-btn'
+                          loading={isLoadingSave}
+                          onClick={handleSaveScore}
+                        >
+                          {isLoadingSave ? 'Loading...' : 'Simpan'}
+                        </Button>
+                        {findAnswer.score && (
+                          <div style={{ marginLeft: '10px', fontSize: '20px' }}>
+                            <Icon
+                              type='check-circle'
+                              theme='twoTone'
+                              twoToneColor='#52c41a'
+                            />
+                          </div>
+                        )}
                       </div>
-                    </>
+                    </div>
                   )}
                 </Card>
               </Col>
