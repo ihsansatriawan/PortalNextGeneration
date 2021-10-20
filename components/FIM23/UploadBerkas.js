@@ -109,6 +109,7 @@ const UploadBerkas = (props) => {
     }
 
     if (status) {
+      notification.success({ message: 'Berkas berhasil disimpan' });
       if (
         attachment.identityFileUrl &&
         attachment.recommendationLetterUrl &&
@@ -119,6 +120,8 @@ const UploadBerkas = (props) => {
         }
         fetchDataFormCompleteness('refetch');
       }
+    } else {
+      notification.error({ message: 'Berkas gagal disimpan' });
     }
   };
 
@@ -199,9 +202,14 @@ const UploadBerkas = (props) => {
     );
   };
 
-  const _saveBerkas = () => {
-    notification.success({ message: "Berkas berhasil disimpan" });
-    setStep(5);
+  const _saveBerkas = async () => {
+    try {
+      await saveDocument();
+      notification.success({ message: 'Berkas berhasil disimpan' });
+      setStep(5);
+    } catch (error) {
+      notification.error({ message: 'Gagal Upload Berkas' });
+    }
   };
 
   const renderUploadForm = (type, name) => {
