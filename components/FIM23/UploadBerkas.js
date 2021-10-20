@@ -125,11 +125,11 @@ const UploadBerkas = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (!isFirstInitialize.current) {
-      saveDocument();
-    }
-  }, [attachment]);
+  // useEffect(() => {
+  //   if (!isFirstInitialize.current) {
+  //     saveDocument();
+  //   }
+  // }, [attachment]);
 
   useEffect(() => {
     fetchDocument();
