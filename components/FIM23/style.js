@@ -39,7 +39,7 @@ export const stySidebarWrapper = css`
   flex-direction: column;
 
   ${mq[1]} {
-    width: 20%;
+    width: 23%;
   }
 `;
 
@@ -195,6 +195,8 @@ export const styStepDesktopWrapper = css`
     margin-bottom: 10px;
     align-items: flex-start;
     cursor: pointer;
+    position: relative;
+    width: 100%;
 
     .checkbox {
       margin-right: 10px;
@@ -215,14 +217,34 @@ export const styStepDesktopWrapper = css`
       display: flex;
       flex-direction: column;
 
-      .title {
-        font-weight: 500;
-        font-size: 18px;
-      }
+      .menu-item {
+        display: flex;
+        flex-direction: row;
 
-      .description {
-        font-weight: normal;
-        font-size: 14px;
+        .count {
+          position: absolute;
+          top: 10px;
+          right: 11px;
+          font-weight: 400;
+          background: #dedede;
+          width: 25px;
+          border-radius: 50%;
+          height: 25px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+        }
+
+        .title {
+          font-weight: 500;
+          font-size: 18px;
+        }
+
+        .description {
+          font-weight: normal;
+          font-size: 14px;
+        }
       }
     }
   }
@@ -488,6 +510,7 @@ export const styMenuDekstopLogic = css`
   display: none;
   ${mq[1]} {
     display: flex;
+    width: 100%;
   }
 `;
 

@@ -60,6 +60,8 @@ const UploadBerkas = (props) => {
     commitmentLetterUrl: true,
   });
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const fetchDocument = async () => {
     setLoading({
       identityFileUrl: true,
@@ -119,14 +121,16 @@ const UploadBerkas = (props) => {
         }
         fetchDataFormCompleteness('refetch');
       }
+    } else {
+      notification.error({ message: 'Berkas gagal disimpan' });
     }
   };
 
-  useEffect(() => {
-    if (!isFirstInitialize.current) {
-      saveDocument();
-    }
-  }, [attachment]);
+  // useEffect(() => {
+  //   if (!isFirstInitialize.current) {
+  //     saveDocument();
+  //   }
+  // }, [attachment]);
 
   useEffect(() => {
     fetchDocument();
@@ -199,9 +203,16 @@ const UploadBerkas = (props) => {
     );
   };
 
-  const _saveBerkas = () => {
-    notification.success({ message: "Berkas berhasil disimpan" });
-    setStep(5);
+  const _saveBerkas = async () => {
+    try {
+      setIsLoading(true);
+      await saveDocument();
+      notification.success({ message: 'Berkas berhasil disimpan' });
+      setStep(5);
+    } catch (error) {
+      setIsLoading(false);
+      notification.error({ message: 'Gagal Upload Berkas' });
+    }
   };
 
   const renderUploadForm = (type, name) => {
@@ -279,14 +290,15 @@ const UploadBerkas = (props) => {
       {!isInPreview && (
         <div css={stySubmitWrapperButton}>
           <Button
-            disabled={isDisabled}
+            disabled={isDisabled || isLoading}
             size='large'
             css={styButtonSave}
             type='primary'
             htmlType='submit'
             onClick={_saveBerkas}
           >
-            <Icon type='save' theme='filled' /> Simpan Perubahan
+            <Icon type='save' theme='filled' />
+            {isLoading ? 'Loading...' : 'Simpan Perubahan'}
           </Button>
         </div>
       )}

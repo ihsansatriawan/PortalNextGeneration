@@ -210,6 +210,7 @@ const BasicInfo = (props) => {
                 disabled={isDisabled}
                 style={{ width: '100%' }}
                 format={'DD-MM-YYYY'}
+                locale="id_ID"
               />
             )}
           </Form.Item>

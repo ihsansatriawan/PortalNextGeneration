@@ -72,7 +72,6 @@ const DataDiri = (props) => {
           ktpNumber: Identity.ktpNumber,
           institution: Identity.institution,
           occupation: Identity.occupation,
-          reason: Identity.reason,
         });
       }
 
@@ -213,7 +212,9 @@ const DataDiri = (props) => {
             : value.photoUrl.file.response.secure_url,
         religion: value.religion,
         bornPlace: value.bornPlace,
-        bornDate: moment(value.bornDate || new Date(), 'YYYY-MM-DD'),
+        bornDate: moment(value.bornDate || new Date(), 'YYYY-MM-DD').format(
+          'YYYY-MM-DD HH:mm:ss'
+        ),
         address: value.address,
         cityAddress: value.cityAddress,
         provinceAddress: value.provinceAddress,
@@ -276,6 +277,7 @@ const DataDiri = (props) => {
         facebookUrl: value.facebookUrl,
         websiteUrl: value.websiteUrl,
         otherSiteUrl: value.otherSiteUrl,
+        reason: value.reason,
       },
     });
 
@@ -385,6 +387,7 @@ const DataDiri = (props) => {
           .then(() => {
             setStep(2);
             fetchDataFormCompleteness('refetch');
+            fetchDataProfile();
           })
           .catch((error) => {
             console.error(error);
