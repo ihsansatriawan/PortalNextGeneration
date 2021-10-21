@@ -39,12 +39,12 @@ const Recruiter = (props) => {
       const status = response.data.status || false;
 
       if (!status) {
-        return redirectNonLogin();
+        // return redirectNonLogin();
       }
     } catch (error) {
       console.log('error: ', error);
 
-      redirectNonLogin();
+      // redirectNonLogin();
     }
   };
 
