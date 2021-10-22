@@ -64,21 +64,23 @@ const ParticipantList = (props) => {
     <div>
       {/* <FilterCard /> */}
       {listParticipants.map((participant) => {
-        const { userId, Identity } = participant;
+        const {
+          userId,
+          fullName,
+          cityAddress,
+          occupation,
+          photoUrl = '',
+        } = participant;
 
-        if (Identity) {
-          const { photoUrl, fullName, cityAddress } = Identity;
-
-          return (
-            <ParticipantCard
-              key={userId}
-              photoUrl={photoUrl}
-              fullName={fullName}
-              cityAddress={cityAddress}
-              userId={userId}
-            />
-          );
-        }
+        return (
+          <ParticipantCard
+            key={userId}
+            photoUrl={photoUrl}
+            fullName={fullName}
+            cityAddress={cityAddress}
+            userId={userId}
+          />
+        );
       })}
       <Pagination
         defaultCurrent={currentPage}
