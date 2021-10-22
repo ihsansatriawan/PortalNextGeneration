@@ -16,11 +16,10 @@ import {
   DatePicker,
   Upload,
   Skeleton,
-} from "antd";
+} from 'antd';
 import '../../static/sass/AddListRecruiter.scss';
 import ListCardRecruiter from './ListCardRecruiter/ListCardRecruiter';
 import { fetch } from '@helper/fetch';
-
 
 class AddListRecruiter extends Component {
   constructor(props) {
@@ -28,8 +27,8 @@ class AddListRecruiter extends Component {
     this.state = {
       email: '',
       isLoading: false,
-      recruiters: []
-    }
+      recruiters: [],
+    };
   }
 
   componentDidMount() {
@@ -38,64 +37,66 @@ class AddListRecruiter extends Component {
 
   fetchRecruiter = async () => {
     const { cookieLogin, refetchStep } = this.props;
-    this.setState({ isLoading: true })
+
+    console.log(this.props);
+    console.log('this.props');
+
+    this.setState({ isLoading: true });
     try {
       const response = await fetch({
         url: '/recruiter/lists',
         method: 'get',
         headers: {
-          'Authorization': `Bearer ${cookieLogin}`
-        }
-      })
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
 
-      const status = (response.data.status || false)
+      const status = response.data.status || false;
 
       if (!status) {
-        message.error(response.data.message)
-        this.setState({ isLoading: false })
+        message.error(response.data.message);
+        this.setState({ isLoading: false });
       } else {
-        message.success(response.data.message)
+        message.success(response.data.message);
         this.setState({
           isLoading: false,
-          recruiters: response.data.data
-        })
+          recruiters: response.data.data,
+        });
       }
-
     } catch (error) {
-      message.error("Server Error")
-      this.setState({ isLoading: false })
+      message.error('Server Error');
+      this.setState({ isLoading: false });
     }
-  }
+  };
 
   submitRecruiter = async (email) => {
     const { cookieLogin, refetchStep } = this.props;
     try {
       const response = await fetch({
         url: '/recruiter/recruiter/add',
-        method: 'post',
+        method: 'get',
         headers: {
-          'Authorization': `Bearer ${cookieLogin}`
+          Authorization: `Bearer ${cookieLogin}`,
         },
         data: {
-          email: email
-        }
-      })
+          email: email,
+        },
+      });
 
-      const status = (response.data.status || false)
+      const status = response.data.status || false;
 
       if (!status) {
-        message.error(response.data.message)
-        this.setState({ isLoading: false })
+        message.error(response.data.message);
+        this.setState({ isLoading: false });
       } else {
-        message.success(response.data.message)
+        message.success(response.data.message);
         this.fetchRecruiter();
       }
-
     } catch (error) {
-      message.error("Server Error")
-      this.setState({ isLoading: false })
+      message.error('Server Error');
+      this.setState({ isLoading: false });
     }
-  }
+  };
 
   onSubmitAddRecruiterHandler(e) {
     e.preventDefault();
@@ -107,56 +108,66 @@ class AddListRecruiter extends Component {
   _renderRecruiter = () => {
     const { recruiters } = this.state;
 
-    return <div className="list-recruiter-wrapper">
-      <div className="list-name-wrapper">
-        {recruiters.map((value, index) => (
-          <ListCardRecruiter dataRecruiter={value} key={index} />
-        ))}
+    return (
+      <div className='list-recruiter-wrapper'>
+        <div className='list-name-wrapper'>
+          {recruiters.map((value, index) => (
+            <ListCardRecruiter dataRecruiter={value} key={index} />
+          ))}
+        </div>
       </div>
-    </div>
-  }
-
+    );
+  };
 
   render() {
-    const { isLoading } = this.state
+    const { isLoading } = this.state;
     const formItemLayout = {
       labelCol: {
         xs: { span: 24 },
-        sm: { span: 3 }
+        sm: { span: 3 },
       },
       wrapperCol: {
         xs: { span: 24 },
-        sm: { span: 20 }
-      }
+        sm: { span: 20 },
+      },
     };
 
     return (
       <>
-        <div className="add-list-recruiter-wrapper">
+        <div className='add-list-recruiter-wrapper'>
           <form onSubmit={(e) => this.onSubmitAddRecruiterHandler(e)}>
-            <div className="add-recruiter-wrapper">
+            <div className='add-recruiter-wrapper'>
               <label>Tambah Recruiter</label>
-              <Input onChange={(e) => { this.setState({ email: e.target.value }) }} type="email" placeholder="Tambahkan e-mail recruiter di sini"></Input>
-              <Button type="submit" onClick={(e) => this.onSubmitAddRecruiterHandler(e)} >Add</Button>
+              <Input
+                onChange={(e) => {
+                  this.setState({ email: e.target.value });
+                }}
+                type='email'
+                placeholder='Tambahkan e-mail recruiter di sini'
+              ></Input>
+              <Button
+                type='submit'
+                onClick={(e) => this.onSubmitAddRecruiterHandler(e)}
+              >
+                Add
+              </Button>
             </div>
           </form>
         </div>
 
-        {
-          isLoading ? <Skeleton active /> : this._renderRecruiter()
-        }
+        {isLoading ? <Skeleton active /> : this._renderRecruiter()}
 
         <style jsx>{`
-            .add-list-recruiter-wrapper{                       
-                display:flex;
-                flex-direction:row;
-            }  
-            .list-name-wrapper{
-                margin-top:20px;
-            }
+          .add-list-recruiter-wrapper {
+            display: flex;
+            flex-direction: row;
+          }
+          .list-name-wrapper {
+            margin-top: 20px;
+          }
         `}</style>
       </>
-    )
+    );
   }
 }
 
