@@ -374,6 +374,7 @@ export const styButtonSave = css`
 export const styMeterWrapper = css`
   display: flex;
   flex-direction: row !important;
+  align-items: center;
 `;
 export const styButtonSubmitAll = css`
   background: #ff8229;
@@ -396,6 +397,7 @@ export const styButtonSubmitAll = css`
 export const styModalWrapper = css`
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   p {
     line-height: 1.8;
