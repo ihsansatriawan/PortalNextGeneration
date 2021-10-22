@@ -33,6 +33,8 @@ const ParticipantList = (props) => {
 
       if (response.data.status) {
         const dataParticipantList = response.data.data;
+        console.log(dataParticipantList);
+        console.log('dataParticipantList');
         setListParticipants(dataParticipantList);
       } else {
         Router.push('/');
