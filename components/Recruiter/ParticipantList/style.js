@@ -82,4 +82,5 @@ export const styPanelRecruiter = css`
   margin-bottom: 20px;
   margin-top: -20px;
   border-radius: 0px 0px 12px 12px;
+  align-items: center;
 `;

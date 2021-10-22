@@ -66,11 +66,12 @@ const ParticipantCard = ({
       </div>
       {userRole === 3 && (
         <div css={styPanelRecruiter}>
+          <label style={{ marginRight: '10px' }}>Recruiter</label>
           <Select
             onChange={(value) => onChangeRecruiter(value, userId)}
             placeholder={`Pilih Recruiter yang ditugaskan untuk ${fullName}`}
             style={{ width: '100%' }}
-            defaultValue={recruiterEmail}
+            defaultValue={recruiterEmail ? recruiterEmail : ''}
           >
             {listRecruiter.map((recruiter, key) => {
               return (
