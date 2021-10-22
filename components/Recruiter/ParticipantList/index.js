@@ -5,14 +5,18 @@ import { fetch } from '@helper/fetch';
 import ParticipantCard from './ParticipantCard';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
 import { Pagination } from 'antd';
+import { useIdentity } from '@context/profileContext';
+
 import Router from 'next/router';
 import { notification } from 'antd';
 
 const ParticipantList = (props) => {
   const { cookieLogin } = props;
+  const { dataUser } = useIdentity();
+
   const [listParticipants, setListParticipants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [totalData, setTotalData] = useState(50);
+  const [totalData] = useState(1500);
   const [currentPage, setCurrentPage] = useState(1);
 
   const openNotificationWithIcon = (type) => {
@@ -24,7 +28,7 @@ const ParticipantList = (props) => {
   const fetchDataListParticipant = useCallback(async () => {
     try {
       const response = await fetch({
-        url: `/participant?batch=23&offset=${currentPage - 1}&limit=10`,
+        url: `/participant?batch=23&offset=${currentPage * 10 - 10}&limit=10`,
         method: 'get',
         headers: {
           Authorization: `Bearer ${cookieLogin}`,
@@ -48,10 +52,17 @@ const ParticipantList = (props) => {
   }, [currentPage]);
 
   const onChangePagination = (page) => {
+    console.log(page);
+    console.log('page');
     setCurrentPage(page);
   };
 
   useEffect(() => {
+    if (dataUser.role < 2) {
+      Router.push('/');
+      openNotificationWithIcon('error');
+    }
+
     setIsLoading(true);
     fetchDataListParticipant();
   }, [currentPage]);
