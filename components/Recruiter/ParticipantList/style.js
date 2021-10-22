@@ -72,3 +72,14 @@ export const styCta = css`
     border: none;
   }
 `;
+
+export const styPanelRecruiter = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  background: #faf3ee;
+  margin-bottom: 20px;
+  margin-top: -20px;
+  border-radius: 0px 0px 12px 12px;
+`;

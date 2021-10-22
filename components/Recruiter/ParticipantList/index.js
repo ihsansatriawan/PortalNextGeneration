@@ -16,13 +16,41 @@ const ParticipantList = (props) => {
 
   const [listParticipants, setListParticipants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingRecruiterList, setIsLoadingRecruiterList] = useState(false);
   const [totalData] = useState(1500);
   const [currentPage, setCurrentPage] = useState(1);
+  const [listRecruiter, setListRecruiter] = useState([]);
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
       message: 'Anda tidak dapat mengakses halaman ini',
     });
+  };
+
+  const fetchListRecruiter = async () => {
+    setIsLoadingRecruiterList(true);
+    try {
+      const response = await fetch({
+        url: '/recruiter/lists',
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
+
+      const status = response.data.status || false;
+
+      if (!status) {
+        notification.error(response.data.message);
+        setIsLoadingRecruiterList(false);
+      } else {
+        setIsLoadingRecruiterList(false);
+        setListRecruiter(response.data.data);
+      }
+    } catch (error) {
+      notification.error('Server Error');
+      setIsLoadingRecruiterList(false);
+    }
   };
 
   const fetchDataListParticipant = useCallback(async () => {
@@ -37,8 +65,6 @@ const ParticipantList = (props) => {
 
       if (response.data.status) {
         const dataParticipantList = response.data.data;
-        console.log(dataParticipantList);
-        console.log('dataParticipantList');
         setListParticipants(dataParticipantList);
       } else {
         Router.push('/');
@@ -52,8 +78,6 @@ const ParticipantList = (props) => {
   }, [currentPage]);
 
   const onChangePagination = (page) => {
-    console.log(page);
-    console.log('page');
     setCurrentPage(page);
   };
 
@@ -61,11 +85,38 @@ const ParticipantList = (props) => {
     if (dataUser.role < 2) {
       Router.push('/');
       openNotificationWithIcon('error');
+    } else {
+      fetchListRecruiter();
     }
 
     setIsLoading(true);
     fetchDataListParticipant();
   }, [currentPage]);
+
+  const onChangeRecruiter = async (email, userId) => {
+    try {
+      const response = await fetch({
+        url: `/recruiter/assign`,
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+        data: {
+          participantId: userId,
+          recruiterEmail: email,
+          batch: '23',
+        },
+      });
+
+      if (response.data.status) {
+        notification.success({ message: response.data.message });
+      } else {
+        notification.error({ message: response.data.message });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   if (isLoading) {
     return <LoadingSpin />;
@@ -81,6 +132,8 @@ const ParticipantList = (props) => {
           cityAddress,
           occupation,
           photoUrl = '',
+          recruiterEmail,
+          scoreFinal,
         } = participant;
 
         return (
@@ -89,7 +142,13 @@ const ParticipantList = (props) => {
             photoUrl={photoUrl}
             fullName={fullName}
             cityAddress={cityAddress}
+            occupation={occupation}
             userId={userId}
+            userRole={dataUser.role}
+            listRecruiter={listRecruiter}
+            onChangeRecruiter={onChangeRecruiter}
+            recruiterEmail={recruiterEmail}
+            scoreFinal={scoreFinal}
           />
         );
       })}

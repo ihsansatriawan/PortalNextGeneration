@@ -1,6 +1,6 @@
 import React from 'react';
-import { string, number } from 'prop-types';
-import { Button } from 'antd';
+import { string, number, arrayOf, object, func } from 'prop-types';
+import { Button, Select, Icon } from 'antd';
 import Link from 'next/link';
 
 import {
@@ -10,7 +10,10 @@ import {
   styProfesi,
   styAsal,
   styCta,
+  styPanelRecruiter,
 } from './style';
+
+const { Option } = Select;
 
 const ParticipantCard = ({
   photoUrl,
@@ -18,34 +21,68 @@ const ParticipantCard = ({
   occupation,
   cityAddress,
   userId,
+  listRecruiter,
+  userRole,
+  onChangeRecruiter,
+  recruiterEmail,
+  scoreFinal,
 }) => {
   return (
-    <div css={styParticipantCardWrapper}>
-      <div css={styProfilPicture}>
-        <img className='profpic' src={photoUrl} />
-      </div>
+    <>
+      <div css={styParticipantCardWrapper}>
+        <div css={styProfilPicture}>
+          <img className='profpic' src={photoUrl} />
+        </div>
 
-      <div css={styName}>
-        <label>Nama</label>
-        <span>{fullName}</span>
-      </div>
+        <div css={styName}>
+          <label>Nama</label>
+          <span>{fullName}</span>
+        </div>
 
-      <div css={styProfesi}>
-        <label>Profesi</label>
-        <span>{occupation}</span>
-      </div>
+        <div css={styProfesi}>
+          <label>Profesi</label>
+          <span>{occupation}</span>
+        </div>
 
-      <div css={styAsal}>
-        <label>Asal Daerah</label>
-        <span>{cityAddress}</span>
-      </div>
+        <div css={styAsal}>
+          <label>Asal Daerah</label>
+          <span>{cityAddress}</span>
+        </div>
 
-      <div css={styCta}>
-        <Link href={`/recruiter/participant-detail?userid=${userId}`}>
-          <Button className='button-preview'>Lihat Detail Formulir</Button>
-        </Link>
+        {userRole === 3 && (
+          <div css={styAsal}>
+            <label>Score</label>
+            <span>
+              {scoreFinal && <Icon type='star' />} {scoreFinal}
+            </span>
+          </div>
+        )}
+
+        <div css={styCta}>
+          <Link href={`/recruiter/participant-detail?userid=${userId}`}>
+            <Button className='button-preview'>Lihat Detail Formulir</Button>
+          </Link>
+        </div>
       </div>
-    </div>
+      {userRole === 3 && (
+        <div css={styPanelRecruiter}>
+          <Select
+            onChange={(value) => onChangeRecruiter(value, userId)}
+            placeholder={`Pilih Recruiter yang ditugaskan untuk ${fullName}`}
+            style={{ width: '100%' }}
+            defaultValue={recruiterEmail}
+          >
+            {listRecruiter.map((recruiter, key) => {
+              return (
+                <Option key={key} value={recruiter.email}>
+                  {recruiter.fullName} - {recruiter.email}
+                </Option>
+              );
+            })}
+          </Select>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -55,6 +92,11 @@ ParticipantCard.propTypes = {
   occupation: string,
   cityAddress: string,
   userId: number,
+  userRole: number,
+  listRecruiter: arrayOf(object),
+  onChangeRecruiter: func,
+  recruiterEmail: string,
+  scoreFinal: number,
 };
 
 export default ParticipantCard;
