@@ -1,7 +1,8 @@
-import React from 'react';
-import { object, bool } from 'prop-types';
-import { Row, Col, Icon } from 'antd';
+import React, { useState } from 'react';
+import { object, bool, string } from 'prop-types';
+import { Row, Col, Icon, Input, Button, notification } from 'antd';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
+import { fetch } from '@helper/fetch';
 
 import {
   styDataDiriWrapper,
@@ -10,12 +11,18 @@ import {
   styBasicInfo,
   styInfo,
   stySocialMediaWrapper,
+  styCardNilai,
 } from './style';
 
 import BerkasDisplay from './BerkasDisplay';
 
 const DataDiri = (props) => {
-  const { isLoading } = props;
+  const { isLoading, cookieLogin } = props;
+  const [isLoadingSave, setIsLoadingSave] = useState(false);
+  const [scoreIdentity, setScoreIdentity] = useState({
+    identityScore: 0,
+    socialMediaScore: 0,
+  });
   const {
     Identity,
     Skill,
@@ -77,6 +84,46 @@ const DataDiri = (props) => {
     PersonalDocument;
 
   const { duration, eventScale, responsibility, result, role } = FimActivity;
+
+  const handleChangeScore = (e, name) => {
+    e.preventDefault();
+
+    const value = e.target.value;
+    setScoreIdentity((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSaveScore = async () => {
+    setIsLoadingSave(true);
+
+    const payload = scoreIdentity;
+
+    try {
+      const response = await fetch({
+        url: `/participant/${props.userid}/batch/23/assessment`,
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+        data: payload,
+      });
+
+      const status = response.status || false;
+
+      if (!status) {
+        notification.error({ message: response.data.message });
+      } else {
+        notification.success({ message: response.data.message });
+        setIsLoadingSave(false);
+      }
+    } catch (error) {
+      console.error(error);
+      notification.error({ message: 'Gagal disimpan' });
+      setIsLoadingSave(false);
+    }
+  };
 
   return (
     <div css={styDataDiriWrapper}>
@@ -319,6 +366,26 @@ const DataDiri = (props) => {
           </div>
         </Col>
       </Row>
+      <Row>
+        <div css={styCardNilai}>
+          <strong>Berikan Nilai kualitas sosial media (Max 4 Poin)</strong>
+          <Input
+            className='input-field'
+            defaultValue={SocialMedia.score}
+            onChange={(e) => handleChangeScore(e, 'socialMediaScore')}
+          />
+
+          {SocialMedia.score && (
+            <div style={{ marginLeft: '10px', fontSize: '20px' }}>
+              <Icon
+                type='check-circle'
+                theme='twoTone'
+                twoToneColor='#52c41a'
+              />
+            </div>
+          )}
+        </div>
+      </Row>
 
       <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
         <hr />
@@ -518,6 +585,33 @@ const DataDiri = (props) => {
           <BerkasDisplay url={identityFileUrl} />
         </Col>
       </Row>
+
+      <Row>
+        <div css={styCardNilai}>
+          <strong>Berikan Nilai kualitas Data Diri (Max 2 Poin)</strong>
+          <Input
+            className='input-field'
+            defaultValue={Identity.score}
+            onChange={(e) => handleChangeScore(e, 'identityScore')}
+          />
+          <Button
+            className='save-btn'
+            loading={isLoadingSave}
+            onClick={handleSaveScore}
+          >
+            {isLoadingSave ? 'Loading...' : 'Simpan'}
+          </Button>
+          {Identity.score && (
+            <div style={{ marginLeft: '10px', fontSize: '20px' }}>
+              <Icon
+                type='check-circle'
+                theme='twoTone'
+                twoToneColor='#52c41a'
+              />
+            </div>
+          )}
+        </div>
+      </Row>
     </div>
   );
 };
@@ -525,6 +619,8 @@ const DataDiri = (props) => {
 DataDiri.propTypes = {
   dataParticipant: object,
   isLoading: bool,
+  cookieLogin: string,
+  userid: string,
 };
 
 export default DataDiri;

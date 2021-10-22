@@ -74,10 +74,10 @@ const DetailParticipant = (props) => {
         </div>
 
         <div css={styStatusBar}>
-          <span>Rekruiter: Bagus Dwi Utama</span>
+          <span>Rekruiter: </span>
           <div className='status'>
             {/* <Icon type='check-circle' theme='filled' /> */}
-            <Icon type='check-circle' /> Belum Dinilai
+            {/* <Icon type='check-circle' /> Belum Dinilai */}
           </div>
         </div>
       </div>
@@ -85,7 +85,11 @@ const DetailParticipant = (props) => {
       <div css={styBody}>
         <Tabs defaultActiveKey='1' onChange={onChangeTab}>
           <TabPane tab='Informasi Utama' key='1'>
-            <DataDiri dataParticipant={dataParticipant} isLoading={isLoading} />
+            <DataDiri
+              {...props}
+              dataParticipant={dataParticipant}
+              isLoading={isLoading}
+            />
           </TabPane>
           <TabPane tab='Essay' key='2'>
             <Essay
