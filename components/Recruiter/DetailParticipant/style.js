@@ -134,3 +134,46 @@ export const styCardNilai = css`
     margin-right: 20px;
   }
 `;
+
+export const stySubmitWrapperButton = css`
+  width: 100%;
+  position: fixed;
+  bottom: 10px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const styButtonSave = css`
+  background: #ff8229;
+  width: 200px;
+  border: none;
+  box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  height: 48px;
+`;
+
+export const styButtonWrapper = css`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .batal {
+    width: 48%;
+    font-size: 12px;
+    height: 50px;
+    font-weight: 700;
+    color: #ff8229;
+    border: 1px solid #ff8229;
+  }
+
+  .submit {
+    width: 48%;
+    font-size: 12px;
+    background: #ff8229;
+    color: white;
+    height: 50px;
+    font-weight: 700;
+  }
+`;

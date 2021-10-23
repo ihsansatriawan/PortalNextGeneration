@@ -375,7 +375,7 @@ const DataDiri = (props) => {
             onChange={(e) => handleChangeScore(e, 'socialMediaScore')}
           />
 
-          {SocialMedia.score && (
+          {SocialMedia.score ? (
             <div style={{ marginLeft: '10px', fontSize: '20px' }}>
               <Icon
                 type='check-circle'
@@ -383,6 +383,8 @@ const DataDiri = (props) => {
                 twoToneColor='#52c41a'
               />
             </div>
+          ) : (
+            ''
           )}
         </div>
       </Row>
@@ -601,7 +603,7 @@ const DataDiri = (props) => {
           >
             {isLoadingSave ? 'Loading...' : 'Simpan'}
           </Button>
-          {Identity.score && (
+          {Identity.score ? (
             <div style={{ marginLeft: '10px', fontSize: '20px' }}>
               <Icon
                 type='check-circle'
@@ -609,6 +611,8 @@ const DataDiri = (props) => {
                 twoToneColor='#52c41a'
               />
             </div>
+          ) : (
+            ''
           )}
         </div>
       </Row>

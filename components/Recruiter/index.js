@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LogoFim from '@components/Home/Slider/assets/logo-fim.svg';
 import Router from 'next/router';
 import { string } from 'prop-types';
+import { notification } from 'antd';
+import { fetch } from '@helper/fetch';
 
 import StepDesktop from '@components/FIM23/StepDesktop';
 import MenuFIMDesktop from '@components/FIM23/MenuFIMDesktop';
@@ -23,7 +25,12 @@ import {
 } from '@components/FIM23/style';
 
 const ContainerRecruiter = (props) => {
-  const { userid } = props;
+  const { userid, cookieLogin } = props;
+  const [statistic, setStatistic] = useState({
+    archived_number: 0,
+    processed_number: 0,
+    submitted_number: 0,
+  });
 
   const stepList = [
     {
@@ -32,7 +39,7 @@ const ContainerRecruiter = (props) => {
       description: 'Semua capes yang sudah mendaftar ada di sini',
       type: 'isFirstStepCompleted',
       icon: <People />,
-      count: 1,
+      count: statistic.submitted_number,
     },
     {
       id: 2,
@@ -40,7 +47,7 @@ const ContainerRecruiter = (props) => {
       description: 'Di sini isinya capes yang sudah dinilai oleh recruiter',
       type: 'isSecondStepCompleted',
       icon: <Checklist />,
-      count: 1,
+      count: statistic.processed_number,
     },
     {
       id: 3,
@@ -48,9 +55,36 @@ const ContainerRecruiter = (props) => {
       description: 'Cek keseluruhan data formulir kamu sebelum dikirim ya!',
       type: 'isSecondStepCompleted',
       icon: <ArchivePeople />,
-      count: 1,
+      count: statistic.archived_number,
     },
   ];
+
+  const fetchStatisticStatusPenilaian = async () => {
+    try {
+      const response = await fetch({
+        url: '/participant/summaries?batch=23',
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
+
+      const status = response.data.status || false;
+      const responseData = response.data.data;
+
+      if (!status) {
+        notification.error(response.data.message);
+      } else {
+        setStatistic(responseData);
+      }
+    } catch (error) {
+      notification.error('Server Error');
+    }
+  };
+
+  useEffect(() => {
+    fetchStatisticStatusPenilaian();
+  }, []);
 
   const RenderView = () => {
     if (userid) {
@@ -86,6 +120,7 @@ const ContainerRecruiter = (props) => {
 
 ContainerRecruiter.propTypes = {
   userid: string,
+  cookieLogin: string,
 };
 
 export default ContainerRecruiter;

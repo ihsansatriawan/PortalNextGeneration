@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Icon, Tabs } from 'antd';
+import { Icon, Tabs, Button, Modal, Typography, notification } from 'antd';
 import { string, number } from 'prop-types';
 import { fetch } from '@helper/fetch';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
+import PenilaianIllu from '@components/assets/illu-penilaian.svg';
 import Router from 'next/router';
 import DataDiri from './DataDiri';
 import Essay from './Essay';
@@ -12,13 +13,19 @@ import {
   styHeader,
   styStatusBar,
   styBody,
+  stySubmitWrapperButton,
+  styButtonSave,
+  styButtonWrapper,
 } from './style';
+
+const { Title } = Typography;
 
 const { TabPane } = Tabs;
 const DetailParticipant = (props) => {
   const { userid, cookieLogin } = props;
   const [isLoading, setIsLoading] = useState(false);
   const [dataParticipant, setDataParticipant] = useState({});
+  const [modalSendShow, setModalSendShow] = useState(false);
 
   let fullNameParticipant;
   let recruiterEmail;
@@ -47,6 +54,33 @@ const DetailParticipant = (props) => {
     console.log('key');
   };
 
+  const onConfirmOK = async () => {
+    try {
+      const response = await fetch({
+        url: `/participant/assessment/submit`,
+        method: 'post',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+        data: {
+          participantId: userid,
+          batch: '23',
+        },
+      });
+
+      const isSuccess = response.data.status;
+
+      if (isSuccess) {
+        notification.success({ message: 'Berhasil Submit Nilai Peserta' });
+        setModalSendShow(true);
+      } else {
+        notification.error({ message: response.data.message });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchDataDetailParticipant();
   }, []);
@@ -63,6 +97,40 @@ const DetailParticipant = (props) => {
   if (dataParticipant.Recruiter) {
     recruiterEmail = dataParticipant.Recruiter.email;
   }
+
+  const ModalConfirm = () => {
+    return (
+      <Modal
+        closable={false}
+        visible={modalSendShow}
+        onOk={onConfirmOK}
+        onCancel={() => setModalSendShow(false)}
+        footer={null}
+        width='400px'
+      >
+        <PenilaianIllu />
+        <Title level={4} style={{ marginTop: '20px' }}>
+          Udah Yakin Sama Penilaian Kamu?
+        </Title>
+        <p>
+          Pastikan kamu sudah yakin dengan penilaian kamu ya. Setelah submit
+          nilai, kamu tidak dapat mengubah atau mengedit nilai lagi lho!
+        </p>
+        <div css={styButtonWrapper}>
+          <Button
+            className='batal'
+            size='large'
+            onClick={() => setModalSendShow(false)}
+          >
+            Batal
+          </Button>
+          <Button className='submit' size='large' onClick={onConfirmOK}>
+            Submit Sekarang
+          </Button>
+        </div>
+      </Modal>
+    );
+  };
 
   return (
     <div css={styDetailParticipantWrapper}>
@@ -112,6 +180,22 @@ const DetailParticipant = (props) => {
           </TabPane>
         </Tabs>
       </div>
+
+      <div css={stySubmitWrapperButton}>
+        <Button
+          size='large'
+          css={styButtonSave}
+          type='primary'
+          htmlType='submit'
+          onClick={() => {
+            setModalSendShow(true);
+          }}
+        >
+          <Icon type='save' theme='filled' /> Submit Nilai
+        </Button>
+      </div>
+
+      {modalSendShow && <ModalConfirm />}
     </div>
   );
 };

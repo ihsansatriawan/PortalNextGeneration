@@ -48,8 +48,10 @@ const StepDesktop = (props) => {
             <div className='checkbox'>{renderIcon(value, isDone)}</div>
             <div className='nameStep'>
               <div className='menu-item'>
-                <span className='title'>{value.name} </span>
-                {value.count && <div className='count'>0</div>}
+                <span className='title'>
+                  {value.name} {value.count && `(${value.count})`}
+                </span>
+                {/* {value.count && <div className='count'>1</div>} */}
               </div>
               <span className='description'>{value.description}</span>
             </div>
