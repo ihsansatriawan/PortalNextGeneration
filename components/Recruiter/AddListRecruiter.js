@@ -73,8 +73,8 @@ class AddListRecruiter extends Component {
     const { cookieLogin, refetchStep } = this.props;
     try {
       const response = await fetch({
-        url: '/recruiter/recruiter/add',
-        method: 'get',
+        url: '/recruiter/add',
+        method: 'post',
         headers: {
           Authorization: `Bearer ${cookieLogin}`,
         },
