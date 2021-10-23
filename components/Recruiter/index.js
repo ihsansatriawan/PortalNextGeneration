@@ -111,7 +111,7 @@ const ContainerRecruiter = (props) => {
       </div>
 
       <div css={styMainFormWrapper}>
-        <Header />
+        <Header isRecruiter />
         <RenderView />
       </div>
     </div>
