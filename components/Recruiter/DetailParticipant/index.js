@@ -21,6 +21,7 @@ const DetailParticipant = (props) => {
   const [dataParticipant, setDataParticipant] = useState({});
 
   let fullNameParticipant;
+  let recruiterEmail;
 
   const fetchDataDetailParticipant = useCallback(async () => {
     try {
@@ -59,6 +60,10 @@ const DetailParticipant = (props) => {
     fullNameParticipant = fullName;
   }
 
+  if (dataParticipant.Recruiter) {
+    recruiterEmail = dataParticipant.Recruiter.email;
+  }
+
   return (
     <div css={styDetailParticipantWrapper}>
       <div css={styHeader}>
@@ -74,7 +79,7 @@ const DetailParticipant = (props) => {
         </div>
 
         <div css={styStatusBar}>
-          <span>Rekruiter: </span>
+          <span>Rekruiter: {recruiterEmail}</span>
           <div className='status'>
             {/* <Icon type='check-circle' theme='filled' /> */}
             {/* <Icon type='check-circle' /> Belum Dinilai */}
