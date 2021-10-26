@@ -26,6 +26,7 @@ const DetailParticipant = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [dataParticipant, setDataParticipant] = useState({});
   const [modalSendShow, setModalSendShow] = useState(false);
+  const [isFinalSubmit, setIsFinalSubmit] = useState(false);
 
   let fullNameParticipant;
   let recruiterEmail;
@@ -42,6 +43,10 @@ const DetailParticipant = (props) => {
 
       const dataParticipantDetail = response.data.data;
       setDataParticipant(dataParticipantDetail);
+      if (dataParticipantDetail) {
+        const isFinal = dataParticipantDetail.Summaries.finalScore !== null;
+        setIsFinalSubmit(isFinal);
+      }
 
       setIsLoading(false);
     } catch (error) {
@@ -149,8 +154,15 @@ const DetailParticipant = (props) => {
         <div css={styStatusBar}>
           <span>Rekruiter: {recruiterEmail}</span>
           <div className='status'>
-            {/* <Icon type='check-circle' theme='filled' /> */}
-            {/* <Icon type='check-circle' /> Belum Dinilai */}
+            {isFinalSubmit ? (
+              <>
+                <Icon type='check-circle' theme='filled' /> Sudah Dinilai
+              </>
+            ) : (
+              <>
+                <Icon type='check-circle' /> Belum Dinilai
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -162,11 +174,13 @@ const DetailParticipant = (props) => {
               {...props}
               dataParticipant={dataParticipant}
               isLoading={isLoading}
+              isFinalSubmit={isFinalSubmit}
             />
           </TabPane>
           <TabPane tab='Essay' key='2'>
             <Essay
               dataParticipant={dataParticipant}
+              isFinalSubmit={isFinalSubmit}
               {...props}
               category='essay'
             />
@@ -174,6 +188,7 @@ const DetailParticipant = (props) => {
           <TabPane tab='Rencana Pengabdian' key='3'>
             <Essay
               dataParticipant={dataParticipant}
+              isFinalSubmit={isFinalSubmit}
               {...props}
               category='volunteering_plan'
             />
@@ -181,19 +196,21 @@ const DetailParticipant = (props) => {
         </Tabs>
       </div>
 
-      <div css={stySubmitWrapperButton}>
-        <Button
-          size='large'
-          css={styButtonSave}
-          type='primary'
-          htmlType='submit'
-          onClick={() => {
-            setModalSendShow(true);
-          }}
-        >
-          <Icon type='save' theme='filled' /> Submit Nilai
-        </Button>
-      </div>
+      {!isFinalSubmit && (
+        <div css={stySubmitWrapperButton}>
+          <Button
+            size='large'
+            css={styButtonSave}
+            type='primary'
+            htmlType='submit'
+            onClick={() => {
+              setModalSendShow(true);
+            }}
+          >
+            <Icon type='save' theme='filled' /> Submit Nilai
+          </Button>
+        </div>
+      )}
 
       {modalSendShow && <ModalConfirm />}
     </div>

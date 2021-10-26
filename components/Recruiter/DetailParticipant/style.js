@@ -135,6 +135,20 @@ export const styCardNilai = css`
   }
 `;
 
+export const styCardCatatan = css`
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  background: #a68b77;
+  margin-top: 20px;
+  color: white;
+
+  .input-field {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+`;
+
 export const stySubmitWrapperButton = css`
   width: 100%;
   position: fixed;

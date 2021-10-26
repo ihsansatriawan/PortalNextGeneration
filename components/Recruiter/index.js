@@ -52,7 +52,7 @@ const ContainerRecruiter = (props) => {
     {
       id: 3,
       name: 'Capes Diarsipkan',
-      description: 'Cek keseluruhan data formulir kamu sebelum dikirim ya!',
+      description: 'Cek keseluruhan data penilaian kamu sebelum dikirim ya!',
       type: 'isSecondStepCompleted',
       icon: <ArchivePeople />,
       count: statistic.archived_number,

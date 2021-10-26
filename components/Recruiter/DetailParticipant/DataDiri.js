@@ -12,16 +12,18 @@ import {
   styInfo,
   stySocialMediaWrapper,
   styCardNilai,
+  styCardCatatan,
 } from './style';
 
 import BerkasDisplay from './BerkasDisplay';
-
+const { TextArea } = Input;
 const DataDiri = (props) => {
-  const { isLoading, cookieLogin } = props;
+  const { isLoading, cookieLogin, isFinalSubmit } = props;
   const [isLoadingSave, setIsLoadingSave] = useState(false);
   const [scoreIdentity, setScoreIdentity] = useState({
-    identityScore: 0,
-    socialMediaScore: 0,
+    identityScore: Identity ? Identity.score : 0,
+    socialMediaScore: SocialMedia ? SocialMedia.score : 0,
+    notes: Summaries ? Summaries.notes : '',
   });
   const {
     Identity,
@@ -31,6 +33,7 @@ const DataDiri = (props) => {
     FimActivity,
     OrganizationExperiences,
     PersonalDocument,
+    Summaries,
   } = props.dataParticipant;
 
   if (!Identity || isLoading) {
@@ -79,6 +82,8 @@ const DataDiri = (props) => {
     phoneNumber,
     relationship,
   } = AlumniReference;
+
+  const { notes } = Summaries;
 
   const { commitmentLetterUrl, identityFileUrl, recommendationLetterUrl } =
     PersonalDocument;
@@ -373,8 +378,17 @@ const DataDiri = (props) => {
             className='input-field'
             defaultValue={SocialMedia.score}
             onChange={(e) => handleChangeScore(e, 'socialMediaScore')}
+            disabled={isFinalSubmit}
           />
-
+          {!isFinalSubmit && (
+            <Button
+              className='save-btn'
+              loading={isLoadingSave}
+              onClick={handleSaveScore}
+            >
+              {isLoadingSave ? 'Loading...' : 'Simpan'}
+            </Button>
+          )}
           {SocialMedia.score ? (
             <div style={{ marginLeft: '10px', fontSize: '20px' }}>
               <Icon
@@ -595,14 +609,17 @@ const DataDiri = (props) => {
             className='input-field'
             defaultValue={Identity.score}
             onChange={(e) => handleChangeScore(e, 'identityScore')}
+            disabled={isFinalSubmit}
           />
-          <Button
-            className='save-btn'
-            loading={isLoadingSave}
-            onClick={handleSaveScore}
-          >
-            {isLoadingSave ? 'Loading...' : 'Simpan'}
-          </Button>
+          {!isFinalSubmit && (
+            <Button
+              className='save-btn'
+              loading={isLoadingSave}
+              onClick={handleSaveScore}
+            >
+              {isLoadingSave ? 'Loading...' : 'Simpan'}
+            </Button>
+          )}
           {Identity.score ? (
             <div style={{ marginLeft: '10px', fontSize: '20px' }}>
               <Icon
@@ -616,6 +633,27 @@ const DataDiri = (props) => {
           )}
         </div>
       </Row>
+      <Row>
+        <div css={styCardCatatan}>
+          <strong>Catatan Peserta</strong>
+          <TextArea
+            className='input-field'
+            rows={6}
+            defaultValue={notes}
+            onChange={(e) => handleChangeScore(e, 'notes')}
+            disabled={isFinalSubmit}
+          />
+          {!isFinalSubmit && (
+            <Button
+              className='save-btn'
+              loading={isLoadingSave}
+              onClick={handleSaveScore}
+            >
+              {isLoadingSave ? 'Loading...' : 'Simpan'}
+            </Button>
+          )}
+        </div>
+      </Row>
     </div>
   );
 };
@@ -625,6 +663,7 @@ DataDiri.propTypes = {
   isLoading: bool,
   cookieLogin: string,
   userid: string,
+  isFinalSubmit: bool,
 };
 
 export default DataDiri;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { string, object } from 'prop-types';
+import { string, object, bool } from 'prop-types';
 import { fetch } from '@helper/fetch';
 import { notification, Row, Col, Card, Input, Button, Icon } from 'antd';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
@@ -10,7 +10,7 @@ import { styDataDiriWrapper, styCardNilai } from './style';
 const tunnelId = 12;
 
 const Essay = (props) => {
-  const { cookieLogin, category } = props;
+  const { cookieLogin, category, isFinalSubmit } = props;
   const { Answers, Identity } = props.dataParticipant;
   const [isLoading, setIsLoading] = useState(false);
   const [dataQuestion, setDataQuestion] = useState([]);
@@ -148,14 +148,17 @@ const Essay = (props) => {
                           className='input-field'
                           defaultValue={findAnswer.score}
                           onChange={(e) => handleRating(e, findAnswer.id)}
+                          disabled={isFinalSubmit}
                         />
-                        <Button
-                          className='save-btn'
-                          loading={isLoadingSave}
-                          onClick={handleSaveScore}
-                        >
-                          {isLoadingSave ? 'Loading...' : 'Simpan'}
-                        </Button>
+                        {!isFinalSubmit && (
+                          <Button
+                            className='save-btn'
+                            loading={isLoadingSave}
+                            onClick={handleSaveScore}
+                          >
+                            {isLoadingSave ? 'Loading...' : 'Simpan'}
+                          </Button>
+                        )}
                         {findAnswer.score && (
                           <div style={{ marginLeft: '10px', fontSize: '20px' }}>
                             <Icon
@@ -181,6 +184,7 @@ Essay.propTypes = {
   cookieLogin: string,
   dataParticipant: object,
   category: string,
+  isFinalSubmit: bool,
 };
 
 export default Essay;
