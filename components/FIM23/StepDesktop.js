@@ -1,6 +1,6 @@
 import React from 'react';
 import { notification } from 'antd';
-import { array, number } from 'prop-types';
+import { array, number, func } from 'prop-types';
 import { styStepDesktopWrapper } from './style.js';
 import { CheckCircleFilled } from '@ant-design/icons';
 import { useIdentity } from '@context/profileContext';
@@ -10,7 +10,9 @@ const StepDesktop = (props) => {
   const { formCompleteness, setStep } = useIdentity();
   const { pathname } = useRouter();
 
-  const { step, liststep } = props;
+  const { step, liststep, setStepAdmin } = props;
+
+  let selectedStep = step;
 
   const renderIcon = (step, isDone) => {
     if (step.icon) {
@@ -30,9 +32,17 @@ const StepDesktop = (props) => {
         const isDone = formCompleteness[value.type];
         return (
           <div
-            className={value.id === step ? 'chipStep active' : 'chipStep'}
+            className={
+              value.id === selectedStep ? 'chipStep active' : 'chipStep'
+            }
             key={key}
             onClick={() => {
+              // From recruiter side
+
+              if (value.icon) {
+                setStepAdmin(value.id);
+              }
+
               if (!formCompleteness.submittedAt || value.id === 5) {
                 setStep(value.id);
                 if (pathname === '/pengumuman') {
@@ -65,6 +75,7 @@ const StepDesktop = (props) => {
 StepDesktop.propTypes = {
   liststep: array,
   step: number,
+  setStepAdmin: func,
 };
 
 export default StepDesktop;

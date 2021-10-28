@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Card, Form, Radio, Select } from 'antd';
-import { object, string, bool } from 'prop-types';
+import { Card, Form, Button, Select, Input, Icon } from 'antd';
+import { object, string, bool, func } from 'prop-types';
 import provinsiData from '@helper/dataIndonesia/provinsi.json';
 
 import {
@@ -14,6 +14,7 @@ const { Option } = Select;
 
 const FilterCard = (props) => {
   const { getFieldDecorator } = props.form;
+  const { onHandleClickSearch } = props;
   const [idProvinsi, setIdProvinsi] = useState('');
   let dataKota = [];
   if (idProvinsi) {
@@ -24,7 +25,7 @@ const FilterCard = (props) => {
   const handleSubmitForm = (e) => {
     e.preventDefault();
     props.form.validateFieldsAndScroll(async (err, values) => {
-      console.log(values);
+      onHandleClickSearch(values);
     });
   };
 
@@ -35,7 +36,14 @@ const FilterCard = (props) => {
           <h4> Filter Capes Berdasarkan</h4>
           <div css={styFormFilterWrapper}>
             <div css={styItemInput}>
-              <Form.Item label='Jalur Masuk'>
+              <Form.Item label='Nama Lengkap'>
+                {getFieldDecorator('name', {
+                  rules: [{ required: false, message: '' }],
+                })(
+                  <Input placeholder='Nama Lengkap' style={{ width: '100%' }} />
+                )}
+              </Form.Item>
+              {/* <Form.Item label='Jalur Masuk'>
                 {getFieldDecorator('gender', {
                   rules: [{ required: false, message: 'Pilih jalur masuk' }],
                 })(
@@ -56,11 +64,11 @@ const FilterCard = (props) => {
                     </Radio.Button>
                   </Radio.Group>
                 )}
-              </Form.Item>
+              </Form.Item> */}
             </div>
 
             <div css={styItemInput}>
-              <Form.Item label='Provinsi'>
+              <Form.Item label='Kota'>
                 {getFieldDecorator('provinceAddress', {
                   rules: [
                     { required: false, message: 'Isi Provinsi Alamat kamu!' },
@@ -68,7 +76,7 @@ const FilterCard = (props) => {
                 })(
                   <Select
                     showSearch
-                    placeholder='Provinsi Peserta'
+                    placeholder='Pilih Provinsi dulu'
                     style={{ width: '100%' }}
                     onChange={(e) => {
                       const jsonId = provinsiData.find(
@@ -79,6 +87,7 @@ const FilterCard = (props) => {
                       }
                     }}
                   >
+                    <Option value=''></Option>
                     {provinsiData.map((value, index) => (
                       <Option key={index} value={value.nama}>
                         {value.nama}
@@ -90,15 +99,18 @@ const FilterCard = (props) => {
             </div>
 
             <div css={styItemInput}>
-              <Form.Item label='Kota'>
+              <Form.Item label=' '>
                 {getFieldDecorator('cityAddress', {
-                  rules: [{ required: false, message: 'Isi Kota Alamat kamu!' }],
+                  rules: [
+                    { required: false, message: 'Isi Kota Alamat kamu!' },
+                  ],
                 })(
                   <Select
                     showSearch
-                    placeholder='Kota domisili saat ini'
+                    placeholder='Lalu isi Kota'
                     style={{ width: '100%' }}
                   >
+                    <Option value=''></Option>
                     {dataKota.map((value, index) => (
                       <Option key={index} value={value.nama}>
                         {value.nama}
@@ -111,23 +123,27 @@ const FilterCard = (props) => {
 
             <div css={styItemInput}>
               <Form.Item label='Profesi'>
-                {getFieldDecorator('profesi', {
-                  rules: [{ required: false, message: 'Isi Kota Alamat kamu!' }],
+                {getFieldDecorator('occupation', {
+                  rules: [{ required: false, message: '' }],
                 })(
-                  <Select
-                    showSearch
-                    placeholder='Profesi Peserta'
+                  <Input
+                    placeholder='profesi peserta'
                     style={{ width: '100%' }}
-                  >
-                    {dataKota.map((value, index) => (
-                      <Option key={index} value={value.nama}>
-                        {value.nama}
-                      </Option>
-                    ))}
-                  </Select>
+                  />
                 )}
               </Form.Item>
             </div>
+
+            <Form.Item style={{ display: 'flex', alignItems: 'flex-end' }}>
+              <Button
+                size='large'
+                css={{ background: '#ff8229' }}
+                type='primary'
+                htmlType='submit'
+              >
+                <Icon type='search' /> Cari
+              </Button>
+            </Form.Item>
           </div>
         </div>
       </Card>
@@ -141,6 +157,7 @@ FilterCard.propTypes = {
   form: object.isRequired,
   cookieLogin: string,
   isInPreview: bool,
+  onHandleClickSearch: func,
 };
 
 export default WrappedFilterForm;

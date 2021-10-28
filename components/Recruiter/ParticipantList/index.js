@@ -1,25 +1,44 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { string } from 'prop-types';
+import { string, number } from 'prop-types';
 import FilterCard from '../FilterCard';
 import { fetch } from '@helper/fetch';
 import ParticipantCard from './ParticipantCard';
 import LoadingSpin from '@components/FIM23/LoadingSpin.js';
-import { Pagination } from 'antd';
+import { Pagination, Empty } from 'antd';
 import { useIdentity } from '@context/profileContext';
 
 import Router from 'next/router';
 import { notification } from 'antd';
 
 const ParticipantList = (props) => {
-  const { cookieLogin } = props;
+  const { cookieLogin, stepAdmin } = props;
   const { dataUser } = useIdentity();
 
   const [listParticipants, setListParticipants] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingSearch, setIsLoadingSearch] = useState(false);
+
   const [isLoadingRecruiterList, setIsLoadingRecruiterList] = useState(false);
   const [totalData] = useState(1500);
   const [currentPage, setCurrentPage] = useState(1);
   const [listRecruiter, setListRecruiter] = useState([]);
+  const [searchParams, setSearchParams] = useState({
+    name: '',
+    provinceAddress: '',
+    cityAddress: '',
+    occupation: '',
+  });
+
+  let statusList = '';
+  if (stepAdmin == 1) {
+    statusList = '';
+  } else if (stepAdmin == 2) {
+    statusList = 'processed';
+  } else if (stepAdmin == 3) {
+    statusList = 'archived';
+  }
+
+  const [filterByStatus] = useState(statusList);
 
   const openNotificationWithIcon = (type) => {
     notification[type]({
@@ -77,9 +96,66 @@ const ParticipantList = (props) => {
     }
   }, [currentPage]);
 
+  const fetchDataListParticipantWithParams = async () => {
+    setIsLoadingSearch(true);
+    try {
+      const listParams = [];
+      const { name, cityAddress, occupation } = searchParams;
+
+      if (name) {
+        listParams.push(`name=${name}`);
+      }
+
+      if (cityAddress) {
+        listParams.push(`cityAddress=${cityAddress}`);
+      }
+
+      if (occupation) {
+        listParams.push(`occupation=${occupation}`);
+      }
+
+      if (filterByStatus) {
+        listParams.push(`status=${filterByStatus}`);
+      }
+
+      const value = `&${listParams.join('&')}`;
+
+      const response = await fetch({
+        url: `/participant?batch=23&offset=${
+          currentPage * 10 - 10
+        }&limit=10${value}`,
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${cookieLogin}`,
+        },
+      });
+
+      if (response.data.status) {
+        const dataParticipantList = response.data.data;
+        setListParticipants(dataParticipantList);
+      } else {
+        Router.push('/');
+        openNotificationWithIcon('error');
+      }
+
+      setIsLoadingSearch(false);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onHandleClickSearch = (value) => {
+    setSearchParams(value);
+  };
+
   const onChangePagination = (page) => {
     setCurrentPage(page);
   };
+
+  useEffect(() => {
+    fetchDataListParticipantWithParams();
+  }, [searchParams, filterByStatus]);
 
   useEffect(() => {
     if (dataUser.role < 2) {
@@ -90,7 +166,7 @@ const ParticipantList = (props) => {
     }
 
     setIsLoading(true);
-    fetchDataListParticipant();
+    fetchDataListParticipantWithParams();
   }, [currentPage]);
 
   const onChangeRecruiter = async (email, userId) => {
@@ -124,7 +200,8 @@ const ParticipantList = (props) => {
 
   return (
     <div>
-      {/* <FilterCard /> */}
+      <FilterCard onHandleClickSearch={onHandleClickSearch} />
+      {isLoadingSearch ? <LoadingSpin /> : ''}
       {listParticipants.map((participant) => {
         const {
           userId,
@@ -152,6 +229,7 @@ const ParticipantList = (props) => {
           />
         );
       })}
+      {listParticipants.length === 0 ? <Empty /> : ''}
       <Pagination
         defaultCurrent={currentPage}
         total={totalData}
@@ -163,6 +241,7 @@ const ParticipantList = (props) => {
 
 ParticipantList.propTypes = {
   cookieLogin: string,
+  stepAdmin: number,
 };
 
 export default ParticipantList;

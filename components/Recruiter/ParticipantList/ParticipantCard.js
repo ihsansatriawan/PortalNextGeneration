@@ -53,7 +53,10 @@ const ParticipantCard = ({
           <div css={styAsal}>
             <label>Score</label>
             <span>
-              {scoreFinal && <Icon type='star' />} {scoreFinal}
+              {scoreFinal && (
+                <Icon type='star' theme='filled' style={{ color: '#ffcc00' }} />
+              )}{' '}
+              {scoreFinal}
             </span>
           </div>
         )}

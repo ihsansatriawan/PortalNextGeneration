@@ -31,6 +31,7 @@ const ContainerRecruiter = (props) => {
     processed_number: 0,
     submitted_number: 0,
   });
+  const [stepAdmin, setStepAdmin] = useState(1);
 
   const stepList = [
     {
@@ -91,7 +92,7 @@ const ContainerRecruiter = (props) => {
       return <DetailParticipant {...props} />;
     }
 
-    return <ParticipantList {...props} />;
+    return <ParticipantList {...props} stepAdmin={stepAdmin} />;
   };
 
   return (
@@ -103,7 +104,11 @@ const ContainerRecruiter = (props) => {
           className={styLogo}
         />
 
-        <StepDesktop liststep={stepList} step={1} />
+        <StepDesktop
+          liststep={stepList}
+          step={stepAdmin}
+          setStepAdmin={(val) => setStepAdmin(val)}
+        />
 
         <div css={styMenuDekstopLogic}>
           <MenuFIMDesktop />
