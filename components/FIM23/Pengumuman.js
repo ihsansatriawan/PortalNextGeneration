@@ -87,7 +87,7 @@ const Pengumuman = () => {
         </div>
         <div>
           <span className='titlePengumuman'>
-            Mohon Maaf! Kamu Belum Lolos ke Tahap Selanjutnya
+            Mohon Maaf, Kamu Belum Lolos ke Tahap Selanjutnya
           </span>
           <p>
             Kesempatanmu bergabung menjadi peserta FIM 23 harus tertunda dulu
