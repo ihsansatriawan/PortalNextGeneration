@@ -12,7 +12,7 @@ const MenuFIMDesktop = (props) => {
         <Icon type='bell' />
         <span>Pengumuman</span>
 
-        <div className='count'>0</div>
+        {/* <div className='count'>2</div> */}
       </div>
 
       <div className='menu-item' onClick={onLogout}>

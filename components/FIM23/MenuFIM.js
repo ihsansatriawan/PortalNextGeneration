@@ -31,7 +31,7 @@ const MenuFIM = (props) => {
             <Icon type='bell' />
             <span>Pengumuman</span>
 
-            <div className='count'>0</div>
+            {/* <div className='count'>2</div> */}
           </div>
         )}
 
