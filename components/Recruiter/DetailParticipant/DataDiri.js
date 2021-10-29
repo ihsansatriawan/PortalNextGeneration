@@ -75,14 +75,6 @@ const DataDiri = (props) => {
     websiteUrl,
   } = SocialMedia;
 
-  const {
-    acquaintedSince,
-    batch,
-    fullName: fulnameReference,
-    phoneNumber,
-    relationship,
-  } = AlumniReference;
-
   const { notes } = Summaries;
 
   const { commitmentLetterUrl, identityFileUrl, recommendationLetterUrl } =
@@ -413,41 +405,44 @@ const DataDiri = (props) => {
         </Col>
       </Row>
 
-      <Row style={{ marginBottom: '20px' }}>
-        <Col span={8}>
-          <div css={styInfo}>
-            <label>Nama Lengkap</label>
-            <span>{fulnameReference}</span>
-          </div>
-        </Col>
-        <Col span={8}>
-          <div css={styInfo}>
-            <label>No HP</label>
-            <span>{phoneNumber}</span>
-          </div>
-        </Col>
-        <Col span={8}>
-          <div css={styInfo}>
-            <label>Mengenal Sebagai Apa</label>
-            <span>{relationship}</span>
-          </div>
-        </Col>
-      </Row>
-
-      <Row style={{ marginBottom: '20px' }}>
-        <Col span={8}>
-          <div css={styInfo}>
-            <label>Angkatan FIM</label>
-            <span>{batch}</span>
-          </div>
-        </Col>
-        <Col span={8}>
-          <div css={styInfo}>
-            <label>Kenal Berapa Lama</label>
-            <span>{acquaintedSince}</span>
-          </div>
-        </Col>
-      </Row>
+      {AlumniReference && (
+        <>
+          <Row style={{ marginBottom: '20px' }}>
+            <Col span={8}>
+              <div css={styInfo}>
+                <label>Nama Lengkap</label>
+                <span>{AlumniReference.fulnameReference}</span>
+              </div>
+            </Col>
+            <Col span={8}>
+              <div css={styInfo}>
+                <label>No HP</label>
+                <span>{AlumniReference.phoneNumber}</span>
+              </div>
+            </Col>
+            <Col span={8}>
+              <div css={styInfo}>
+                <label>Mengenal Sebagai Apa</label>
+                <span>{AlumniReference.relationship}</span>
+              </div>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: '20px' }}>
+            <Col span={8}>
+              <div css={styInfo}>
+                <label>Angkatan FIM</label>
+                <span>{AlumniReference.batch}</span>
+              </div>
+            </Col>
+            <Col span={8}>
+              <div css={styInfo}>
+                <label>Kenal Berapa Lama</label>
+                <span>{AlumniReference.acquaintedSince}</span>
+              </div>
+            </Col>
+          </Row>
+        </>
+      )}
 
       <Row style={{ marginBottom: '20px', marginTop: '20px' }}>
         <hr />

@@ -156,7 +156,12 @@ const DetailParticipant = (props) => {
           <div className='status'>
             {isFinalSubmit ? (
               <>
-                <Icon type='check-circle' theme='filled' /> Sudah Dinilai
+                <Icon
+                  type='check-circle'
+                  theme='filled'
+                  style={{ color: '#8fd401' }}
+                />{' '}
+                Sudah Dinilai
               </>
             ) : (
               <>
