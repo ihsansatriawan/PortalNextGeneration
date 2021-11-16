@@ -174,7 +174,7 @@ const ContinerFIM23 = (props) => {
             {renderStepForm()}
           </>
         ) : (
-          <Pengumuman />
+          <Pengumuman {...props} />
         )}
       </div>
     </div>
