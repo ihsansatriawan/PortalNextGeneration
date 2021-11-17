@@ -48,6 +48,9 @@ const Pengumuman = (props) => {
   const isLolosWawancara = dataFiltered.length === 1;
   const isLolosFim = dataLolosFim.length === 1;
 
+  const currentTime = Math.round(new Date().getTime() / 1000);
+  const dedlineKonfirmasi = currentTime > 1637244000; // 18 November 2021
+
   useEffect(() => {
     setTimeout(() => {
       setIsLoadingLolos(false);
@@ -171,12 +174,20 @@ const Pengumuman = (props) => {
     const isAttend = dataAttendence.isAttend === true;
     const fileUrl = dataAttendence.reasonUrl;
 
+    if (!isLolosFim) {
+      return renderGagalWawancara();
+    }
+
     let wording = '';
 
     if (isAttend) {
       wording = '✅ Konfirmasi Siap Hadir';
     } else {
       wording = `❌ Tidak Dapat Hadir (${dataAttendence.reason})`;
+    }
+
+    if (dedlineKonfirmasi && !isThereIsValue) {
+      wording = '❌ Batas waktu konfirmasi sudah habis';
     }
 
     return (
@@ -196,14 +207,19 @@ const Pengumuman = (props) => {
           <p>
             Cie, selamat ya! Kamu lolos seluruh tahapan rekrutment Pelatihan FIM
             23. Setelah ini, segera konfirmasi kehadiran pelatihan FIM 23 yang
-            akan dilaksanakan pada <b>9-12 Desember 2021.</b>
+            akan dilaksanakan pada 9-12 Desember 2021. Batas akhir konfirmasi
+            kehadiran tanggal <b>18 November 2021 pukul 21:00 WIB</b>
             <div css={styButtonWrapper} style={{ marginTop: '20px' }}>
               <Button
                 className='submit'
                 size='large'
                 loading={loadingFetch}
-                onClick={() => setOpenModal(true)}
-                disabled={isThereIsValue}
+                onClick={() => {
+                  if (!dedlineKonfirmasi) {
+                    setOpenModal(true);
+                  }
+                }}
+                disabled={isThereIsValue || dedlineKonfirmasi}
               >
                 {!isThereIsValue ? 'Kirim Konfirmasi Kehadiran' : wording}
               </Button>
@@ -233,6 +249,7 @@ const Pengumuman = (props) => {
         {formCompleteness.submittedAt &&
           !isLoadingLolos &&
           isLolosFim &&
+          isLolosWawancara &&
           renderLolosFim()}
         {isLolosFim ? (
           <ModalConfirmation
