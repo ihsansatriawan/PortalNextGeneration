@@ -74,7 +74,9 @@ const Pengumuman = (props) => {
         notification.error({ message: response.message });
       } else {
         const responseData = response.data || [];
-        setDataAttendence(responseData.data);
+        if (responseData.data) {
+          setDataAttendence(responseData.data);
+        }
       }
 
       setLoadingFetch(false);
@@ -85,7 +87,9 @@ const Pengumuman = (props) => {
   };
 
   useEffect(() => {
-    onFetchAttendence();
+    if (isLolosFim) {
+      onFetchAttendence();
+    }
   }, []);
 
   const renderEmptyState = () => {
@@ -248,7 +252,6 @@ const Pengumuman = (props) => {
         {formCompleteness.submittedAt && !isLoadingLolos && renderWawancara()}
         {formCompleteness.submittedAt &&
           !isLoadingLolos &&
-          isLolosFim &&
           isLolosWawancara &&
           renderLolosFim()}
         {isLolosFim ? (

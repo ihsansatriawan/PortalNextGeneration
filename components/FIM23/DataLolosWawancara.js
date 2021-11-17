@@ -1,4 +1,5 @@
 export default [
+  { email: 'nurilabu@gmail.com' },
   { email: 'dwiutamabagus@gmail.com' },
   { email: 'hanifah.alhaq@gmail.com' },
   { email: 'almirazhaf@gmail.com' },

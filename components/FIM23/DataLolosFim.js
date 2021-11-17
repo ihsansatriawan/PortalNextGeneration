@@ -199,4 +199,6 @@ export default [
   { email: 'anjaniola@gmail.com' },
   { email: 'yuhinmeidina@gmail.com' },
   { email: 'yulandari9697@gmail.com' },
+  { email: 'dwiutamabagus@gmail.com' },
+  { email: 'nurilabu@gmail.com' },
 ];
