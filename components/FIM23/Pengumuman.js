@@ -215,7 +215,7 @@ const Pengumuman = (props) => {
             kehadiran tanggal <b>18 November 2021 pukul 21:00 WIB</b>
             <div css={styButtonWrapper} style={{ marginTop: '20px' }}>
               <Button
-                className='submit'
+                className='submit submit-konfirmasi'
                 size='large'
                 loading={loadingFetch}
                 onClick={() => {

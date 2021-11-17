@@ -190,4 +190,8 @@ export const styButtonWrapper = css`
     height: 50px;
     font-weight: 700;
   }
+
+  .submit-konfirmasi {
+    width: 100% !important;
+  }
 `;
