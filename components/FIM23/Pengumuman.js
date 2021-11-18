@@ -90,7 +90,7 @@ const Pengumuman = (props) => {
     if (isLolosFim) {
       onFetchAttendence();
     }
-  }, []);
+  }, [isLolosFim]);
 
   const renderEmptyState = () => {
     return (
